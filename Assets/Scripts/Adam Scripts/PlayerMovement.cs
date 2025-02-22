@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public CameraMovement _cameraMovement;
+
     Rigidbody rb;
     Animator _animator;
 
-    public float playerSpeed;
-    public float playerJumpFactor;
+    public float playerSpeed = 5f;
+    public float playerJumpFactor = 300f;
+    public float camSensitivity = 200f;
 
     void Start()
     {

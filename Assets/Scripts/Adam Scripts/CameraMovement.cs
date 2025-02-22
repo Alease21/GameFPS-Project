@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public PlayerMovement _playerMovement;
+
     float xRotate = 0f;
     float yRotate = 0f;
 
-    float camSensitivity = 200f;
+    // moved to playerMovement for easy adjusting in inspector
+    //public float camSensitivity = 200f;
 
     public GameObject player;
 
@@ -20,8 +23,8 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        xRotate += Input.GetAxis("Mouse X") * camSensitivity * Time.deltaTime;
-        yRotate += -Input.GetAxis("Mouse Y") * camSensitivity * Time.deltaTime;
+        xRotate += Input.GetAxis("Mouse X") * _playerMovement.camSensitivity * Time.deltaTime;
+        yRotate += -Input.GetAxis("Mouse Y") * _playerMovement.camSensitivity * Time.deltaTime;
 
         // Move camera up/down (rotate around x axis) with mouse y
         // and rotate player left/right (rotate around y axis) with mouse x

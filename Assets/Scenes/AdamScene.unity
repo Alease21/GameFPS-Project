@@ -382,7 +382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 40ea2a08eab7c57489457b9c44909701, type: 2}
+  - {fileID: 2100000, guid: 0348d1a4bc3a63340b4fc52b8452ceb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -502,7 +502,7 @@ PrefabInstance:
     - target: {fileID: 23672589033054590, guid: 37e681eb08549004c9d9c2be529cbf54, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 48e3b2fccc5c515479b03b1ce577d11b, type: 2}
+      objectReference: {fileID: 2100000, guid: 25c502d90e9c6da4780fb377add39a82, type: 2}
     - target: {fileID: 64716801127992332, guid: 37e681eb08549004c9d9c2be529cbf54, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -843,7 +843,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 40ea2a08eab7c57489457b9c44909701, type: 2}
+  - {fileID: 2100000, guid: 0348d1a4bc3a63340b4fc52b8452ceb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -994,6 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec791ca9dd8b3594a813623021f8c767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerMovement: {fileID: 1926579872}
   player: {fileID: 1654332048}
 --- !u!4 &1379899279 stripped
 Transform:
@@ -1011,8 +1012,8 @@ GameObject:
   - component: {fileID: 1390544779}
   - component: {fileID: 1390544778}
   - component: {fileID: 1390544777}
-  - component: {fileID: 1390544776}
   - component: {fileID: 1390544781}
+  - component: {fileID: 1390544776}
   - component: {fileID: 1390544780}
   m_Layer: 0
   m_Name: PlayerCapsule
@@ -1145,11 +1146,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1390544775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79b0a97690c9a04469222f639b698bd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 374d65b5938aff745b2689d8d0ac10d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraMovement: {fileID: 0}
   playerSpeed: 5
-  playerJumpFactor: 0
+  playerJumpFactor: 250
+  camSensitivity: 200
 --- !u!1 &1654332048 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
@@ -1231,7 +1234,7 @@ PrefabInstance:
     - target: {fileID: 2775862123970177323, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 48e3b2fccc5c515479b03b1ce577d11b, type: 2}
+      objectReference: {fileID: 2100000, guid: 25c502d90e9c6da4780fb377add39a82, type: 2}
     - target: {fileID: 5866666021909216657, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       propertyPath: m_Controller
       value: 
@@ -1248,7 +1251,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1926579868}
+      addedObject: {fileID: 1926579872}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1926579870}
@@ -1261,20 +1264,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
   m_PrefabInstance: {fileID: 1926579865}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1926579868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654332048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79b0a97690c9a04469222f639b698bd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeed: 24.33
-  playerJumpFactor: 300
 --- !u!136 &1926579869
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1325,6 +1314,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1926579872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654332048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374d65b5938aff745b2689d8d0ac10d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraMovement: {fileID: 1294655912}
+  playerSpeed: 10
+  playerJumpFactor: 300
+  camSensitivity: 400
 --- !u!4 &2082935340 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4691987367314160, guid: 787a31f2409a3f64c987faeb2a72ab86, type: 3}
