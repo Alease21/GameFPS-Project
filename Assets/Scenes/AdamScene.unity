@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -995,6 +995,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 1926579872}
+  camPivotLock: 60
+  camAllowance: 1
   player: {fileID: 1654332048}
 --- !u!4 &1379899279 stripped
 Transform:
@@ -1152,6 +1154,7 @@ MonoBehaviour:
   _cameraMovement: {fileID: 0}
   playerSpeed: 5
   playerJumpFactor: 250
+  playerDashFactor: 500
   camSensitivity: 200
 --- !u!1 &1654332048 stripped
 GameObject:
@@ -1239,6 +1242,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 52ab98868845d004c9a1297154686af2, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1296,7 +1303,7 @@ Rigidbody:
   m_GameObject: {fileID: 1654332048}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1329,6 +1336,7 @@ MonoBehaviour:
   _cameraMovement: {fileID: 1294655912}
   playerSpeed: 10
   playerJumpFactor: 300
+  playerDashFactor: 800
   camSensitivity: 400
 --- !u!4 &2082935340 stripped
 Transform:

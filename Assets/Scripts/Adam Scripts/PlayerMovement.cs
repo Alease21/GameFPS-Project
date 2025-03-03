@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float playerSpeed = 5f;
     public float playerJumpFactor = 300f;
+    public float playerDashFactor = 10f;
     public float camSensitivity = 200f;
 
     void Start()
@@ -21,14 +22,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Root motion player movement through animator, allows forward movement
-        // based on facing direction
+        // Basic movement based on the direction the player is facing
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        Vector3 offset = vertical * transform.forward + horizontal * transform.right;       
+        transform.position += offset * Time.deltaTime * playerSpeed;
+
+        // Update animation controller to match movement direction
         _animator.SetFloat("Horizontal", horizontal);
         _animator.SetFloat("Vertical", vertical);
-
+        
         // Jump input
         if (Input.GetKeyDown("space"))
         {
@@ -37,6 +41,13 @@ public class PlayerMovement : MonoBehaviour
             //    -falling velocity?
 
             rb.AddForce(Vector3.up * playerJumpFactor);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Very slippery.
+            //      -add friction/drag?
+            rb.AddForce(transform.forward * playerDashFactor);
         }
     }
 }
