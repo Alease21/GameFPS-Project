@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,10 +10,14 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     Animator _animator;
 
-    public float playerSpeed = 5f;
-    public float playerJumpFactor = 300f;
-    public float playerDashFactor = 10f;
-    public float camSensitivity = 200f;
+    // make sliders in inspector?
+    public float playerSpeed;
+    public float playerJumpFactor;
+    public float playerDashFactor;
+    public float camSensitivity;
+
+    [SerializeField] private bool isJumping = false;
+    private bool hasDashed = false;
 
     void Start()
     {
@@ -22,10 +27,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Basic movement based on the direction the player is facing
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        // Movement based on the direction the player is facing
         Vector3 offset = vertical * transform.forward + horizontal * transform.right;       
         transform.position += offset * Time.deltaTime * playerSpeed;
 
@@ -34,20 +39,35 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat("Vertical", vertical);
         
         // Jump input
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && !isJumping)
         {
-            // figure this out.
-            //    -ground collision?
-            //    -falling velocity?
-
             rb.AddForce(Vector3.up * playerJumpFactor);
+            isJumping = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        // Dash in the direction player is currently moving
+        if (Input.GetKeyDown(KeyCode.R) && !hasDashed)
         {
-            // Very slippery.
-            //      -add friction/drag?
-            rb.AddForce(transform.forward * playerDashFactor);
+            hasDashed = true;
+            StartCoroutine(DashCoolDown());
+
+            // -add friction/drag?
+            rb.AddForce(offset * playerDashFactor);
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.transform.tag == "Ground")
+        {
+            isJumping = false;
+        }
+    }
+
+    public IEnumerator DashCoolDown()
+    {
+        yield return new WaitForSecondsRealtime(3);
+        hasDashed = false;
+        Debug.Log("dash can be used again");
     }
 }

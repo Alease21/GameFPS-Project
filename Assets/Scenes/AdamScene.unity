@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 349395588}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -316,8 +316,8 @@ Transform:
   m_GameObject: {fileID: 349395587}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.1305268, w: 0.9914448}
-  m_LocalPosition: {x: -18.37, y: 0.88, z: -14.83}
-  m_LocalScale: {x: 11.824, y: 0.69818, z: 11.919615}
+  m_LocalPosition: {x: -18.37, y: 0.88, z: -17.6169}
+  m_LocalScale: {x: 11.824, y: 0.69818, z: 6.346003}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 562073834}
   m_Layer: 0
   m_Name: GroundCube (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 994791213}
   m_Layer: 0
   m_Name: GroundCube
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -995,9 +995,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 1926579872}
-  camPivotLock: 60
-  camAllowance: 1
   player: {fileID: 1654332048}
+  camPivotMax: 50
 --- !u!4 &1379899279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3765236089850875182, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
@@ -1156,6 +1155,7 @@ MonoBehaviour:
   playerJumpFactor: 250
   playerDashFactor: 500
   camSensitivity: 200
+  isJumping: 0
 --- !u!1 &1654332048 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
@@ -1335,9 +1335,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraMovement: {fileID: 1294655912}
   playerSpeed: 10
-  playerJumpFactor: 300
+  playerJumpFactor: 450
   playerDashFactor: 800
   camSensitivity: 400
+  isJumping: 0
 --- !u!4 &2082935340 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4691987367314160, guid: 787a31f2409a3f64c987faeb2a72ab86, type: 3}
