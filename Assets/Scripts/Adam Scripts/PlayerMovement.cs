@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Dash in the direction player is currently moving or
         // if no direction keys are pressed, then dash forward
-        if (Input.GetKeyDown(KeyCode.R) && !hasDashed)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
         {
             hasDashed = true;
             StartCoroutine(DashCoolDown());

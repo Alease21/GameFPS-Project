@@ -844,6 +844,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5427190347425322556, guid: 3b436ce762fc0a746839799ccb8bd61e, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455649794480477836, guid: 3b436ce762fc0a746839799ccb8bd61e, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455712378683642638, guid: 3b436ce762fc0a746839799ccb8bd61e, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455945019924022284, guid: 3b436ce762fc0a746839799ccb8bd61e, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455947514286807192, guid: 3b436ce762fc0a746839799ccb8bd61e, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6385554981243043461, guid: 3b436ce762fc0a746839799ccb8bd61e, type: 3}
+      propertyPath: camSensitivity
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
