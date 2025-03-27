@@ -8,9 +8,11 @@ public class WeaponSO : ScriptableObject
     public enum WeaponType
     {
         HitScan,
-        Projectile
+        Projectile,
+        Continuous
     }
     public string weaponName;
     public WeaponType weaponType;
-    public string weaponDescription;
+    public int ammoMax;
+    public int ammoCount;
 }

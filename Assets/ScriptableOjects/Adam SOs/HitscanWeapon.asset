@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: HitScan Weapon 1
   weaponType: 0
-  weaponDescription: qw eqweqrqws
+  ammoMax: 20
+  ammoCount: 20

@@ -39,6 +39,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8398032427946848612, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8838093547878555863, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.105
@@ -79,13 +83,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8838093547878923505, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8838093547878923507, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8838093547878923509, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8838093547878923511, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
       propertyPath: m_Name
-      value: PickupProjectileWeapon1
+      value: PickupContinuousWeapon1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8838093547878923511, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8838093547878923511, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
       propertyPath: m_TagString
       value: WeaponPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8942392652330626609, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -121,7 +145,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -139,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d88b9b247fc314e9c2c3cec3d13286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSO: {fileID: 11400000, guid: fa9e6e662a717bf439d1c511a4871581, type: 2}
-  weaponPrefab: {fileID: 5282326119965129494}
+  weaponSO: {fileID: 11400000, guid: 611dd5480533aed4aaaf39127185e8ff, type: 2}
+  weaponPrefab: {fileID: 8838093547878923511, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}
 --- !u!4 &5282326119965419318 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8838093547878555863, guid: 22cd8e646b4333f43bf8b4ba8e24f8ac, type: 3}

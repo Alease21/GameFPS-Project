@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaycastBehavior : IWeaponBehavior
+public class HitScanBehavior : IWeaponBehavior
 {
     // raycast forward from shootpoint position, display object hit
     public void FireGun(Transform shootPoint)

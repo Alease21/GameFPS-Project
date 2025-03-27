@@ -6,21 +6,10 @@ public abstract class WeaponBase
 {
     public Transform shootPoint;
     public IWeaponBehavior weaponBehavior;
+    public int ammoCount;
+    public int ammoMax;
 
-    public void SetWeaponBehavior(IWeaponBehavior newBehavior)
-    {
-        weaponBehavior = newBehavior;
-    }
-
-    public void Use()
-    {
-        if (weaponBehavior != null)
-        {
-            weaponBehavior.FireGun(shootPoint);
-        }
-        else
-        {
-            Debug.Log("No weapon behavior set");
-        }
-    }
+    public abstract void AmmoGet(int amount);
+    public abstract void SetWeaponBehavior(IWeaponBehavior newBehavior);
+    public abstract void Use();
 }

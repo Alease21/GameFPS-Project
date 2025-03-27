@@ -1,110 +1,262 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class WeaponController : MonoBehaviour
 {
-    public WeaponBase myWeapon;
-    public Transform shootPoint;
-    public GameObject projectilePreFab;
+    public PlayerStatsScript playerStatsScript;
 
-    public Dictionary<WeaponSO.WeaponType, GameObject> weaponPrefabs = new Dictionary<WeaponSO.WeaponType, GameObject>();
-    public GameObject initialWeapon;
-    public GameObject currWeapon;
-    public Transform gunSetPoint;
+    [SerializeField] private WeaponBase myWeapon;
+    private WeaponBase weapon1,
+                       weapon2,
+                       weapon3;
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private Transform gunSetPoint;
+    [SerializeField] private GameObject projectilePreFab;
+    [SerializeField] private GameObject firePrefab;
 
-    public bool hasHitScan;
-    public bool hasProjectile;
+    [SerializeField] private GameObject[] weaponPrefabs;
+    [SerializeField] private GameObject currWeapon;
+    //[SerializeField] private WeaponSO.WeaponType currWeaponType;
+
+    private GameObject hitScanWeapon,
+                       projectileWeapon,
+                       continuousWeapon;
+    [SerializeField] private float continuousTickRate;
+    public bool isHoldingFire = false;
+
+    private bool isHitScan,
+                 isProjectile,
+                 isContinuous;
+
+    //set up to never flip false after true, could change for dropping weapons in future.
+    public bool hasHitScan = false,
+                hasProjectile = false,
+                hasContinuous = false;
 
     void Start()
     {
-        myWeapon = new Gun(new RaycastBehavior());
-        myWeapon.shootPoint = shootPoint;
+        //hard coded in hitscan values. not sure how to grab in a more dynamic way.
+        //maybe start with no weapon and choose 1 of 3?
+        WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20);
+        isHitScan = true;
 
-        HaveWeaponChecker(WeaponSO.WeaponType.HitScan, initialWeapon);
-
-        GameObject hitScanWeapon = GameObject.Instantiate(initialWeapon, gunSetPoint.position, gunSetPoint.transform.rotation);
-        hitScanWeapon.transform.parent = transform;
-        currWeapon = hitScanWeapon;
-        myWeapon.SetWeaponBehavior(new RaycastBehavior());
+        myWeapon = weapon1;
     }
+
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isHitScan)
         {
             if (hasHitScan)
             {
-                GeneralWeaponSwap(WeaponSO.WeaponType.HitScan);
-                Debug.Log("HitScan Weapon Loaded");
+                myWeapon = weapon1;
+                WeaponPrefabSwap(WeaponSO.WeaponType.HitScan);
+
+                Debug.Log("Swapped to hitscan weapon");
+            }
+            else
+            {
+                Debug.Log("No weapon in 1st slot");
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !isProjectile)
         {
             if (hasProjectile)
             {
-                GeneralWeaponSwap(WeaponSO.WeaponType.Projectile);
-                Debug.Log("Projectile Weapon Loaded");
+                myWeapon = weapon2;
+                WeaponPrefabSwap(WeaponSO.WeaponType.Projectile);
+
+                Debug.Log("Swapped to projectile weapon");
+            }
+            else
+            {
+                Debug.Log("No weapon in 2nd slot");
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && !isContinuous)
+        {
+            if (hasContinuous)
+            {
+                myWeapon = weapon3;
+                WeaponPrefabSwap(WeaponSO.WeaponType.Continuous);
+
+                Debug.Log("Swapped to continuous weapon");
+            }
+            else
+            {
+                Debug.Log("No weapon in 3rd slot");
+            }
+        }
+        if (Input.GetMouseButtonDown(0) && !isContinuous)
         {
             myWeapon.Use();
+            AmmoStatUpdater();
         }
-    }
-    public void GeneralWeaponSwap(WeaponSO.WeaponType weaponType)
-    {
-        currWeapon.SetActive(false);
-
-        switch (weaponType)
+        if (Input.GetMouseButton(0) && isContinuous)
         {
-            case WeaponSO.WeaponType.HitScan:
-                currWeapon = weaponPrefabs[WeaponSO.WeaponType.HitScan];
-                break;
-            case WeaponSO.WeaponType.Projectile:
-                currWeapon = weaponPrefabs[WeaponSO.WeaponType.Projectile];
-                break;
+            if (!isHoldingFire)
+            {
+                isHoldingFire = true;
+            }
         }
-        currWeapon.SetActive(true);
+        else if(Input.GetMouseButtonUp(0) && isContinuous)
+        {
+            if (isHoldingFire)
+            {
+                isHoldingFire = false;
+            }
+        }
+    }
+    public IEnumerator ContinuousWeaponFire()
+    {
+        while (true)
+        {
+            if (isHoldingFire)
+            {
+                myWeapon.Use();
+                yield return new WaitForSeconds(continuousTickRate);
+            }
+            yield return new WaitForFixedUpdate();
+            yield return null;
+        }
     }
 
-    public void GeneralSpawnWeapon(WeaponSO.WeaponType weaponType)
+    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount)
     {
-        currWeapon.SetActive(false);
+        if (currWeapon != null)
+        {
+            currWeapon.SetActive(false);
+        }
 
         switch (weaponType)
         {
             case WeaponSO.WeaponType.HitScan:
                 if (!hasHitScan)
+                {
+                    hitScanWeapon = GameObject.Instantiate(weaponPrefabs[0], gunSetPoint.position, gunSetPoint.transform.rotation);
+                    hitScanWeapon.transform.parent = transform;
+                    currWeapon = hitScanWeapon;
+
+                    weapon1 = new HitScanGun(initialAmmoMax, initialAmmoCount);
+                    weapon1.shootPoint = shootPoint;
+                    myWeapon = weapon1;
+
                     hasHitScan = true;
 
-                Debug.Log("HitScan Weapon picked up");
-
-                GameObject hitScanWeapon = GameObject.Instantiate(weaponPrefabs[WeaponSO.WeaponType.HitScan], gunSetPoint.position, gunSetPoint.transform.rotation);
-                hitScanWeapon.transform.parent = transform;
-                currWeapon = hitScanWeapon;
-                myWeapon.SetWeaponBehavior(new RaycastBehavior());
+                    Debug.Log("Hitscan weapon instantiated");
+                }
                 break;
 
             case WeaponSO.WeaponType.Projectile:
-                if (!hasProjectile) 
+                if (!hasProjectile)
+                {
+                    projectileWeapon = GameObject.Instantiate(weaponPrefabs[1], gunSetPoint.position, gunSetPoint.transform.rotation);
+                    projectileWeapon.transform.parent = transform;
+                    currWeapon = projectileWeapon;
+
+                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount);
+                    weapon2.shootPoint = shootPoint;
+                    myWeapon = weapon2;
+
                     hasProjectile = true;
 
-                Debug.Log("Projectile Weapon picked up");
+                    Debug.Log("Projectile weapon instantiated");
+                }
+                break;
+            case WeaponSO.WeaponType.Continuous:
+                if (!hasContinuous)
+                {
+                    continuousWeapon = GameObject.Instantiate(weaponPrefabs[2], gunSetPoint.position, gunSetPoint.transform.rotation);
+                    continuousWeapon.transform.parent = transform;
+                    currWeapon = continuousWeapon;
+                    StartCoroutine(ContinuousWeaponFire());
 
-                GameObject projectileWeapon = GameObject.Instantiate(weaponPrefabs[WeaponSO.WeaponType.Projectile], gunSetPoint.position, gunSetPoint.transform.rotation);
-                projectileWeapon.transform.parent = transform;
+                    weapon3 = new ContinuousGun(firePrefab, initialAmmoMax, initialAmmoCount);
+                    weapon3.shootPoint = shootPoint;
+                    myWeapon = weapon3;
+
+                    hasContinuous = true;
+
+                    Debug.Log("Continuous weapon instantiated");
+                }
+                break;
+        }
+
+        BoolStuff(weaponType);
+        AmmoStatUpdater();
+    }
+
+    public void WeaponPrefabSwap(WeaponSO.WeaponType newWeaponType)
+    {
+        currWeapon.SetActive(false);
+        BoolStuff(newWeaponType);
+
+
+        switch (newWeaponType)
+        {
+            case WeaponSO.WeaponType.HitScan:
+                currWeapon = hitScanWeapon;
+                myWeapon = weapon1;
+                StopCoroutine(ContinuousWeaponFire());
+                //currWeaponType = WeaponSO.WeaponType.HitScan;
+                break;
+            case WeaponSO.WeaponType.Projectile:
                 currWeapon = projectileWeapon;
-                myWeapon.SetWeaponBehavior(new ProjectileBehavior { projectilePrefab = projectilePreFab });
+                myWeapon = weapon2;
+                StopCoroutine(ContinuousWeaponFire());
+                //currWeaponType = WeaponSO.WeaponType.Projectile;
+                break;
+            case WeaponSO.WeaponType.Continuous:
+                currWeapon = continuousWeapon;
+                myWeapon = weapon3;
+                StartCoroutine(ContinuousWeaponFire());
+                break;
+        }
+        if (!currWeapon.activeInHierarchy)
+        {
+            currWeapon.SetActive(true);
+        }
+    }
+    public void BoolStuff(WeaponSO.WeaponType weaponType)
+    {
+        switch (weaponType)
+        {
+            case WeaponSO.WeaponType.HitScan:
+                isHitScan = true;
+                isProjectile = false;
+                isContinuous = false;
+                break;
+            case WeaponSO.WeaponType.Projectile:
+                isHitScan = false;
+                isProjectile = true;
+                isContinuous = false;
+                break;
+            case WeaponSO.WeaponType.Continuous:
+                isHitScan = false;
+                isProjectile = false;
+                isContinuous = true;
                 break;
         }
     }
-    public void HaveWeaponChecker(WeaponSO.WeaponType weaponType, GameObject prefab)
+
+    public void AmmoStatUpdater()
     {
-        if (!weaponPrefabs.ContainsKey(weaponType))
+        if (weapon1 != null)
         {
-            weaponPrefabs.Add(weaponType, prefab);
-        }   
+            playerStatsScript.hitScanWeaponAmmo = weapon1.ammoCount;
+
+        }
+        if (weapon2 != null)
+        {
+            playerStatsScript.projectileWeaponAmmo = weapon2.ammoCount;
+        }
+        if (weapon3 != null)
+        {
+            playerStatsScript.continuousWeaponAmmo = weapon3.ammoCount;
+        }
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ce912048a57c934285f17a51e9143f5, type: 3}
-  m_Name: ProjectileWeapon
+  m_Name: ContinuousWeapon
   m_EditorClassIdentifier: 
-  weaponName: Projectile Weapon 1
-  weaponType: 1
-  ammoMax: 12
-  ammoCount: 12
+  weaponName: ContinuousWeapon1
+  weaponType: 2
+  ammoMax: 100
+  ammoCount: 100
