@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ContinuousGun : WeaponBase
 {
+    //Constructor instantiates new ContinuousBehvaior then initializes ammoMax and ammoCount based on params
     public ContinuousGun(GameObject firePrefab, int initialAmmoMax, int initialAmmoCount)
     {
         weaponBehavior = new ContinuousBehavior { firePrefab = firePrefab };
@@ -11,6 +12,8 @@ public class ContinuousGun : WeaponBase
         ammoCount = initialAmmoCount;
     }
 
+    //Checks ammo count against ammo max and decides if ammo should be added
+    //or to display debug message
     public override void AmmoGet(int amount)
     {
         if (ammoCount < ammoMax)
@@ -30,11 +33,15 @@ public class ContinuousGun : WeaponBase
         }
     }
 
+    //Currently unused method to swap weapon's behavior
+    /*
     public override void SetWeaponBehavior(IWeaponBehavior newBehavior)
     {
         this.weaponBehavior = newBehavior;
     }
+    */
 
+    //If weapon has ammo, call FireGun() from weaponBehvaior, else display debug message
     public override void Use()
     {
         if (weaponBehavior != null)

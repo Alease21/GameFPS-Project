@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface iRechargableItem
+public interface iRechargeableItem
 {
     public void RechargeItem(float rechargeTime);
 }

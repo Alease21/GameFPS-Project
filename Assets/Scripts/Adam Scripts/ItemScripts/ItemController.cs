@@ -4,13 +4,5 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    //Not Implemented
 }

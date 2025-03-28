@@ -11,6 +11,8 @@ public class ItemPackScript : MonoBehaviour
 
     private void Start()
     {
+        //Instantiate new itemBase based of the itempacktype of the attached itemPackSO.
+        //In case of HealhPack or ShieldPack ItemPackTypes, start ItemRechargeCoro().
         switch (itemPackSO.itemPackType)
         {
             case ItemPackSO.ItemPackType.HealthPack:
@@ -29,6 +31,9 @@ public class ItemPackScript : MonoBehaviour
         }
     }
 
+    //Coroutine to wait until instantiated item bool isRecharging is true, then
+    //wait rechargeTime(from attached itemSO) seconds before calling RechargeLink
+    //from item and restarting the coroutine
     public IEnumerator ItemRechargeCoro()
     {
         yield return new WaitUntil(() => item.isRecharging);

@@ -12,46 +12,51 @@ public class ItemPickupScript : MonoBehaviour
         if (other.tag == "ItemPickup")
         {
             ItemPackScript itemPackPickUp = other.transform.GetComponent<ItemPackScript>();
-
+            
             switch (itemPackPickUp.itemPackSO.itemPackType)
             {
+                //If item is of ItemPackType HealthPack or ShieldPack: check if item is currently recharging, check if player can be healed/shielded.
+                //if true then consume item and call OnPackConsume().
                 case ItemPackSO.ItemPackType.HealthPack:
-                    if (playerStatsScript.Health != playerStatsScript.MaxHealth)
+                    if (!itemPackPickUp.item.isRecharging)
                     {
-                        if (!itemPackPickUp.item.isRecharging)
+                        if (playerStatsScript.GetHealed(itemPackPickUp.itemPackSO.packAmount))
                         {
-                            if (playerStatsScript.GetHealed(itemPackPickUp.itemPackSO.packAmount))
-                            {
 
-                                itemPackPickUp.item.OnPackConsume(other.gameObject);
-                                Debug.Log("Health Pack used");
-                            }
+                            itemPackPickUp.item.OnPackConsume(other.gameObject);
+                            Debug.Log("Health Pack used");
                         }
                     }
                     break;
+
                 case ItemPackSO.ItemPackType.ShieldPack:
-                    if (playerStatsScript.Shield != playerStatsScript.MaxShield)
+                    if (!itemPackPickUp.item.isRecharging)
                     {
-                        if (!itemPackPickUp.item.isRecharging)
+                        if (playerStatsScript.GetShielded(itemPackPickUp.itemPackSO.packAmount))
                         {
-                            if (playerStatsScript.GetShielded(itemPackPickUp.itemPackSO.packAmount))
-                            {
-                                itemPackPickUp.item.OnPackConsume(other.gameObject);
-                                Debug.Log("Shield Pack used");
-                            }
+                            itemPackPickUp.item.OnPackConsume(other.gameObject);
+                            Debug.Log("Shield Pack used");
                         }
                     }
                     break;
-                case ItemPackSO.ItemPackType.AmmoPack:
-                    //just for testing so ammo pack affects all guns player has
-                    weaponController.weapon1?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                    weaponController.weapon2?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                    weaponController.weapon3?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                    //
 
-                    itemPackPickUp.item.OnPackConsume(other.gameObject);
+                //If item is of ItemPackType ammoPack: check if each weapon (if player currently has) ammoCount < ammoMax.
+                //if true, call onPackConsume(), then call AmmoGet() for each weapon and update ammo stats
+                case ItemPackSO.ItemPackType.AmmoPack:
+                    if (weaponController.weapon1?.ammoCount < weaponController.weapon1?.ammoMax ||
+                        weaponController.weapon2?.ammoCount < weaponController.weapon2?.ammoMax ||
+                        weaponController.weapon3?.ammoCount < weaponController.weapon3?.ammoMax)
+                    {
+                        //just for testing so ammo pack affects all guns player currently has
+                        weaponController.weapon1?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        weaponController.weapon2?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        weaponController.weapon3?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        //
+
+                        itemPackPickUp.item.OnPackConsume(other.gameObject);
                         weaponController.AmmoStatUpdater();
                         Debug.Log("Ammo Pack used");
+                    }
                     break;
             }
         }
@@ -59,6 +64,8 @@ public class ItemPickupScript : MonoBehaviour
         {
             WeaponSO weaponPickUpSO = other.transform.GetComponent<WeaponScript>().weaponSO;
 
+            //If weapon pickup is of certain Weapontype (cases), check if player has this weapon or not. If not, call weaponPrefabSpawn() to instantiate the weapon and
+            //destroy item on successful pickup
             switch (weaponPickUpSO.weaponType)
             {
                 case WeaponSO.WeaponType.HitScan:

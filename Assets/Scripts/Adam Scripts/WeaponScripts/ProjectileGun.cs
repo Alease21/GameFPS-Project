@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileGun : WeaponBase
 {
+    //Constructor instantiates new ProjectileBehavior then initializes ammoMax and ammoCount based on params
     public ProjectileGun(GameObject projectilePrefab, int initialAmmoMax, int initialAmmoCount)
     {
         weaponBehavior = new ProjectileBehavior { projectilePrefab = projectilePrefab };
@@ -11,6 +12,8 @@ public class ProjectileGun : WeaponBase
         ammoCount = initialAmmoCount;
     }
 
+    //Checks ammo count against ammo max and decides if ammo should be added
+    //or to display debug message
     public override void AmmoGet(int amount)
     {
         if (ammoCount < ammoMax)
@@ -30,11 +33,15 @@ public class ProjectileGun : WeaponBase
         }
     }
 
+    //Currently unused method to swap weapon's behavior
+    /*
     public override void SetWeaponBehavior(IWeaponBehavior newBehavior)
     {
         weaponBehavior = newBehavior;
     }
+    */
 
+    //If weapon has ammo, call FireGun() from weaponBehvaior, else display debug message
     public override void Use()
     {
         if (weaponBehavior != null)

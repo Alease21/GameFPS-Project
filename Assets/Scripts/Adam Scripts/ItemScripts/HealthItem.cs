@@ -4,16 +4,19 @@ using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class HealthItem : ItemBase, iRechargableItem
+public class HealthItem : ItemBase, iRechargeableItem
 {
+    //Basic constructor (can initialize variables if ever needed)
     public HealthItem()
     {
 
     }
 
-    public override void OnPackConsume(GameObject itemGameobject)
+    //Loop through every child of itemGameObject and swap layer to 6 (Invis layer culled by main cam)
+    //then flip isRecharging bool true
+    public override void OnPackConsume(GameObject itemGameObject)
     {
-        packPrefab = itemGameobject;
+        packPrefab = itemGameObject;
        
         for (int i = 0; i < packPrefab.transform.childCount; i++)
         {
@@ -23,11 +26,17 @@ public class HealthItem : ItemBase, iRechargableItem
 
         isRecharging = true;
     }
+
+    //Method to call RechargeItem method
+    //(band-aid fix as I couldn't figure out call RechargeItem() from ItemPickUpScript,
+    //because it is not in the itemBase class, but is instead inherited from iRechargable)
     public override void RechargeLink(float rechargeTime)
     {
         RechargeItem(rechargeTime);
     }
 
+    //Loop through each child of itemGameObject and set layer back to 0 (default),
+    //then flip isRecharging bool false
     public void RechargeItem(float rechargeTime)
     {
         for (int i = 0; i < packPrefab.transform.childCount; i++)

@@ -15,6 +15,6 @@ public class ItemPackSO : ScriptableObject
     public int packAmount;
     public ItemPackType itemPackType;
 
-    // edit inspector to show only on irechargable items?
+    // edit inspector to show only on iRechargableItem items?
     public float rechargeTime;
 }

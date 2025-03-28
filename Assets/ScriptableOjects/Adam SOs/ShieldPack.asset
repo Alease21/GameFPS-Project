@@ -15,4 +15,4 @@ MonoBehaviour:
   itemPackName: ShieldPack
   packAmount: 20
   itemPackType: 1
-  rechargeTime: 10
+  rechargeTime: 5

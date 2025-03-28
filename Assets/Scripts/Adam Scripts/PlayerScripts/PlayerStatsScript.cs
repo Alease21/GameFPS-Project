@@ -9,6 +9,7 @@ public class PlayerStatsScript : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int shield;
     [SerializeField] private int maxShield = 50;
+    
     public int Health => health;
     public int MaxHealth => maxHealth;
     public int Shield => shield;
@@ -18,49 +19,54 @@ public class PlayerStatsScript : MonoBehaviour
                projectileWeaponAmmo,
                continuousWeaponAmmo;
 
-    public bool gotHealed,
-                gotShielded;
     private void Start()
     {
         health = 100;
         shield = 0;
     }
 
+    //Check if player can be healed, if amount to be healed > maxHealth, cap health at maxHealth
+    //return true if player can be healed and increment health by amount, else false
     public bool GetHealed(int amount)
     {
-        if (health > maxHealth || amount > (maxHealth - health))
+        if (health == maxHealth)
+        {
+            return false;
+        }
+        else if (health > maxHealth || amount > (maxHealth - health))
         {
             health = maxHealth;
             return true;
         }
-        else if (health < maxHealth)
+        else
         {
             health += amount;
             return true;
         }
-        else
+    }
+
+    //Check if player can be shielded, if amount to added to shield > maxShield, cap shield at maxShield
+    //return true if player can be shielded and increment shield by amount, else false
+    public bool GetShielded(int amount)
+    {
+        if (shield == MaxShield)
         {
             return false;
         }
-    }
-    public bool GetShielded(int amount)
-    {
-        if (shield > maxShield || amount > (maxShield - shield))
+        else if (shield > maxShield || amount > (maxShield - shield))
         {
             shield = maxShield;
             return true;
         }
-        else if (shield < maxShield)
+        else
         {
             shield += amount;
             return true;
         }
-        else
-        {
-            return false;
-        }
+
     }
 
+    //Decrement health but amount if health > 0, else set health to 0 and display debug message
     public void TakeDamage(int amount)
     {
         if (health > 0 && (health - amount) > 0)
