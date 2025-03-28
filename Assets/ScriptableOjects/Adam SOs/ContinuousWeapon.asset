@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: ContinuousWeapon1
   weaponType: 2
-  ammoMax: 100
-  ammoCount: 100
+  ammoMax: 50
+  ammoCount: 50

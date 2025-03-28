@@ -5,9 +5,9 @@ using UnityEngine;
 public class ContinuousGun : WeaponBase
 {
     //Constructor instantiates new ContinuousBehvaior then initializes ammoMax and ammoCount based on params
-    public ContinuousGun(GameObject firePrefab, int initialAmmoMax, int initialAmmoCount)
+    public ContinuousGun(GameObject fireVisualPrefab, int initialAmmoMax, int initialAmmoCount)
     {
-        weaponBehavior = new ContinuousBehavior { firePrefab = firePrefab };
+        weaponBehavior = new ContinuousBehavior(fireVisualPrefab);
         ammoMax = initialAmmoMax;
         ammoCount = initialAmmoCount;
     }
@@ -49,7 +49,6 @@ public class ContinuousGun : WeaponBase
             if (ammoCount > 0)
             {
                 weaponBehavior.FireGun(shootPoint);
-                ammoCount--;
             }
             else
             {

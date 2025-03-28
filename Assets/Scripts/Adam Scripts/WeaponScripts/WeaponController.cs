@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class WeaponController : MonoBehaviour
 {
@@ -22,7 +19,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GameObject[] weaponPrefabs;
     [SerializeField] private GameObject currWeapon;
     [SerializeField] private GameObject projectilePreFab;
-    [SerializeField] private GameObject firePrefab;//continuous fire visual (not implemented yet)
+    [SerializeField] private GameObject fireVisualPrefab;//continuous fire visual (not implemented yet)
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
     public bool isHoldingFire = false;
@@ -100,10 +97,14 @@ public class WeaponController : MonoBehaviour
             myWeapon.Use();
             AmmoStatUpdater();
         }
-        //On left mouse hold and myWeapon isContinuous, update ammo every frame and flip isHoldingFire true if it is false.
+
+        //On left mouse hold and myWeapon isContinuous, call use() for myWeapon and update
+        //ammo every frame then flip isHoldingFire true if it is false.
         //On left mouse release, update ammo and flip isHoldingFire to false if it is true
         if (Input.GetMouseButton(0) && isContinuous)
         {
+            myWeapon.Use();
+
             AmmoStatUpdater();
             if (!isHoldingFire)
             {
@@ -121,14 +122,14 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    //Coroutine to use myWeapon every continuousTickRate seconds
+    //Coroutine to decrement ammoCount for continuous weapon every continuousTickRate seconds
     public IEnumerator ContinuousWeaponFire()
     {
         while (true)
         {
             if (isHoldingFire)
             {
-                myWeapon.Use();
+                myWeapon.ammoCount--;
                 yield return new WaitForSeconds(continuousTickRate);
             }
             yield return new WaitForFixedUpdate();
@@ -136,8 +137,8 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    //Initial gun object and gameobject instantiation, based on weaponType param. New gun instantiated with params initialAmmoMax and initialAmmoCount
-    //Swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
+    //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax and initialAmmoCount
+    //Immediately swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
     public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount)
     {
         if (currWeapon != null)
@@ -145,7 +146,7 @@ public class WeaponController : MonoBehaviour
             currWeapon.SetActive(false);
         }
 
-        //Based on weaponType, check if player has that weapon (bool), if false then instantiate gameobject and gun object and flip 'has[weapontpe]' bool true
+        //Based on weaponType, check if player has that weapon (bool), if false then instantiate gameobject and gun object and flip appropriate bool true
         switch (weaponType)
         {
             case WeaponSO.WeaponType.HitScan:
@@ -185,9 +186,10 @@ public class WeaponController : MonoBehaviour
                     continuousWeapon = GameObject.Instantiate(weaponPrefabs[2], gunSetPoint.position, gunSetPoint.transform.rotation);
                     continuousWeapon.transform.parent = transform;
                     currWeapon = continuousWeapon;
+
                     StartCoroutine(ContinuousWeaponFire());
 
-                    weapon3 = new ContinuousGun(firePrefab, initialAmmoMax, initialAmmoCount);
+                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount);
                     weapon3.shootPoint = shootPoint;
                     myWeapon = weapon3;
 
@@ -261,7 +263,6 @@ public class WeaponController : MonoBehaviour
         if (weapon1 != null)
         {
             playerStatsScript.hitScanWeaponAmmo = weapon1.ammoCount;
-
         }
         if (weapon2 != null)
         {

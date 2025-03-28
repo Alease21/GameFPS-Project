@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class ContinuousBehavior : IWeaponBehavior
 {
-    public GameObject firePrefab;
+    public GameObject fireVisualPrefab;
+    public float fireSpeed = 10f;
+
+    public ContinuousBehavior(GameObject fireVisualPrefab)
+    {
+        this.fireVisualPrefab = fireVisualPrefab;
+    }
+
     public void FireGun(Transform shootPoint)
     {
-        //Visual currently unimplemented
-        Debug.Log("im firing some fire, trust me");
+        GameObject projectile = GameObject.Instantiate(fireVisualPrefab, shootPoint.position, Quaternion.LookRotation(shootPoint.transform.up));
+        projectile.GetComponent<Rigidbody>().velocity = shootPoint.forward * fireSpeed;
+
+        //Debug.Log("im firing some fire");
     }
 }
