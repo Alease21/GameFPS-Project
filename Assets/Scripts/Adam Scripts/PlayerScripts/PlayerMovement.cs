@@ -78,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
+        // fix falling on slopes causing isJumping to flip true a lot and not allowing jumps
         if (collision.transform.tag == "Ground")
         {
             isJumping = true;

@@ -13,7 +13,7 @@ public class HitScanGun : WeaponBase
 
     public override void AmmoGet(int amount)
     {
-        if (ammoCount <= ammoMax)
+        if (ammoCount < ammoMax)
         {
             if (amount >= (ammoMax - ammoCount))
             {

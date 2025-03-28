@@ -9,7 +9,7 @@ public class WeaponController : MonoBehaviour
     public PlayerStatsScript playerStatsScript;
 
     [SerializeField] private WeaponBase myWeapon;
-    private WeaponBase weapon1,
+    public WeaponBase weapon1,
                        weapon2,
                        weapon3;
     [SerializeField] private Transform shootPoint;
@@ -98,6 +98,7 @@ public class WeaponController : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && isContinuous)
         {
+            AmmoStatUpdater();
             if (!isHoldingFire)
             {
                 isHoldingFire = true;
@@ -105,6 +106,9 @@ public class WeaponController : MonoBehaviour
         }
         else if(Input.GetMouseButtonUp(0) && isContinuous)
         {
+            //maybe delete?
+            AmmoStatUpdater();
+
             if (isHoldingFire)
             {
                 isHoldingFire = false;
