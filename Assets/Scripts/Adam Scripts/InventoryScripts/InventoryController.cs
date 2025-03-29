@@ -25,8 +25,6 @@ public class InventoryController : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI shieldText;
 
-    public KeyDownEvent InventoryOpen;
-
     private void Start()
     {
         if (!weaponController.hasHitScan)
