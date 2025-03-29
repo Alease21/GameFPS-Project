@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class PlayerStatsScript : MonoBehaviour
 {
+    public InventoryController inventoryController;
+
     [SerializeField] private int health;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int shield;
@@ -30,6 +32,16 @@ public class PlayerStatsScript : MonoBehaviour
         health = 100;
         shield = 0;
         UiStatUpdate?.Invoke();
+        StartCoroutine(InventoryKeyPress());
+    }
+
+    public IEnumerator InventoryKeyPress()
+    {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.I));
+        inventoryController.InventoryToggleEvent?.Invoke();
+
+        yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.I));
+        StartCoroutine(InventoryKeyPress());
     }
 
     //Check if player can be healed, if amount to be healed > maxHealth, cap health at maxHealth

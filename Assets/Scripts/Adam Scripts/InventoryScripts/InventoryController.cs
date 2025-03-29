@@ -11,6 +11,9 @@ public class InventoryController : MonoBehaviour
     public PlayerStatsScript playerStatsScript;
     public WeaponController weaponController;
 
+    public GameObject inventoryPanel;
+    public GameObject healthShieldCanvas;
+
     public GameObject hitScanWeaponIcon;
     public GameObject projWeapIcon;
     public GameObject contWeapIcon;
@@ -22,8 +25,12 @@ public class InventoryController : MonoBehaviour
     public TextMeshProUGUI projAmmoCount;
     public TextMeshProUGUI contAmmoCount;
 
+    public TextMeshProUGUI healthTextInv;
+    public TextMeshProUGUI shieldTextInv;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI shieldText;
+
+    public UnityEvent InventoryToggleEvent;
 
     private void Start()
     {
@@ -39,7 +46,11 @@ public class InventoryController : MonoBehaviour
         {
             contAmmoCount.gameObject.SetActive(false);
         }
-
+    }
+    public void InventoryToggle()
+    {
+        inventoryPanel.SetActive(inventoryPanel.activeInHierarchy ? false : true);
+        healthShieldCanvas.SetActive(healthShieldCanvas.activeInHierarchy ? false : true);
     }
 
     public void ItemGetColorChange()
@@ -66,6 +77,8 @@ public class InventoryController : MonoBehaviour
 
     public void HealthAndShieldUpdate()
     {
+        healthTextInv.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
+        shieldTextInv.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
         healthText.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
         shieldText.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
     }
