@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemPickupScript : MonoBehaviour
 {
@@ -22,7 +23,6 @@ public class ItemPickupScript : MonoBehaviour
                     {
                         if (playerStatsScript.GetHealed(itemPackPickUp.itemPackSO.packAmount))
                         {
-
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
                             Debug.Log("Health Pack used");
                         }
@@ -94,5 +94,7 @@ public class ItemPickupScript : MonoBehaviour
                     break;
             }
         }
+        //update ui stuff every collision, where item is consumed or not.
+        playerStatsScript.UiStatUpdate?.Invoke();
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerStatsScript : MonoBehaviour
 {
@@ -17,12 +18,18 @@ public class PlayerStatsScript : MonoBehaviour
 
     public int hitScanWeaponAmmo,
                projectileWeaponAmmo,
-               continuousWeaponAmmo;
+               continuousWeaponAmmo,
+               maxHitscanAmmo,
+               maxProjectileAmmo,
+               maxContinuousAmmo;
+
+    public UnityEvent UiStatUpdate;
 
     private void Start()
     {
         health = 100;
         shield = 0;
+        UiStatUpdate?.Invoke();
     }
 
     //Check if player can be healed, if amount to be healed > maxHealth, cap health at maxHealth
@@ -69,7 +76,16 @@ public class PlayerStatsScript : MonoBehaviour
     //Decrement health but amount if health > 0, else set health to 0 and display debug message
     public void TakeDamage(int amount)
     {
-        if (health > 0 && (health - amount) > 0)
+        if (shield > 0 && amount < shield)
+        {
+            shield-= amount;
+        }
+        else if (shield >0 && amount > shield)
+        {
+            health -= amount - shield;
+            shield = 0;
+        }
+        else if (health > 0 && (health - amount) > 0)
         {
             health -= amount;
         }

@@ -39,6 +39,7 @@ public class WeaponController : MonoBehaviour
         //maybe start with no weapon and choose 1 of 3?
         WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20);
         isHitScan = true;
+        playerStatsScript.UiStatUpdate?.Invoke();
 
         myWeapon = weapon1;
     }
@@ -159,6 +160,7 @@ public class WeaponController : MonoBehaviour
                     weapon1 = new HitScanGun(initialAmmoMax, initialAmmoCount);
                     weapon1.shootPoint = shootPoint;
                     myWeapon = weapon1;
+                    playerStatsScript.maxHitscanAmmo = myWeapon.ammoMax;
 
                     hasHitScan = true;
                     Debug.Log("Hitscan weapon instantiated");
@@ -175,6 +177,7 @@ public class WeaponController : MonoBehaviour
                     weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount);
                     weapon2.shootPoint = shootPoint;
                     myWeapon = weapon2;
+                    playerStatsScript.maxProjectileAmmo = myWeapon.ammoMax;
 
                     hasProjectile = true;
                     Debug.Log("Projectile weapon instantiated");
@@ -192,6 +195,7 @@ public class WeaponController : MonoBehaviour
                     weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount);
                     weapon3.shootPoint = shootPoint;
                     myWeapon = weapon3;
+                    playerStatsScript.maxContinuousAmmo = myWeapon.ammoMax;
 
                     hasContinuous = true;
                     Debug.Log("Continuous weapon instantiated");
@@ -201,6 +205,7 @@ public class WeaponController : MonoBehaviour
 
         EquippedWeaponBool(weaponType);
         AmmoStatUpdater();
+        playerStatsScript.UiStatUpdate?.Invoke();
     }
 
     //Swap between weapons that the player currently has, start/stop ContinuousWeaponFire
@@ -272,5 +277,6 @@ public class WeaponController : MonoBehaviour
         {
             playerStatsScript.continuousWeaponAmmo = weapon3.ammoCount;
         }
+        playerStatsScript.UiStatUpdate?.Invoke();
     }
 }
