@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IRangeEnemy
 {
-    public void TestMethodRange();
+    public void RangeAttack();
 }

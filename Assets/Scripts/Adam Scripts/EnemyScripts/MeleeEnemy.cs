@@ -4,25 +4,17 @@ using UnityEngine;
 
 public class MeleeEnemy : BaseEnemy, IMeleeEnemy
 {
-    public MeleeEnemy(EnemySO enemySO)
+    public MeleeEnemy()
     {
-        enemyName = enemySO.enemyName;
-        enemyHealth = enemySO.enemyHealth;
-        enemySpeed = enemySO.enemySpeed;
-        // theres more vars but not included for testing
+
     }
 
-    public override void Attack()
+    public override int DamageDeal()
     {
         throw new System.NotImplementedException();
     }
 
-    public override void DamageDeal()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void TakeDamage()
+    public override int TakeDamage()
     {
         throw new System.NotImplementedException();
     }

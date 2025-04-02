@@ -17,3 +17,5 @@ MonoBehaviour:
   enemyHealth: 50
   enemyDamage: 10
   enemySpeed: 10
+  enemyFOV: 180
+  enemyRotateSpeed: 0

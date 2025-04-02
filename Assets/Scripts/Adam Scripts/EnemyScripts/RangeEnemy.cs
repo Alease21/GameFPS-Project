@@ -4,29 +4,22 @@ using UnityEngine;
 
 public class RangeEnemy : BaseEnemy, IRangeEnemy
 {
-    public RangeEnemy(EnemySO enemySO)
+    public RangeEnemy()
     {
-        enemyName = enemySO.enemyName;
-        enemyHealth = enemySO.enemyHealth;
-        enemySpeed = enemySO.enemySpeed;
-        // theres more vars but not included for testing
+
     }
-    public override void Attack()
+
+    public override int DamageDeal()
     {
         throw new System.NotImplementedException();
     }
 
-    public override void DamageDeal()
+    public override int TakeDamage()
     {
         throw new System.NotImplementedException();
     }
 
-    public override void TakeDamage()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void TestMethodRange()
+    public void RangeAttack()
     {
         throw new System.NotImplementedException();
     }

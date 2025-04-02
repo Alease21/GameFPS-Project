@@ -11,15 +11,7 @@ public abstract class BaseEnemy
     }
     public EnemyType enemyType;
 
-    public string enemyName;
-    public int enemyHealth;
-    public int enemyDamage;
-
-    public float enemySpeed;
-    public float enemyFOV;
-    public float rotateSpeed;
-
-    public abstract void DamageDeal();
-    public abstract void TakeDamage();
-    public abstract void Attack();
+    public abstract int DamageDeal();
+    public abstract int TakeDamage();
+    //public abstract void Attack();
 }

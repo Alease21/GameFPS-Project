@@ -10,7 +10,6 @@ public class EnemyMovement : MonoBehaviour
     //private Rigidbody rb;
 
     private NavMeshAgent navMeshAgent;
-    public GameObject patrolPoint;
 
     void Start()
     {
@@ -18,8 +17,6 @@ public class EnemyMovement : MonoBehaviour
         //rb = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyScript = GetComponent<EnemyScript>();
-
-        navMeshAgent.SetDestination(patrolPoint.transform.position);
     }
 
     void Update()
