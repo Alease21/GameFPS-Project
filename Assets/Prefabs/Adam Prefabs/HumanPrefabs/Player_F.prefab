@@ -74,7 +74,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 191
+    m_Bits: 447
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -663,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc394bbc214d5284b927dca6c6b8b0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryController: {fileID: 0}
   health: 0
   maxHealth: 100
   shield: 0
@@ -670,6 +671,12 @@ MonoBehaviour:
   hitScanWeaponAmmo: 0
   projectileWeaponAmmo: 0
   continuousWeaponAmmo: 0
+  maxHitscanAmmo: 0
+  maxProjectileAmmo: 0
+  maxContinuousAmmo: 0
+  UiStatUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &616918740352239086
 MonoBehaviour:
   m_ObjectHideFlags: 0

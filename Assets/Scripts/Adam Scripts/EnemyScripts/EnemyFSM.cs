@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class EnemyFSM : MonoBehaviour
         Chase
     }
     public EnemyState enemyState;
+
+    public UnityEvent OnPlayerSpotted;
+    public UnityEvent OnPlayerGone;
 
     private void Start()
     {
