@@ -94,7 +94,7 @@ public class ItemPickupScript : MonoBehaviour
                     break;
             }
         }
-        //update ui stuff every collision, where item is consumed or not.
+        //update ui stuff every collision, whether item is consumed or not.
         playerStatsScript.UiStatUpdate?.Invoke();
     }
 }

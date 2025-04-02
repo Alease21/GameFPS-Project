@@ -19,7 +19,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GameObject[] weaponPrefabs;
     [SerializeField] private GameObject currWeapon;
     [SerializeField] private GameObject projectilePreFab;
-    [SerializeField] private GameObject fireVisualPrefab;//continuous fire visual (not implemented yet)
+    [SerializeField] private GameObject fireVisualPrefab;
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
     public bool isHoldingFire = false;

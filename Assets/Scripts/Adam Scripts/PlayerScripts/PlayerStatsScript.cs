@@ -72,7 +72,7 @@ public class PlayerStatsScript : MonoBehaviour
         {
             return false;
         }
-        else if (shield > maxShield || amount > (maxShield - shield))
+        else if (shield > maxShield || amount >= (maxShield - shield))
         {
             shield = maxShield;
             return true;
@@ -85,14 +85,14 @@ public class PlayerStatsScript : MonoBehaviour
 
     }
 
-    //Decrement health but amount if health > 0, else set health to 0 and display debug message
+    //Decrement health by amount if health > 0, else set health to 0 and display debug message
     public void TakeDamage(int amount)
     {
         if (shield > 0 && amount < shield)
         {
             shield-= amount;
         }
-        else if (shield >0 && amount > shield)
+        else if (shield > 0 && amount >= shield)
         {
             health -= amount - shield;
             shield = 0;

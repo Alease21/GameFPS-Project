@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
         _animator.SetFloat("Horizontal", horizontal);
         _animator.SetFloat("Vertical", vertical);
-        
+
         // Jump input, no double jump
         if (Input.GetKeyDown("space") && !isJumping)
         {

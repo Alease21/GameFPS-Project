@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5137538073557286157}
   - component: {fileID: 6554836811645641929}
   - component: {fileID: 4664984618546987652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DamageTakeCube
   m_TagString: Enemy
   m_Icon: {fileID: 0}
