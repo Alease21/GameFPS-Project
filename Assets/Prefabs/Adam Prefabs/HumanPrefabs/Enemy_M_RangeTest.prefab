@@ -599,9 +599,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093a235ec8162f9439899faa83ce68fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSeen: 0
+  playerTest: {fileID: 0}
   enemyState: 0
   patrolPoints: []
-  playerSeen: 0
   OnPlayerSpotted:
     m_PersistentCalls:
       m_Calls: []
@@ -621,6 +622,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: b09cf55190b50894dad4bc8b24bcd72f, type: 2}
+  weaponSO: {fileID: 11400000, guid: f9a2db4e2cc1e2b488507393cf13b875, type: 2}
+  enemyName: 
+  enemyHealth: 0
+  enemyDamage: 0
+  enemySpeed: 0
+  enemyFOV: 0
+  enemyRotateSpeed: 0
 --- !u!114 &8450918116731670765
 MonoBehaviour:
   m_ObjectHideFlags: 0

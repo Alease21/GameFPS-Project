@@ -16,7 +16,7 @@ public class WeaponController : MonoBehaviour
     private GameObject hitScanWeapon,
                        projectileWeapon,
                        continuousWeapon;
-    [SerializeField] private GameObject[] weaponPrefabs;
+    [SerializeField] private GameObject[] weaponPrefabs;//change to grab from weaponSO with projectile/fire prefabs?
     [SerializeField] private GameObject currWeapon;
     [SerializeField] private GameObject projectilePreFab;
     [SerializeField] private GameObject fireVisualPrefab;

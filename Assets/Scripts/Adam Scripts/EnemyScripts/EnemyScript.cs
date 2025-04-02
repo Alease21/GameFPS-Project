@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public BaseEnemy enemySelf;
-    public WeaponBase enemyWeapon;
+    private BaseEnemy enemySelf;
+    private WeaponBase enemyWeapon;
     public EnemySO enemySO;
     public WeaponSO weaponSO;
     
@@ -28,7 +28,7 @@ public class EnemyScript : MonoBehaviour
                 enemySelf = new MeleeEnemy();
                 break;
             default:
-                Debug.Log("No enemy type on enemySO (no enemy object made)");
+                Debug.Log("No enemy type on enemySO");
                 break;
         }
         enemyName = enemySO.enemyName;
