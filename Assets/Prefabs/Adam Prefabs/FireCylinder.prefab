@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 6062755984231965868}
   - component: {fileID: 2624003045364117433}
   - component: {fileID: 5617610962813890110}
+  - component: {fileID: 6107715761294803349}
   - component: {fileID: 3667846405711903325}
-  - component: {fileID: 1453494251859425463}
   - component: {fileID: 2307361557393153799}
   m_Layer: 7
   m_Name: FireCylinder
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,6 +86,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6107715761294803349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545932288709607859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c79486fc2cead409a4bdc4fa43e2a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileType: 1
+  projectileDamage: 0
 --- !u!136 &3667846405711903325
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -109,20 +123,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &1453494251859425463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2545932288709607859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f69739daaa37484084e90c0fbf7254d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialPos: {x: 0, y: 0, z: 0}
-  fireDistance: 2.255
 --- !u!54 &2307361557393153799
 Rigidbody:
   m_ObjectHideFlags: 0

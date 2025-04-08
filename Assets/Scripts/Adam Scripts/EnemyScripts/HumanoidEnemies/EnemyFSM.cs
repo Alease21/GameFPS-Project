@@ -31,8 +31,8 @@ public class EnemyFSM : MonoBehaviour
     private bool isChasing;
     private int patrolIndex = 0; //find better solution
 
-    public UnityEvent OnPlayerSpotted;
-    public UnityEvent OnPlayerGone;
+    //public UnityEvent OnPlayerSpotted;
+    //public UnityEvent OnPlayerGone;
 
     private void Start()
     {

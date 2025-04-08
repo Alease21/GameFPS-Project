@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841a3874ca06fda438f83425312ea71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsScript: {fileID: 1804407342877423398}
+  playerStatsScript: {fileID: 254305765184342598}
   shootPoint: {fileID: 977100561814126460}
   gunSetPoint: {fileID: 8737554698319249407}
   weaponPrefabs:
@@ -616,10 +616,10 @@ PrefabInstance:
       addedObject: {fileID: 6385554981243043461}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1804407342877423398}
+      addedObject: {fileID: 254305765184342598}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 616918740352239086}
+      addedObject: {fileID: 2761110040587487347}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 347482698421003466}
@@ -651,7 +651,7 @@ MonoBehaviour:
   camSensitivity: 400
   dashCoolDown: 2
   isJumping: 0
---- !u!114 &1804407342877423398
+--- !u!114 &254305765184342598
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -663,7 +663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc394bbc214d5284b927dca6c6b8b0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryController: {fileID: 0}
   health: 0
   maxHealth: 100
   shield: 0
@@ -677,7 +676,7 @@ MonoBehaviour:
   UiStatUpdate:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &616918740352239086
+--- !u!114 &2761110040587487347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -690,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 4850780103023987910}
-  playerStatsScript: {fileID: 1804407342877423398}
+  playerStatsScript: {fileID: 254305765184342598}
 --- !u!54 &347482698421003466
 Rigidbody:
   m_ObjectHideFlags: 0

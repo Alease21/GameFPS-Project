@@ -8,7 +8,8 @@ TagManager:
   - ItemPickup
   - WeaponPickup
   - Enemy
-  - FireVisual
+  - Projectile
+  - EnvironEnemy
   layers:
   - Default
   - TransparentFX

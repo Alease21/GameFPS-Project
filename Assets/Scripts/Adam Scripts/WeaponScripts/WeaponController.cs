@@ -37,7 +37,7 @@ public class WeaponController : MonoBehaviour
     {
         //hard coded in hitscan values. not sure how to grab in a more dynamic way.
         //maybe start with no weapon and choose 1 of 3?
-        WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20);
+        WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
         isHitScan = true;
         playerStatsScript.UiStatUpdate?.Invoke();
 
@@ -140,7 +140,7 @@ public class WeaponController : MonoBehaviour
 
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax and initialAmmoCount
     //Immediately swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
-    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount)
+    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, int damage)
     {
         if (currWeapon != null)
         {
@@ -157,7 +157,7 @@ public class WeaponController : MonoBehaviour
                     hitScanWeapon.transform.parent = transform;
                     currWeapon = hitScanWeapon;
 
-                    weapon1 = new HitScanGun(initialAmmoMax, initialAmmoCount);
+                    weapon1 = new HitScanGun(initialAmmoMax, initialAmmoCount, damage);
                     weapon1.shootPoint = shootPoint;
                     myWeapon = weapon1;
                     playerStatsScript.maxHitscanAmmo = myWeapon.ammoMax;

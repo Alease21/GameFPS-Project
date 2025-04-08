@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyAnimationManager : MonoBehaviour
 {
     private EnemyScript enemyScript;
     private Animator animator;
@@ -24,7 +24,7 @@ public class EnemyMovement : MonoBehaviour
         float horizontal = navMeshAgent.velocity.normalized.x;
         float vertical = navMeshAgent.velocity.normalized.z;
 
-        //figure this out, unsure why - on the horizontal works and not positive
+        //figure this out, unsure why - on the horizontal works and not positive for correct animations
         Vector3 offset =  vertical * transform.forward + -horizontal * transform.right;
 
         animator.SetFloat("Horizontal", offset.x);

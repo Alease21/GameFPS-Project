@@ -15,4 +15,5 @@ public class WeaponSO : ScriptableObject
     public WeaponType weaponType;
     public int ammoMax;
     public int ammoCount;
+    public int damage;
 }

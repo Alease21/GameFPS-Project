@@ -22,7 +22,7 @@ public class EnemyScript : MonoBehaviour
         {
             case BaseEnemy.EnemyType.Range:
                 enemySelf = new RangeEnemy();
-                enemyWeapon = new HitScanGun(weaponSO.ammoMax, weaponSO.ammoCount);
+                enemyWeapon = new HitScanGun(weaponSO.ammoMax, weaponSO.ammoCount, weaponSO.damage);
                 break;
             case BaseEnemy.EnemyType.Melee:
                 enemySelf = new MeleeEnemy();
@@ -37,5 +37,21 @@ public class EnemyScript : MonoBehaviour
         enemySpeed = enemySO.enemySpeed;
         enemyFOV = enemySO.enemyFOV;
         enemyRotateSpeed = enemySO.enemyRotateSpeed;
+    }
+    public void TakeDamage(int damage)
+    {
+        if (enemyHealth > 0 && enemyHealth > damage)
+        {
+            enemyHealth -= damage;
+        }
+        else
+        {
+            enemyHealth = 0;
+            OnEnemyDeath();
+        }
+    }
+    public void OnEnemyDeath()
+    {
+        Destroy(gameObject);
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 public class HitScanGun : WeaponBase
 {
     //Constructor instantiates new HitScanBehavior then initializes ammoMax and ammoCount based on params
-    public HitScanGun(int initialAmmoMax, int initialAmmoCount)
+    public HitScanGun(int initialAmmoMax, int initialAmmoCount, int damage)
     {
-        weaponBehavior = new HitScanBehavior();
+        weaponBehavior = new HitScanBehavior { hitScanDamage = damage};
         ammoMax = initialAmmoMax;
         ammoCount = initialAmmoCount;
     }
