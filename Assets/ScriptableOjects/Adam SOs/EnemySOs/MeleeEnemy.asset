@@ -19,3 +19,4 @@ MonoBehaviour:
   enemySpeed: 10
   enemyFOV: 80
   enemyRotateSpeed: 0
+  enemyViewDistance: 5
