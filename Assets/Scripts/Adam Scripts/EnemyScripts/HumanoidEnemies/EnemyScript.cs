@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
@@ -15,6 +16,7 @@ public class EnemyScript : MonoBehaviour
     public float enemySpeed;
     public float enemyFOV;
     public float enemyRotateSpeed;
+    public float enemyViewDist;
 
     private void Start()
     {
@@ -37,7 +39,9 @@ public class EnemyScript : MonoBehaviour
         enemySpeed = enemySO.enemySpeed;
         enemyFOV = enemySO.enemyFOV;
         enemyRotateSpeed = enemySO.enemyRotateSpeed;
+        enemyViewDist = enemySO.enemyViewDistance;
     }
+
     public void TakeDamage(int damage)
     {
         if (enemyHealth > 0 && enemyHealth > damage)

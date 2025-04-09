@@ -5,13 +5,14 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class EnemyFSM : MonoBehaviour
+
 {
-    [Header("FOV Filler Bool")]
     //filler until fov system set up to see player
-    public bool playerSeen = false;
+    [Header("FOV Filler Bool")]
     public GameObject playerTest;
     ///********************
 
+    public EnemyScript enemyScript;
 
     public enum EnemyState
     {
@@ -26,38 +27,60 @@ public class EnemyFSM : MonoBehaviour
     private GameObject currPoint;
 
     private NavMeshAgent navMeshAgent;
-    private bool isIdle;
-    private bool isPatroling;
-    private bool isChasing;
-    private int patrolIndex = 0; //find better solution
+    public bool isIdle;
+    public bool isPatroling;
+    public bool isChasing;
+    public int patrolIndex = 0; //find better solution
 
+    public GameObject playerTarget;
+    public bool playerSeen = false;
     //public UnityEvent OnPlayerSpotted;
     //public UnityEvent OnPlayerGone;
 
     private void Start()
     {
         enemyState = EnemyState.Idle;
+        enemyScript = GetComponent<EnemyScript>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-
-        //navMeshAgent.SetDestination(patrolPoints[0].transform.position);
-        //currPoint = patrolPoints[0];
     }
+    private void OnDrawGizmos()
+    {
+        EnemySO enemySO = enemyScript.enemySO;
 
+        UnityEditor.Handles.color = Color.red * new Color(1f,1f,1f,0.3f);
+        Vector3 rotatedForward = Quaternion.Euler(0,-enemySO.enemyFOV / 2,0) * transform.forward;
+        UnityEditor.Handles.DrawSolidArc(transform.position, transform.up,rotatedForward , enemySO.enemyFOV, enemySO.enemyViewDistance);
+    }
     private void Update()
     {
+        Vector3 playerTargetDir = playerTarget.transform.position - transform.position;
+        float playerTargetDist = playerTargetDir.magnitude;
+
+        if (playerTargetDist < enemyScript.enemyViewDist && 
+            Vector3.Angle(transform.forward, playerTargetDir.normalized) < enemyScript.enemyFOV / 2)
+        {
+            Debug.Log("test");
+            playerSeen = true;
+            if (isIdle)
+            {
+                isIdle = false;
+            }
+            if (isPatroling)
+            {
+                isPatroling = false;
+            }
+            enemyState = EnemyState.Chase;
+        }
         switch (enemyState)
         {
             case EnemyState.Idle:
                 IdleActions();
-                //Debug.Log("Idle State");
                 break;
             case EnemyState.Patrol:
                 PatrolActions();
-                //Debug.Log("Patrol State");
                 break;
             case EnemyState.Chase:
                 ChaseActions();
-                //Debug.Log("Chase State");
                 break;
         }
     }
@@ -69,14 +92,12 @@ public class EnemyFSM : MonoBehaviour
             isIdle = true;
         }
 
-        //filler until fov system set up to see player
         if (playerSeen)
         {
             enemyState = EnemyState.Chase;
             isIdle = false;
         }
     }
-
     public void PatrolActions()
     {
         //on update check for player in sight? maybe move out of switch statement
@@ -118,18 +139,18 @@ public class EnemyFSM : MonoBehaviour
         }
         else
         {
-            //StartCoroutine(ChaseCoroutine());
             isChasing = true;
         }
 
+        //set dest as snapshot player pos
+        //constanly check for player in sight, if in sight, snapshot post and set dest again
+        //if reach snapshot point and no player in sight, then start patrol at last patrol point
         if (playerSeen)
         {
             Vector3 playerSnapShot = playerTest.transform.position;
             navMeshAgent.SetDestination(playerSnapShot);
+            playerSeen = false;
         }
-        //set dest as snapshot play pos
-        //constanly check for player in sight, if in sight, snapshot post and set dest again
-        //if reach snapshot point and no player in sight, then start patrol at last patrol point
     }
 
     public IEnumerator IdleCoroutine()
@@ -141,27 +162,15 @@ public class EnemyFSM : MonoBehaviour
         }
         isIdle = false;
     }
+
+    /* Unused coroutines *\
     public IEnumerator PatrolCoroutine()
     {
-        navMeshAgent.SetDestination(patrolPoints[patrolIndex].transform.position);
-
-        //yield return new WaitUntil(() => navMeshAgent.remainingDistance < destinationAllowance && isPatroling);
-        if ( !navMeshAgent.hasPath && isPatroling)
-        {
-            enemyState = EnemyState.Idle;
-            patrolIndex++;
-            yield return null;
-        }
+        yield return null;
     }
     public IEnumerator ChaseCoroutine()
     {
-        Vector3 playerSnapShot = playerTest.transform.position;
-        navMeshAgent.SetDestination(playerSnapShot);
-
-        if (!navMeshAgent.hasPath && !playerSeen)
-        {
-            enemyState = EnemyState.Patrol;
-            yield return null;
-        }
+        yield return null;
     }
+    */
 }

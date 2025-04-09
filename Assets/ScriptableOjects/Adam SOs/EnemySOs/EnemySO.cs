@@ -12,4 +12,5 @@ public class EnemySO : ScriptableObject
     public int enemySpeed;
     public float enemyFOV;
     public float enemyRotateSpeed;
+    public float enemyViewDistance;
 }

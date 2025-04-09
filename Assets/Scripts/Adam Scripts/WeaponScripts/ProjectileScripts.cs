@@ -55,6 +55,7 @@ public class ProjectileScripts : MonoBehaviour
                 other.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
                 break;
             case "EnvironEnemy":
+                //if(other.GetComponent<EnvironEnemy>() is IDestructable destructable)
                 other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage); // fix me to be able to hit
                                                                                    // multiple environenemies
                                                                                    // (w/ different scripts)
