@@ -20,6 +20,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GameObject currWeapon;
     [SerializeField] private GameObject projectilePreFab;
     [SerializeField] private GameObject fireVisualPrefab;
+    [SerializeField] private GameObject hitScanShotPrefab;
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
     public bool isHoldingFire = false;
@@ -43,8 +44,7 @@ public class WeaponController : MonoBehaviour
 
         myWeapon = weapon1;
     }
-
-
+    
     void Update()
     {
         //if 1 key pressed and if player has hitscan weapon, swap to hitscan weapon
@@ -157,7 +157,7 @@ public class WeaponController : MonoBehaviour
                     hitScanWeapon.transform.parent = transform;
                     currWeapon = hitScanWeapon;
 
-                    weapon1 = new HitScanGun(initialAmmoMax, initialAmmoCount, damage);
+                    weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage);
                     weapon1.shootPoint = shootPoint;
                     myWeapon = weapon1;
                     playerStatsScript.maxHitscanAmmo = myWeapon.ammoMax;

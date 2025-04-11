@@ -3,43 +3,42 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyWeaponController))]
 public class EnemyScript : MonoBehaviour
 {
-    private BaseEnemy enemySelf;
-    private WeaponBase enemyWeapon;
     public EnemySO enemySO;
     public WeaponSO weaponSO;
+    public EnemyWeaponController e_WepControl;
     
     public string enemyName;
     public int enemyHealth;
     public int enemyDamage;
-    public float enemySpeed;
+    //public float enemySpeed;
     public float enemyFOV;
-    public float enemyRotateSpeed;
     public float enemyViewDist;
 
     private void Start()
     {
+        e_WepControl = GetComponent<EnemyWeaponController>();
+        enemyName = enemySO.enemyName;
+        enemyHealth = enemySO.enemyHealth;
+        enemyDamage = enemySO.enemyDamage;
+        enemyFOV = enemySO.enemyFOV;
+        enemyViewDist = enemySO.enemyViewDistance;
+        //enemySpeed = enemySO.enemySpeed; //adjust navmeshagent speed?
+
         switch (enemySO.enemyType)
         {
             case BaseEnemy.EnemyType.Range:
-                enemySelf = new RangeEnemy();
-                enemyWeapon = new HitScanGun(weaponSO.ammoMax, weaponSO.ammoCount, weaponSO.damage);
+                e_WepControl.WeaponPrefabSpawn(weaponSO.weaponType, weaponSO.ammoMax, weaponSO.ammoCount, enemyDamage);
                 break;
             case BaseEnemy.EnemyType.Melee:
-                enemySelf = new MeleeEnemy();
+                e_WepControl.WeaponPrefabSpawn(weaponSO.weaponType, weaponSO.range);
                 break;
             default:
                 Debug.Log("No enemy type on enemySO");
                 break;
         }
-        enemyName = enemySO.enemyName;
-        enemyHealth = enemySO.enemyHealth;
-        enemyDamage = enemySO.enemyDamage;
-        enemySpeed = enemySO.enemySpeed;
-        enemyFOV = enemySO.enemyFOV;
-        enemyRotateSpeed = enemySO.enemyRotateSpeed;
-        enemyViewDist = enemySO.enemyViewDistance;
     }
 
     public void TakeDamage(int damage)

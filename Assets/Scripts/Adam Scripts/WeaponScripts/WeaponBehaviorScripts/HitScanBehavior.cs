@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class HitScanBehavior : IWeaponBehavior
+public class HitScanBehavior : IGunBehavior
 {
     public int hitScanDamage;
+    public GameObject hitScanShotPrefab;
 
     // raycast forward from shootpoint position, display object hit
     public void FireGun(Transform shootPoint)
@@ -27,5 +29,7 @@ public class HitScanBehavior : IWeaponBehavior
             }
             Debug.Log($"Shot {hit.transform.name}. (raycast)");
         }
+
+        GameObject hitScanShot = GameObject.Instantiate(hitScanShotPrefab, shootPoint);
     }
 }

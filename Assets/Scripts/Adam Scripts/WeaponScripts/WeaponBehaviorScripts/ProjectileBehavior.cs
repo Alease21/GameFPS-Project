@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileBehavior : IWeaponBehavior
+public class ProjectileBehavior : IGunBehavior
 {
     public GameObject projectilePrefab;
     public float projectileSpeed = 20f;

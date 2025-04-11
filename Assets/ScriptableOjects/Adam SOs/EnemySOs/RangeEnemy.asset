@@ -18,5 +18,6 @@ MonoBehaviour:
   enemyDamage: 10
   enemySpeed: 10
   enemyFOV: 65
-  enemyRotateSpeed: 10
   enemyViewDistance: 7.25
+  weaponPrefabs:
+  - {fileID: 3316595089499939627, guid: 60cdbf161eed99f499f3c42b5af91873, type: 3}

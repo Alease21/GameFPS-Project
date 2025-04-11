@@ -7,11 +7,6 @@ using UnityEngine.Events;
 public class EnemyFSM : MonoBehaviour
 
 {
-    //filler until fov system set up to see player
-    [Header("FOV Filler Bool")]
-    public GameObject playerTest;
-    ///********************
-
     public EnemyScript enemyScript;
 
     public enum EnemyState
@@ -30,7 +25,7 @@ public class EnemyFSM : MonoBehaviour
     public bool isIdle;
     public bool isPatroling;
     public bool isChasing;
-    public int patrolIndex = 0; //find better solution
+    public int patrolIndex = 0; //find better solution?
 
     public GameObject playerTarget;
     public bool playerSeen = false;
@@ -39,6 +34,7 @@ public class EnemyFSM : MonoBehaviour
 
     private void Start()
     {
+        isIdle = false;
         enemyState = EnemyState.Idle;
         enemyScript = GetComponent<EnemyScript>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -147,7 +143,7 @@ public class EnemyFSM : MonoBehaviour
         //if reach snapshot point and no player in sight, then start patrol at last patrol point
         if (playerSeen)
         {
-            Vector3 playerSnapShot = playerTest.transform.position;
+            Vector3 playerSnapShot = playerTarget.transform.position;
             navMeshAgent.SetDestination(playerSnapShot);
             playerSeen = false;
         }

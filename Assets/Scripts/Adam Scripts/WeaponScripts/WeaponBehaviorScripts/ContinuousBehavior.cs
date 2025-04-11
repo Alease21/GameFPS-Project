@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContinuousBehavior : IWeaponBehavior
+public class ContinuousBehavior : IGunBehavior
 {
     public GameObject fireVisualPrefab;
     public float fireSpeed = 10f;

@@ -45,6 +45,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
     private void OnTriggerStay(Collider other)
     {
+        
         if (other.tag == "Player" || other.tag == "Enemy")
         {
             if (!inRangeColliders.Contains<GameObject>(other.gameObject))
@@ -52,6 +53,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
                 inRangeColliders.Add(other.gameObject);
             }
         }
+        /*
         if (hasExploded)
         {
             for (int i = 0; i < inRangeColliders.Count; i++)
@@ -67,7 +69,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
                 }
             }
             hasExploded = false;
-        }
+        }*/
     }
     private void OnTriggerExit(Collider other)
     {
@@ -102,6 +104,11 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         OnAffectSurrounding();
 
         StartCoroutine(DestroyCoro());
+
+        if (inRangeColliders.Count == 0)
+        {
+            hasExploded = false;
+        }
     }
 
     // Coroutine expands sphere gameobject to visualize explosion. (probably change me)
@@ -123,8 +130,21 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     }
     public void OnDealDamage()
     {
-        Debug.Log("Barrel exploded!"); //currently damage is dealt in OnTriggerStay,
-                                       //once a bool is flipped for the explosion
+        for (int i = 0; i < inRangeColliders.Count; i++)
+        {
+            switch (inRangeColliders[i].tag)
+            {
+                case "Player":
+                    inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage);
+                    break;
+                case "Enemy":
+                    inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage);
+                    break;
+            }
+        }
+        hasExploded = false;
+
+        Debug.Log($"Barrel exploded!");
     }
     public void OnAffectSurrounding()
     {

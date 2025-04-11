@@ -5,9 +5,9 @@ using UnityEngine;
 public class HitScanGun : WeaponBase
 {
     //Constructor instantiates new HitScanBehavior then initializes ammoMax and ammoCount based on params
-    public HitScanGun(int initialAmmoMax, int initialAmmoCount, int damage)
+    public HitScanGun(GameObject hitScanShotPrefab, int initialAmmoMax, int initialAmmoCount, int damage)
     {
-        weaponBehavior = new HitScanBehavior { hitScanDamage = damage};
+        weaponBehavior = new HitScanBehavior { hitScanDamage = damage, hitScanShotPrefab = hitScanShotPrefab};
         ammoMax = initialAmmoMax;
         ammoCount = initialAmmoCount;
     }
@@ -33,14 +33,6 @@ public class HitScanGun : WeaponBase
         }
     }
 
-    //Currently unused method to swap weapon's behavior
-    /*
-    public override void SetWeaponBehavior(IWeaponBehavior newBehavior)
-    {
-        weaponBehavior = newBehavior;
-    }
-    */
-
     //If weapon has ammo, call FireGun() from weaponBehvaior, else display debug message
     public override void Use()
     {
@@ -61,4 +53,12 @@ public class HitScanGun : WeaponBase
             Debug.Log("No weapon behavior set");
         }
     }
+
+    //Currently unused method to swap weapon's behavior
+    /*
+    public override void SetWeaponBehavior(IWeaponBehavior newBehavior)
+    {
+        weaponBehavior = newBehavior;
+    }
+    */
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class WeaponBase
 {
     public Transform shootPoint;
-    public IWeaponBehavior weaponBehavior;
+    public IGunBehavior weaponBehavior;
     public int ammoCount;
     public int ammoMax;
 

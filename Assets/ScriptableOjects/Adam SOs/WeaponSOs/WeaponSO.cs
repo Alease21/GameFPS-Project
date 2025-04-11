@@ -9,11 +9,14 @@ public class WeaponSO : ScriptableObject
     {
         HitScan,
         Projectile,
-        Continuous
+        Continuous,
+        Melee
     }
+    //editor script to show relevant vars depending on weapon type? (no ammo for melee)
     public string weaponName;
     public WeaponType weaponType;
     public int ammoMax;
     public int ammoCount;
     public int damage;
+    public float range;
 }

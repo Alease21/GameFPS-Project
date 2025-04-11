@@ -6,8 +6,9 @@ public class ProjectileScripts : MonoBehaviour
 {
     public enum ProjectileType
     {
-        Explosive,
-        Fire
+        Projectile,
+        Fire,
+        HitScan
     }
     public ProjectileType projectileType;
     public int projectileDamage;
@@ -20,12 +21,15 @@ public class ProjectileScripts : MonoBehaviour
         //grab from SO??
         switch (projectileType)
         {
-            case ProjectileType.Explosive:
+            case ProjectileType.Projectile:
                 projectileDamage = 20;
                 break;
             case ProjectileType.Fire:
                 projectileDamage = 1;
                 initialPos = transform.position;
+                break;
+            case ProjectileType.HitScan:
+                StartCoroutine(hitScanShotDestroyer());
                 break;
         }
     }
@@ -64,5 +68,19 @@ public class ProjectileScripts : MonoBehaviour
 
         Destroy(gameObject);
         //Debug.Log($"{projectileType} projectile collided with {other.gameObject.name}. {projectileDamage} damage done.)");
+    }
+    public IEnumerator hitScanShotDestroyer()
+    {
+        float fadeDur = 0.5f;
+        Color mat = gameObject.GetComponent<Renderer>().material.color;
+
+        for (float timer = 0f; timer < fadeDur; timer += Time.deltaTime)
+        {
+            Debug.Log("test");
+            float lerpRatio = timer / fadeDur;
+            gameObject.GetComponent<Renderer>().material.color = Color.Lerp(mat,new Color(1f, 1f, 1f, 0f), lerpRatio);
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 }
