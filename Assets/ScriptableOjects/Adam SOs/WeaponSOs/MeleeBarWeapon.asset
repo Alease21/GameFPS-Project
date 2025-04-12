@@ -16,4 +16,7 @@ MonoBehaviour:
   weaponType: 3
   ammoMax: 0
   ammoCount: 0
-  damage: 10
+  damage: 15
+  range: 1.5
+  attackAnimation: {fileID: -203655887218126122, guid: a619a2351ea9f3c4b991ba8cebf8f132, type: 3}
+  hitBoxPrefab: {fileID: 4595469931428631909, guid: 104b9e2bb9d454240873d332987bc0bd, type: 3}

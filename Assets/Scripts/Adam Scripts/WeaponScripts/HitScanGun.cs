@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitScanGun : WeaponBase
+public class HitScanGun : GunBase
 {
     //Constructor instantiates new HitScanBehavior then initializes ammoMax and ammoCount based on params
     public HitScanGun(GameObject hitScanShotPrefab, int initialAmmoMax, int initialAmmoCount, int damage)
     {
-        weaponBehavior = new HitScanBehavior { hitScanDamage = damage, hitScanShotPrefab = hitScanShotPrefab};
+        weaponBehavior = new HitScanBehavior { hitScanShotPrefab = hitScanShotPrefab};
         ammoMax = initialAmmoMax;
         ammoCount = initialAmmoCount;
+        weaponDamage = damage;
     }
 
     //Checks ammo count against ammo max and decides if ammo should be added
@@ -40,7 +41,7 @@ public class HitScanGun : WeaponBase
         {
             if (ammoCount > 0)
             {
-                weaponBehavior.FireGun(shootPoint);
+                weaponBehavior.FireGun(shootPoint, weaponDamage);
                 ammoCount--;
             }
             else

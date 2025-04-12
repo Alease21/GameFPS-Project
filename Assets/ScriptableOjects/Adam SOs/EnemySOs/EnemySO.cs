@@ -5,10 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEnemy", menuName = "NewEnemy/NewBaseEnemy")]
 public class EnemySO : ScriptableObject
 {
-    public BaseEnemy.EnemyType enemyType;
+    public enum EnemyType
+    {
+        Range,
+        Melee
+    }
+    public EnemyType enemyType;
     public string enemyName;
     public int enemyHealth;
-    public int enemyDamage;
+    public float enemyRotateSpeed;
     public int enemySpeed;
     public float enemyFOV;
     public float enemyViewDistance;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseEnemy
-{
+{/*
     public enum EnemyType
     {
         Range,
@@ -14,4 +14,4 @@ public abstract class BaseEnemy
     public abstract int DamageDeal();
     public abstract int TakeDamage();
     //public abstract void Attack();
-}
+*/}

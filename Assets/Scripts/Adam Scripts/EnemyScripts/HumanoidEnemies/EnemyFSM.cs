@@ -8,29 +8,29 @@ public class EnemyFSM : MonoBehaviour
 
 {
     public EnemyScript enemyScript;
+    private NavMeshAgent navMeshAgent;
 
     public enum EnemyState
     {
         Idle,
         Patrol,
-        Chase
+        Chase,
+        Attack
     }
-    [Space(30f)] // add space between fov filler stuff, remove me later
-    public EnemyState enemyState;
+    private EnemyState enemyState;
 
+    public UnityEvent OnEnemyAttack;
     public GameObject[] patrolPoints;
-    private GameObject currPoint;
-
-    private NavMeshAgent navMeshAgent;
-    public bool isIdle;
-    public bool isPatroling;
-    public bool isChasing;
-    public int patrolIndex = 0; //find better solution?
+    private bool isIdle;
+    private bool isPatroling;
+    private bool isChasing;
+    private int patrolIndex = 0; //find better solution?
 
     public GameObject playerTarget;
-    public bool playerSeen = false;
-    //public UnityEvent OnPlayerSpotted;
-    //public UnityEvent OnPlayerGone;
+    private bool playerSeen = false;
+
+    private Vector3 playerTargetDir;
+    private float playerTargetDist;
 
     private void Start()
     {
@@ -39,7 +39,8 @@ public class EnemyFSM : MonoBehaviour
         enemyScript = GetComponent<EnemyScript>();
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
-    private void OnDrawGizmos()
+    //Gizmo to visualize enemy sight range(FOV)
+    private void OnDrawGizmosSelected()
     {
         EnemySO enemySO = enemyScript.enemySO;
 
@@ -47,39 +48,67 @@ public class EnemyFSM : MonoBehaviour
         Vector3 rotatedForward = Quaternion.Euler(0,-enemySO.enemyFOV / 2,0) * transform.forward;
         UnityEditor.Handles.DrawSolidArc(transform.position, transform.up,rotatedForward , enemySO.enemyFOV, enemySO.enemyViewDistance);
     }
+
     private void Update()
     {
-        Vector3 playerTargetDir = playerTarget.transform.position - transform.position;
-        float playerTargetDist = playerTargetDir.magnitude;
+        // continuously calculate player direction and distance with respect to the enemy
+        playerTargetDir = playerTarget.transform.position - transform.position;
+        playerTargetDist = playerTargetDir.magnitude;
+        
+        Vector3 raycastStart = new Vector3(transform.position.x, transform.GetComponent<CapsuleCollider>().height / 2, transform.position.z);
+        RaycastHit hit;
+        Physics.Raycast(raycastStart, playerTargetDir.normalized, out hit);
 
-        if (playerTargetDist < enemyScript.enemyViewDist && 
-            Vector3.Angle(transform.forward, playerTargetDir.normalized) < enemyScript.enemyFOV / 2)
+        // If raycast hits player, and player is within enemy FOV, rotate to face player and swap state to attack
+        if (hit.transform != null)
         {
-            Debug.Log("test");
-            playerSeen = true;
-            if (isIdle)
+            if (hit.transform.tag == "Player")
             {
-                isIdle = false;
+                if (playerTargetDist < enemyScript.enemyViewDist &&
+                    Vector3.Angle(transform.forward, playerTargetDir.normalized) < enemyScript.enemyFOV / 2)
+                {
+                    playerSeen = true;
+                    var rotation = Quaternion.LookRotation(playerTargetDir);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
+
+                    if (enemyState != EnemyState.Attack)
+                    {
+
+                        enemyState = EnemyState.Chase;
+                    }
+                    if (isIdle)
+                    {
+                        isIdle = false;
+                    }
+                    if (isPatroling)
+                    {
+                        isPatroling = false;
+                    }
+                }
             }
-            if (isPatroling)
+            //Depending on current state, perform relevant actions
+            switch (enemyState)
             {
-                isPatroling = false;
+                case EnemyState.Idle:
+                    IdleActions();
+                    break;
+                case EnemyState.Patrol:
+                    PatrolActions();
+                    break;
+                case EnemyState.Chase:
+                    ChaseActions();
+                    break;
+                case EnemyState.Attack:
+                    AttackActions();
+                    break;
             }
-            enemyState = EnemyState.Chase;
+
         }
-        switch (enemyState)
-        {
-            case EnemyState.Idle:
-                IdleActions();
-                break;
-            case EnemyState.Patrol:
-                PatrolActions();
-                break;
-            case EnemyState.Chase:
-                ChaseActions();
-                break;
-        }
+
     }
+
+    // Start idle coroutine to wait specific seconds before swapping state to patrol.
+    // If player is seen while idle, swap state to chase
     public void IdleActions()
     {
         if (!isIdle)
@@ -94,10 +123,21 @@ public class EnemyFSM : MonoBehaviour
             isIdle = false;
         }
     }
+    public IEnumerator IdleCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        if (enemyState == EnemyState.Idle)
+        {
+            enemyState = EnemyState.Patrol;
+            isIdle = false;
+        }
+    }
+
+    // Patrol along a set path of points (patrolPoints[]), swapping state to
+    // idle once a point is reached and incrementing the patrolIndex.
+    // If player is seen during patrol, swap state to chase
     public void PatrolActions()
     {
-        //on update check for player in sight? maybe move out of switch statement
-        //otherwise set and keep patrol point destination
         if (isPatroling)
         {
             if (!navMeshAgent.hasPath)
@@ -124,49 +164,63 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
+    // Snapshot player position when seen and set as destination, then swap
+    // state to attack if within weapon range, or swap state to idle if player
+    // isnt found
     public void ChaseActions()
     {
         if (isChasing)
         {
-            if (!navMeshAgent.hasPath && !playerSeen)
+
+            if (playerSeen)
+            {
+                Vector3 playerSnapShot = playerTarget.transform.position;
+
+                if ((playerSnapShot - transform.position).magnitude < enemyScript.weaponSO.range)
+                {
+                    enemyState = EnemyState.Attack;
+                    isChasing = false;
+                }
+                else
+                {
+                    navMeshAgent.SetDestination(playerSnapShot);
+                    playerSeen = false;
+                }
+            }
+            else if (!playerSeen && !navMeshAgent.hasPath)
             {
                 enemyState = EnemyState.Idle;
+                isChasing = false;
             }
         }
         else
         {
             isChasing = true;
         }
+    }
 
-        //set dest as snapshot player pos
-        //constanly check for player in sight, if in sight, snapshot post and set dest again
-        //if reach snapshot point and no player in sight, then start patrol at last patrol point
-        if (playerSeen)
+    // Check Isattacking bool (from animator). If false, flip bool true and
+    // start attack coro
+    public void AttackActions()
+    {
+        if (!enemyScript.animator.GetBool("IsAttacking"))
         {
-            Vector3 playerSnapShot = playerTarget.transform.position;
-            navMeshAgent.SetDestination(playerSnapShot);
-            playerSeen = false;
+            enemyScript.animator.SetBool("IsAttacking", true);
+            StartCoroutine(AttackCoro());
         }
     }
 
-    public IEnumerator IdleCoroutine()
+    // Coroutine to trigger OnEnemyAttack event. Clears navmesh path and then
+    // resets IsAttacking and playerSeen bools to false before swapping state 
+    //to chase
+    public IEnumerator AttackCoro()
     {
-        yield return new WaitForSecondsRealtime(2);
-        if (enemyState == EnemyState.Idle)
-        {
-            enemyState = EnemyState.Patrol;
-        }
-        isIdle = false;
-    }
+        OnEnemyAttack?.Invoke();
 
-    /* Unused coroutines *\
-    public IEnumerator PatrolCoroutine()
-    {
-        yield return null;
+        navMeshAgent.ResetPath();
+        yield return new WaitForSecondsRealtime(enemyScript.weaponSO.attackAnimation.length);
+        enemyScript.animator.SetBool("IsAttacking", false);
+        playerSeen = false;
+        enemyState = EnemyState.Chase;
     }
-    public IEnumerator ChaseCoroutine()
-    {
-        yield return null;
-    }
-    */
 }

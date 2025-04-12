@@ -16,3 +16,7 @@ MonoBehaviour:
   weaponType: 1
   ammoMax: 12
   ammoCount: 12
+  damage: 25
+  range: 0
+  attackAnimation: {fileID: 0}
+  hitBoxPrefab: {fileID: 0}

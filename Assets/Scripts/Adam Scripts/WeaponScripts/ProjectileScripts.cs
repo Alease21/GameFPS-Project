@@ -14,28 +14,27 @@ public class ProjectileScripts : MonoBehaviour
     public int projectileDamage;
 
     private Vector3 initialPos;
-    private float fireDistance = 2.255f;//make this adjustable in inspector? and show only on fire type?
+    private float fireDistance = 2.255f;//make this adjustable in inspector,
+                                        //and show only on fire type?
 
     private void Start()
     {
-        //grab from SO??
         switch (projectileType)
         {
             case ProjectileType.Projectile:
-                projectileDamage = 20;
                 break;
             case ProjectileType.Fire:
-                projectileDamage = 1;
                 initialPos = transform.position;
                 break;
             case ProjectileType.HitScan:
-                StartCoroutine(hitScanShotDestroyer());
+                StartCoroutine(HitScanVisualDestroyer());
                 break;
         }
     }
     private void Update()
     {
-        // maybe move to fire behavior
+        // Destroy fire visual after a certain distance has been travelled
+        // (relocate once projectile system is swapped to object pooling)
         if (projectileType == ProjectileType.Fire)
         {
             Vector3 distanceTravelled = (initialPos - transform.position);
@@ -69,14 +68,15 @@ public class ProjectileScripts : MonoBehaviour
         Destroy(gameObject);
         //Debug.Log($"{projectileType} projectile collided with {other.gameObject.name}. {projectileDamage} damage done.)");
     }
-    public IEnumerator hitScanShotDestroyer()
+
+    // Coroutine fade, and then destroy spawned hitscan visual object
+    public IEnumerator HitScanVisualDestroyer()
     {
         float fadeDur = 0.5f;
         Color mat = gameObject.GetComponent<Renderer>().material.color;
 
         for (float timer = 0f; timer < fadeDur; timer += Time.deltaTime)
         {
-            Debug.Log("test");
             float lerpRatio = timer / fadeDur;
             gameObject.GetComponent<Renderer>().material.color = Color.Lerp(mat,new Color(1f, 1f, 1f, 0f), lerpRatio);
             yield return null;

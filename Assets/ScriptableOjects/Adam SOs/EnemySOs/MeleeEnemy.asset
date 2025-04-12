@@ -16,7 +16,7 @@ MonoBehaviour:
   enemyName: Melee Enemy 1
   enemyHealth: 100
   enemyDamage: 15
-  enemySpeed: 10
+  enemyRotateSpeed: 1
+  enemySpeed: 100
   enemyFOV: 80
-  enemyRotateSpeed: 0
   enemyViewDistance: 5

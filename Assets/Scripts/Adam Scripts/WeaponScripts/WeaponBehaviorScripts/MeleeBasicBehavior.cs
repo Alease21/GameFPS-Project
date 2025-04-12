@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MeleeBasicBehavior : IMeleeBehavior
 {
-    public Animation swingAnimation;
+    public GameObject hitBox;
+    public float weaponRange;
+    public Transform meleeSetPoint;
 
-    //add arc hitbox?
-    //base on animation found?
-    //play animation?
-    //woudl need to send animator/animation to melee object thru method
+    // Instantiate new object to serve as weapon hitbox
     public void SwingWeapon()
     {
-        Debug.Log("Weapon Swanged");
+        GameObject MeleeHitBox = GameObject.Instantiate(hitBox, meleeSetPoint.position, meleeSetPoint.rotation);
+        MeleeHitBox.transform.parent = meleeSetPoint;
     }
 }

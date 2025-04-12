@@ -19,4 +19,6 @@ public class WeaponSO : ScriptableObject
     public int ammoCount;
     public int damage;
     public float range;
+    public AnimationClip attackAnimation;
+    public GameObject hitBoxPrefab;
 }

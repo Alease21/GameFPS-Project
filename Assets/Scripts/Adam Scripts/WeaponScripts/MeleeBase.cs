@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class MeleeBase
 {
-    public float meleeRange;
+    public GameObject hitBox;
     public IMeleeBehavior meleeBehavior;
     public abstract void Use();
 }

@@ -75,6 +75,7 @@ public class PlayerStatsScript : MonoBehaviour
         else if (shield > maxShield || amount >= (maxShield - shield))
         {
             shield = maxShield;
+            UiStatUpdate?.Invoke();
             return true;
         }
         else

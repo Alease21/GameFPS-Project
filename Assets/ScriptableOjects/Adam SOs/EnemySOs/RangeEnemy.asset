@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   enemyName: Range Enemy 1
-  enemyHealth: 50
-  enemyDamage: 10
+  enemyHealth: 75
+  enemyRotateSpeed: 5
   enemySpeed: 10
   enemyFOV: 65
-  enemyViewDistance: 7.25
-  weaponPrefabs:
-  - {fileID: 3316595089499939627, guid: 60cdbf161eed99f499f3c42b5af91873, type: 3}
+  enemyViewDistance: 15

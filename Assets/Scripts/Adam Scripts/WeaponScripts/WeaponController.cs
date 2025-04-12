@@ -5,8 +5,8 @@ public class WeaponController : MonoBehaviour
 {
     public PlayerStatsScript playerStatsScript;
 
-    [SerializeField] private WeaponBase myWeapon;
-    public WeaponBase weapon1,
+    [SerializeField] private GunBase myWeapon;
+    public GunBase weapon1,
                       weapon2,
                       weapon3;
 
@@ -39,6 +39,7 @@ public class WeaponController : MonoBehaviour
         //hard coded in hitscan values. not sure how to grab in a more dynamic way.
         //maybe start with no weapon and choose 1 of 3?
         WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
+        playerStatsScript = GetComponentInParent<PlayerStatsScript>();
         isHitScan = true;
         playerStatsScript.UiStatUpdate?.Invoke();
 
@@ -98,10 +99,11 @@ public class WeaponController : MonoBehaviour
             myWeapon.Use();
             AmmoStatUpdater();
         }
-
-        //On left mouse hold and myWeapon isContinuous, call use() for myWeapon and update
-        //ammo every frame then flip isHoldingFire true if it is false.
-        //On left mouse release, update ammo and flip isHoldingFire to false if it is true
+    }
+    private void FixedUpdate()
+    {
+        //On left mouse hold and equipped weapon is continuous, use weapon and update ammocount.
+        //Flip isHoldingFire true if it is false.
         if (Input.GetMouseButton(0) && isContinuous)
         {
             myWeapon.Use();
@@ -112,7 +114,8 @@ public class WeaponController : MonoBehaviour
                 isHoldingFire = true;
             }
         }
-        else if(Input.GetMouseButtonUp(0) && isContinuous)
+        //On left mouse release, update ammo and flip isHoldingFire to false if it is true
+        else if (Input.GetMouseButtonUp(0) && isContinuous)
         {
             AmmoStatUpdater();//maybe delete?
 
@@ -121,24 +124,23 @@ public class WeaponController : MonoBehaviour
                 isHoldingFire = false;
             }
         }
+
     }
 
     //Coroutine to decrement ammoCount for continuous weapon every continuousTickRate seconds
     public IEnumerator ContinuousWeaponFire()
     {
-        while (true)
+        yield return new WaitUntil(() => isHoldingFire);
+        if (myWeapon.ammoCount > 0)
         {
-            if (isHoldingFire)
-            {
-                myWeapon.ammoCount--;
-                yield return new WaitForSeconds(continuousTickRate);
-            }
-            yield return new WaitForFixedUpdate();
-            yield return null;
+            myWeapon.ammoCount--;
+            yield return new WaitForSeconds(continuousTickRate);
         }
+        yield return new WaitForFixedUpdate();
+        StartCoroutine(ContinuousWeaponFire());
     }
 
-    //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax and initialAmmoCount
+    //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax, initialAmmoCount and damage.
     //Immediately swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
     public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, int damage)
     {
@@ -174,7 +176,7 @@ public class WeaponController : MonoBehaviour
                     projectileWeapon.transform.parent = transform;
                     currWeapon = projectileWeapon;
 
-                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount);
+                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage);
                     weapon2.shootPoint = shootPoint;
                     myWeapon = weapon2;
                     playerStatsScript.maxProjectileAmmo = myWeapon.ammoMax;
@@ -192,7 +194,7 @@ public class WeaponController : MonoBehaviour
 
                     StartCoroutine(ContinuousWeaponFire());
 
-                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount);
+                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage);
                     weapon3.shootPoint = shootPoint;
                     myWeapon = weapon3;
                     playerStatsScript.maxContinuousAmmo = myWeapon.ammoMax;
@@ -220,17 +222,14 @@ public class WeaponController : MonoBehaviour
             case WeaponSO.WeaponType.HitScan:
                 currWeapon = hitScanWeapon;
                 myWeapon = weapon1;
-                StopCoroutine(ContinuousWeaponFire());
                 break;
             case WeaponSO.WeaponType.Projectile:
                 currWeapon = projectileWeapon;
                 myWeapon = weapon2;
-                StopCoroutine(ContinuousWeaponFire());
                 break;
             case WeaponSO.WeaponType.Continuous:
                 currWeapon = continuousWeapon;
                 myWeapon = weapon3;
-                StartCoroutine(ContinuousWeaponFire());
                 break;
         }
         if (!currWeapon.activeInHierarchy)

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeEnemy : BaseEnemy, IRangeEnemy
-{
+public class RangeEnemy : BaseEnemy//, IRangeEnemy
+{/*
     public RangeEnemy()
     {
 
@@ -23,4 +23,4 @@ public class RangeEnemy : BaseEnemy, IRangeEnemy
     {
         throw new System.NotImplementedException();
     }
-}
+*/}
