@@ -7,7 +7,7 @@ using UnityEngine;
 public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, IDealDamageEnviron
 {
     public EnvironmentalEnemySO environEnemySO;
-    [HideInInspector]public SphereCollider explodeSphere;
+    [HideInInspector] public SphereCollider explodeSphere;
 
     [Range(1,10)] public float explodeRange;
 
@@ -42,7 +42,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" || other.tag == "Enemy")
         {

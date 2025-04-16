@@ -13,7 +13,6 @@ public class InventoryController : MonoBehaviour
 
     //Singleton setup
     public static InventoryController instance;
-
     private void Awake()
     {
         if (instance == null)

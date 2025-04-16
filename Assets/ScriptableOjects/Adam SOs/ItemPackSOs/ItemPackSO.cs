@@ -8,6 +8,7 @@ public class ItemPackSO : ScriptableObject
     public enum ItemPackType
     {
         HealthPack,
+        HOTPack,
         ShieldPack,
         AmmoPack
     }

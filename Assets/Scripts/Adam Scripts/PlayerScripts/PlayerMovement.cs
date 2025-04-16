@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody _rb;
     private Animator _animator;
+    private CapsuleCollider _capsuleCollider;
 
     public float playerSpeed;
     public float playerJumpFactor;
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     void Update()
@@ -41,6 +43,20 @@ public class PlayerMovement : MonoBehaviour
 
         _animator.SetFloat("Horizontal", horizontal);
         _animator.SetFloat("Vertical", vertical);
+
+        /*
+        RaycastHit hit;
+        Physics.SphereCast(transform.position, _capsuleCollider.radius, -transform.up, out hit, _capsuleCollider.height / 2);
+
+        if (hit.transform == null)
+        {
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+        }
+        */
 
         // Jump input, no double jump
         if (Input.GetKeyDown("space") && !isJumping)

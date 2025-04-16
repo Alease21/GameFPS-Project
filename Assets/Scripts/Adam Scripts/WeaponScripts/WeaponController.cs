@@ -34,6 +34,7 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
     private bool isHoldingFire = false;
+    private float continusousTimer = 0f;
 
     private bool isHitScan,
                  isProjectile,
@@ -50,87 +51,98 @@ public class WeaponController : MonoBehaviour
 
         //hard coded in hitscan values. not sure how to grab in a more dynamic way.
         //maybe start with no weapon and choose 1 of 3?
-        WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
+        //WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
     }
     
     void Update()
     {
-        //if 1 key pressed and if player has hitscan weapon, swap to hitscan weapon
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isHitScan)
+        if (myGun != null)
         {
-            if (hasHitScan)
+            //if 1 key pressed and if player has hitscan weapon, swap to hitscan weapon
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !isHitScan)
             {
-                myGun = weapon1;
-                WeaponPrefabSwap(WeaponSO.WeaponType.HitScan);
+                if (hasHitScan)
+                {
+                    myGun = weapon1;
+                    WeaponPrefabSwap(WeaponSO.WeaponType.HitScan);
+                }
+                //Debug.Log(hasContinuous ? "Swapped to hitscan weapon." : "No weapon in 1st slot.");
             }
-            //Debug.Log(hasContinuous ? "Swapped to hitscan weapon." : "No weapon in 1st slot.");
-        }
-        //if 2 key pressed and if player has projectile weapon, swap to projectile weapon
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !isProjectile)
-        {
-            if (hasProjectile)
+            //if 2 key pressed and if player has projectile weapon, swap to projectile weapon
+            if (Input.GetKeyDown(KeyCode.Alpha2) && !isProjectile)
             {
-                myGun = weapon2;
-                WeaponPrefabSwap(WeaponSO.WeaponType.Projectile);
+                if (hasProjectile)
+                {
+                    myGun = weapon2;
+                    WeaponPrefabSwap(WeaponSO.WeaponType.Projectile);
+                }
+                //Debug.Log(hasContinuous ? "Swapped to projectile weapon." : "No weapon in 2nd slot.");
             }
-            //Debug.Log(hasContinuous ? "Swapped to projectile weapon." : "No weapon in 2nd slot.");
-        }
-        //if 3 key pressed and if player has continuous weapon, swap to continuous weapon
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !isContinuous)
-        {
-            if (hasContinuous)
+            //if 3 key pressed and if player has continuous weapon, swap to continuous weapon
+            if (Input.GetKeyDown(KeyCode.Alpha3) && !isContinuous)
             {
-                myGun = weapon3;
-                WeaponPrefabSwap(WeaponSO.WeaponType.Continuous);
+                if (hasContinuous)
+                {
+                    myGun = weapon3;
+                    WeaponPrefabSwap(WeaponSO.WeaponType.Continuous);
+                }
+                //Debug.Log(hasContinuous ? "Swapped to continuous weapon." : "No weapon in 3rd slot.");
             }
-            //Debug.Log(hasContinuous ? "Swapped to continuous weapon." : "No weapon in 3rd slot.");
-        }
-        //On left mouse click, use currently equipped weapon and update ammo
-        if (Input.GetMouseButtonDown(0) && !isContinuous)
-        {
-            myGun.Use();
-            AmmoStatUpdater();
-        }
-    }
+            //On left mouse click, use currently equipped weapon and update ammo
+            if (Input.GetMouseButtonDown(0) && !isContinuous)
+            {
+                myGun.Use();
+                AmmoStatUpdater();
+            }
 
-    private void FixedUpdate()
-    {
-        //On left mouse hold and equipped weapon is continuous, use weapon and update ammocount.
-        //Flip isHoldingFire true if it is false.
-        if (Input.GetMouseButton(0) && isContinuous)
-        {
-            myGun.Use();
-
-            AmmoStatUpdater();
-            if (!isHoldingFire)
+            //On left mouse hold and equipped weapon is continuous, use weapon and update ammocount.
+            //Flip isHoldingFire true if it is false.
+            if (Input.GetMouseButton(0) && isContinuous)
             {
-                isHoldingFire = true;
+                //myGun.Use();
+
+                if (!isHoldingFire)
+                {
+                    isHoldingFire = true;
+                    myGun.Use();
+                }
+                else
+                {
+                    continusousTimer += Time.deltaTime;
+                    if (continusousTimer >= continuousTickRate / 5)
+                    {
+                        myGun.Use();
+                        continusousTimer = 0f;
+                    }
+                }
+                AmmoStatUpdater();
+            }
+
+            //On left mouse release, update ammo and flip isHoldingFire to false if it is true
+            if (Input.GetMouseButtonUp(0) && isContinuous)
+            {
+                AmmoStatUpdater();
+
+                if (isHoldingFire)
+                {
+                    isHoldingFire = false;
+                }
             }
         }
-        //On left mouse release, update ammo and flip isHoldingFire to false if it is true
-        else if (Input.GetMouseButtonUp(0) && isContinuous)
-        {
-            AmmoStatUpdater();//maybe delete?
-
-            if (isHoldingFire)
-            {
-                isHoldingFire = false;
-            }
-        }
-
     }
 
     //Coroutine to decrement ammoCount for continuous weapon every continuousTickRate seconds
     public IEnumerator ContinuousWeaponFire()
     {
-        yield return new WaitUntil(() => isHoldingFire);
-        if (myGun.ammoCount > 0)
+        while (myGun == weapon3)
         {
-            myGun.ammoCount--;
-            yield return new WaitForSeconds(continuousTickRate);
+            while (isHoldingFire && myGun.ammoCount > 0)
+            {
+                myGun.ammoCount--;
+                yield return new WaitForSeconds(continuousTickRate);
+            }
+            yield return null;
         }
-        yield return new WaitForFixedUpdate();
-        StartCoroutine(ContinuousWeaponFire());
     }
 
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax, initialAmmoCount and damage.
@@ -155,8 +167,8 @@ public class WeaponController : MonoBehaviour
                     weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
                     myGun = weapon1;
                     playerStatsScript.maxHitscanAmmo = myGun.ammoMax;
-
                     hasHitScan = true;
+
                     Debug.Log("Hitscan weapon instantiated");
                 }
                 break;
@@ -171,8 +183,8 @@ public class WeaponController : MonoBehaviour
                     weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
                     myGun = weapon2;
                     playerStatsScript.maxProjectileAmmo = myGun.ammoMax;
-
                     hasProjectile = true;
+
                     Debug.Log("Projectile weapon instantiated");
                 }
                 break;
@@ -183,13 +195,12 @@ public class WeaponController : MonoBehaviour
                     continuousWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = continuousWeapon;
 
-                    StartCoroutine(ContinuousWeaponFire());
-
                     weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
                     myGun = weapon3;
                     playerStatsScript.maxContinuousAmmo = myGun.ammoMax;
-
+                    StartCoroutine(ContinuousWeaponFire());
                     hasContinuous = true;
+
                     Debug.Log("Continuous weapon instantiated");
                 }
                 break;

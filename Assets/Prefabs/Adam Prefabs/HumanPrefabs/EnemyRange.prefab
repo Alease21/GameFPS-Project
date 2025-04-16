@@ -787,7 +787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093a235ec8162f9439899faa83ce68fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyScript: {fileID: 151220213035323356}
   OnEnemyAttack:
     m_PersistentCalls:
       m_Calls:
@@ -803,9 +802,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 151220213035323356}
-        m_TargetAssemblyTypeName: EnemyScript, Assembly-CSharp
-        m_MethodName: OnAttack
+      - m_Target: {fileID: 8324296726718827719}
+        m_TargetAssemblyTypeName: EnemyAnimationManager, Assembly-CSharp
+        m_MethodName: OnAttackAnimation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -834,8 +833,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: b09cf55190b50894dad4bc8b24bcd72f, type: 2}
   weaponSO: {fileID: 11400000, guid: f9a2db4e2cc1e2b488507393cf13b875, type: 2}
-  e_WepControl: {fileID: 0}
-  animator: {fileID: 0}
   enemyName: Range Enemy
   enemyHealth: 0
   enemyDamage: 0
@@ -868,10 +865,6 @@ MonoBehaviour:
   fireVisualPrefab: {fileID: 2545932288709607859, guid: 72306873477a01c43a59af42e1b58f0a, type: 3}
   hitScanShotPrefab: {fileID: 1995857472206946201, guid: 8c86bc295d8fea34989af1729eff596c, type: 3}
   continuousTickRate: 0
-  isHoldingFire: 0
-  hasHitScan: 0
-  hasProjectile: 0
-  hasContinuous: 0
 --- !u!114 &8324296726718827719
 MonoBehaviour:
   m_ObjectHideFlags: 0

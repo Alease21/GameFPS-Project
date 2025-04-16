@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecc3c5401cc809408faca82ca83dc78, type: 3}
-  m_Name: AmmoPack
+  m_Name: HOT-HealthPack
   m_EditorClassIdentifier: 
-  itemPackName: AmmoPack1
-  packAmount: 20
-  itemPackType: 3
-  rechargeTime: 0
+  itemPackName: HOT Health Pack
+  packAmount: 25
+  itemPackType: 1
+  rechargeTime: 10

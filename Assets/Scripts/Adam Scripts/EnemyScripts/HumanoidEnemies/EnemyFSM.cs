@@ -32,6 +32,8 @@ public class EnemyFSM : MonoBehaviour
     private Vector3 playerTargetDir;
     private float playerTargetDist;
 
+    private Vector3 raycastOffset = new Vector3(0, 1, 0);
+
     private void Start()
     {
         isIdle = false;
@@ -45,10 +47,12 @@ public class EnemyFSM : MonoBehaviour
         // continuously calculate player direction and distance with respect to the enemy
         playerTargetDir = playerTarget.transform.position - transform.position;
         playerTargetDist = playerTargetDir.magnitude;
-        
-        Vector3 raycastStart = new Vector3(transform.position.x, transform.GetComponent<CapsuleCollider>().height / 2, transform.position.z);
+
+        Vector3 raycastStart = transform.position + raycastOffset;
         RaycastHit hit;
         Physics.Raycast(raycastStart, playerTargetDir.normalized, out hit);
+
+        Debug.DrawRay(raycastStart, playerTargetDir.normalized, Color.green, 1);
 
         // If raycast hits player, and player is within enemy FOV, rotate to face player and swap state to attack
         if (hit.transform != null)

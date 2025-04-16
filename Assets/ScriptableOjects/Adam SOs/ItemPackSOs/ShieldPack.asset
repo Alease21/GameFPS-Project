@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPackName: ShieldPack
   packAmount: 20
-  itemPackType: 1
+  itemPackType: 2
   rechargeTime: 5
