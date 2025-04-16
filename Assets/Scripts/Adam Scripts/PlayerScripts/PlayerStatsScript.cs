@@ -6,17 +6,25 @@ using UnityEngine.Events;
 
 public class PlayerStatsScript : MonoBehaviour
 {
-    public InventoryController inventoryController;
+    //Singleton setup
+    public static PlayerStatsScript instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
-    [SerializeField] private int health;
-    [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int shield;
-    [SerializeField] private int maxShield = 50;
+    [SerializeField] private int _health;
+    [SerializeField] private int _shield;
+    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private int _maxShield = 50;
     
-    public int Health => health;
-    public int MaxHealth => maxHealth;
-    public int Shield => shield;
-    public int MaxShield => maxShield;
+    public int Health { get { return _health; } protected set { } }
+    public int MaxHealth { get { return _maxHealth; } protected set { } }
+    public int Shield { get { return _shield; } protected set { } }
+    public int MaxShield { get { return _maxShield; } protected set { } }
 
     public int hitScanWeaponAmmo,
                projectileWeaponAmmo,
@@ -25,87 +33,78 @@ public class PlayerStatsScript : MonoBehaviour
                maxProjectileAmmo,
                maxContinuousAmmo;
 
-    public UnityEvent UiStatUpdate;
+    //public bool startupDone = false;
 
     private void Start()
     {
-        health = 100;
-        shield = 0;
-        UiStatUpdate?.Invoke();
-        StartCoroutine(InventoryKeyPress());
-    }
+        _health = _maxHealth;
+        _shield = 0;
 
-    public IEnumerator InventoryKeyPress()
-    {
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.I));
-        inventoryController.InventoryToggleEvent?.Invoke();
-
-        yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.I));
-        StartCoroutine(InventoryKeyPress());
+        InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 
     //Check if player can be healed, if amount to be healed > maxHealth, cap health at maxHealth
     //return true if player can be healed and increment health by amount, else false
     public bool GetHealed(int amount)
     {
-        if (health == maxHealth)
+        if (_health == _maxHealth)
         {
             return false;
         }
-        else if (health > maxHealth || amount > (maxHealth - health))
+        else if (_health > _maxHealth || amount > (_maxHealth - _health))
         {
-            health = maxHealth;
-            return true;
+            _health = _maxHealth;
         }
         else
         {
-            health += amount;
-            return true;
+            _health += amount;
         }
+        InventoryController.instance.UIUpdateEvent?.Invoke();
+        return true;
+
     }
 
     //Check if player can be shielded, if amount to added to shield > maxShield, cap shield at maxShield
     //return true if player can be shielded and increment shield by amount, else false
     public bool GetShielded(int amount)
     {
-        if (shield == MaxShield)
+        if (_shield == MaxShield)
         {
             return false;
         }
-        else if (shield > maxShield || amount >= (maxShield - shield))
+        else if (_shield > _maxShield || amount >= (_maxShield - _shield))
         {
-            shield = maxShield;
-            UiStatUpdate?.Invoke();
-            return true;
+            _shield = _maxShield;
         }
         else
         {
-            shield += amount;
-            return true;
+            _shield += amount;
         }
-
+        InventoryController.instance.UIUpdateEvent?.Invoke();
+        return true;
     }
 
     //Decrement health by amount if health > 0, else set health to 0 and display debug message
     public void TakeDamage(int amount)
     {
-        if (shield > 0 && amount < shield)
+        if (_shield > 0 && amount < _shield)
         {
-            shield-= amount;
+            _shield-= amount;
         }
-        else if (shield > 0 && amount >= shield)
+        else if (_shield > 0 && amount >= _shield)
         {
-            health -= amount - shield;
-            shield = 0;
+            _health -= amount - _shield;
+            _shield = 0;
         }
-        else if (health > 0 && (health - amount) > 0)
+        else if (_health > 0 && (_health - amount) > 0)
         {
-            health -= amount;
+            _health -= amount;
         }
         else
         {
-            health = 0;
+            _health = 0;
             Debug.Log("health is 0 now :(");
         }
+        InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 }

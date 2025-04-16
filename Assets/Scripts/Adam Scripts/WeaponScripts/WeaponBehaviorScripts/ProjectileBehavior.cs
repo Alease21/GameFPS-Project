@@ -13,6 +13,6 @@ public class ProjectileBehavior : IGunBehavior
         GameObject projectile = GameObject.Instantiate(projectilePrefab, shootPoint.position, Quaternion.LookRotation(shootPoint.transform.up));
         projectile.GetComponent<Rigidbody>().velocity = shootPoint.forward * projectileSpeed;
         projectile.GetComponent<ProjectileScripts>().projectileDamage = damage;
-        Debug.Log("Projectile launched.");
+        //Debug.Log("Projectile launched.");
     }
 }

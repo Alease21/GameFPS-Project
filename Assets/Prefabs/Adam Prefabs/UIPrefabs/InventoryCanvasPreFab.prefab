@@ -239,6 +239,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6029468742945673543}
   - {fileID: 5816481048025593083}
   - {fileID: 4425585961652683024}
   m_Father: {fileID: 0}
@@ -480,6 +481,106 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5172021322517472116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6029468742945673543}
+  - component: {fileID: 4396124650909697283}
+  m_Layer: 0
+  m_Name: InventoryController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6029468742945673543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172021322517472116}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 534.0494, y: 55.834377, z: 6.8260536}
+  m_LocalScale: {x: 1.9814318, y: 1.9814318, z: 1.9814318}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2266832767938813771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4396124650909697283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172021322517472116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65e1b7d42edb1b4fa8e146f7f604aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStatsScript: {fileID: 0}
+  weaponController: {fileID: 0}
+  inventoryPanel: {fileID: 7725719360611487685}
+  healthShieldCanvas: {fileID: 0}
+  hitScanWeaponIcon: {fileID: 2062295338381773687}
+  projWeapIcon: {fileID: 6667859574515235968}
+  contWeapIcon: {fileID: 7936350287459910659}
+  hitScanAmmoIcon: {fileID: 731249336773650007}
+  projAmmoIcon: {fileID: 6898414522669923526}
+  contAmmoIcon: {fileID: 5892034018438165813}
+  hitScanAmmoCount: {fileID: 508438167459330964}
+  projAmmoCount: {fileID: 6270469046574090616}
+  contAmmoCount: {fileID: 6645105025564889894}
+  healthTextInv: {fileID: 0}
+  shieldTextInv: {fileID: 0}
+  healthText: {fileID: 8139618303160711415}
+  shieldText: {fileID: 3103113825003835287}
+  UIUpdateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4396124650909697283}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: HealthAndShieldUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4396124650909697283}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: ItemGetColorChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4396124650909697283}
+        m_TargetAssemblyTypeName: InventoryController, Assembly-CSharp
+        m_MethodName: AmmoTextUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5259226239522795835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,6 +1878,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
+--- !u!1 &6667859574515235968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4882829169781804732, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
+  m_PrefabInstance: {fileID: 2255095835826614844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6667859576472658583 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4882829168095432875, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
@@ -1927,6 +2033,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
+--- !u!1 &7936350287459910659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4882829169781804732, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
+  m_PrefabInstance: {fileID: 3305888192730532543}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7936350287942523412 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4882829168095432875, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
@@ -2607,6 +2718,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
+--- !u!1 &2062295338381773687 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4882829169781804732, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}
+  m_PrefabInstance: {fileID: 6871919006739203531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2062295340203939168 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4882829168095432875, guid: a1439da046fcfc14fbc4c5a8e029a031, type: 3}

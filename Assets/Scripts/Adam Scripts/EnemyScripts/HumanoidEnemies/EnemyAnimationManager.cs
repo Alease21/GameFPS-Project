@@ -7,14 +7,11 @@ public class EnemyAnimationManager : MonoBehaviour
 {
     private EnemyScript enemyScript;
     private Animator animator;
-    //private Rigidbody rb;
-
     private NavMeshAgent navMeshAgent;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        //rb = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyScript = GetComponent<EnemyScript>();
     }
@@ -29,5 +26,27 @@ public class EnemyAnimationManager : MonoBehaviour
 
         animator.SetFloat("Horizontal", offset.x);
         animator.SetFloat("Vertical", offset.z);
+    }
+
+    public void OnAttackAnimation()
+    {
+        animator.SetBool("IsAttacking", true);
+        StartCoroutine(AnimationCoro());
+
+        switch (enemyScript.enemySO.enemyType)
+        {
+            case EnemySO.EnemyType.Range:
+                animator.Play("AttackRanged");
+                break;
+            case EnemySO.EnemyType.Melee:
+                Debug.Log("test melee atack anim");
+                animator.Play("AttackMelee");
+                break;
+        }
+    }
+    public IEnumerator AnimationCoro()
+    {
+        yield return new WaitForSecondsRealtime(enemyScript.weaponSO.attackAnimation.length);
+        animator.SetBool("IsAttacking", false);
     }
 }

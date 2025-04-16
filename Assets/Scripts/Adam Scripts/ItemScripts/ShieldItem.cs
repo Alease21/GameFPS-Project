@@ -28,21 +28,21 @@ public class ShieldItem : ItemBase, iRechargeableItem
     //Method to call RechargeItem method
     //(band-aid fix as I couldn't figure out call RechargeItem() from ItemPickUpScript,
     //because it is not in the itemBase class, but is instead inherited from iRechargable)
-    public override void RechargeLink(float rechargeTime)
+    public override void RechargeLink()
     {
-        RechargeItem(rechargeTime);
+        RechargeItem();
     }
 
     //Loop through each child of itemGameObject and set layer back to 0 (default),
     //then flip isRecharging bool false
-    public void RechargeItem(float rechargeTime)
+    public void RechargeItem()
     {
         for (int i = 0; i < packPrefab.transform.childCount; i++)
         {
             GameObject child = packPrefab.transform.GetChild(i).gameObject;
             child.layer = 0;
         }
-        Debug.Log("Shield item recharged");
+        //Debug.Log("Shield item recharged");
         isRecharging = false;
     }
 }

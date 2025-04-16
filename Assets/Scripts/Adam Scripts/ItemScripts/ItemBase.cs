@@ -13,5 +13,5 @@ public abstract class ItemBase
 
     //using this to trigger the rechargeitem method from iRechargableItem interface.
     //(probably change/fix this?)
-    public abstract void RechargeLink(float rechargeTime);
+    public abstract void RechargeLink();
 }

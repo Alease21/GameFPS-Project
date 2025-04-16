@@ -8,32 +8,48 @@ using UnityEngine.UIElements;
 
 public class InventoryController : MonoBehaviour
 {
-    public PlayerStatsScript playerStatsScript;
-    public WeaponController weaponController;
+    private PlayerStatsScript playerStatsScript;
+    private WeaponController weaponController;
 
-    public GameObject inventoryPanel;
-    public GameObject healthShieldCanvas;
+    //Singleton setup
+    public static InventoryController instance;
 
-    public GameObject hitScanWeaponIcon;
-    public GameObject projWeapIcon;
-    public GameObject contWeapIcon;
-    public GameObject hitScanAmmoIcon;
-    public GameObject projAmmoIcon;
-    public GameObject contAmmoIcon;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
-    public TextMeshProUGUI hitScanAmmoCount;
-    public TextMeshProUGUI projAmmoCount;
-    public TextMeshProUGUI contAmmoCount;
+    [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private GameObject healthShieldCanvas;
 
-    public TextMeshProUGUI healthTextInv;
-    public TextMeshProUGUI shieldTextInv;
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI shieldText;
+    [SerializeField] private GameObject hitScanWeaponIcon,
+                                        projWeapIcon,
+                                        contWeapIcon,
+                                        hitScanAmmoIcon,
+                                        projAmmoIcon,
+                                        contAmmoIcon;
 
-    public UnityEvent InventoryToggleEvent;
+    [SerializeField] private TextMeshProUGUI hitScanAmmoCount,
+                                             projAmmoCount,
+                                             contAmmoCount;
+
+    [SerializeField] private TextMeshProUGUI healthTextInv,
+                            shieldTextInv,
+                            healthText,
+                            shieldText;
+
+    public UnityEvent UIUpdateEvent;
 
     private void Start()
     {
+        playerStatsScript = PlayerStatsScript.instance;
+        weaponController = WeaponController.instance;
+
+        //Initial checks for what weapon is equipped. uncollected weapons' ammo
+        //counts are disabled until weaopn collected
         if (!weaponController.hasHitScan)
         {
             hitScanAmmoCount.gameObject.SetActive(false);
@@ -46,13 +62,29 @@ public class InventoryController : MonoBehaviour
         {
             contAmmoCount.gameObject.SetActive(false);
         }
+
+        StartCoroutine(InventoryKeyPress());
     }
+
+    //Coroutine to avoid using update for inventory toggle
+    public IEnumerator InventoryKeyPress()
+    {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.I));
+        UIUpdateEvent?.Invoke();
+        InventoryToggle();
+        yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.I));
+        StartCoroutine(InventoryKeyPress());
+    }
+
+    //Activate inventory panel and deactivate other health/shield ui
     public void InventoryToggle()
     {
         inventoryPanel.SetActive(inventoryPanel.activeInHierarchy ? false : true);
         healthShieldCanvas.SetActive(healthShieldCanvas.activeInHierarchy ? false : true);
     }
 
+    //Once weapon is collected change icons' color to white and set ammocount of
+    //that weapon active
     public void ItemGetColorChange()
     {
         if (weaponController.hasHitScan)
@@ -75,6 +107,7 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    //UI update of Health and Shields
     public void HealthAndShieldUpdate()
     {
         healthTextInv.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
@@ -83,6 +116,7 @@ public class InventoryController : MonoBehaviour
         shieldText.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
     }
 
+    //UI update of ammo counts
     public void AmmoTextUpdate()
     {
         hitScanAmmoCount.text = $"{playerStatsScript.hitScanWeaponAmmo} / {playerStatsScript.maxHitscanAmmo}";

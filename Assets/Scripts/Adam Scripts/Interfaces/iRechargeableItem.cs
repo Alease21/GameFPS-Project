@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface iRechargeableItem
 {
-    public void RechargeItem(float rechargeTime);
+    public void RechargeItem();
 }

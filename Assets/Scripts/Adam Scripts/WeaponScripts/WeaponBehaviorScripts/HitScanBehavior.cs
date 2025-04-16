@@ -18,7 +18,7 @@ public class HitScanBehavior : IGunBehavior
             {
                 case "Player":
                     hit.transform.GetComponent<PlayerStatsScript>().TakeDamage(damage);
-                    hit.transform.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
+                    //hit.transform.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
                     break;
                 case "Enemy":
                     hit.transform.GetComponent<EnemyScript>().TakeDamage(damage);
@@ -27,7 +27,7 @@ public class HitScanBehavior : IGunBehavior
                     hit.transform.GetComponent<BarrelScript>().OnTakeDamage(damage);
                     break;
             }
-            Debug.Log($"Shot {hit.transform.name}. (raycast)");
+            //Debug.Log($"Shot {hit.transform.name}. (raycast)");
         }
 
         // rough visual for the hitscan attack (fades away after short time)

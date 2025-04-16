@@ -5,10 +5,11 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class EnemyFSM : MonoBehaviour
-
 {
-    public EnemyScript enemyScript;
+    private EnemyScript enemyScript;
     private NavMeshAgent navMeshAgent;
+
+    public UnityEvent OnEnemyAttack;
 
     public enum EnemyState
     {
@@ -19,11 +20,10 @@ public class EnemyFSM : MonoBehaviour
     }
     private EnemyState enemyState;
 
-    public UnityEvent OnEnemyAttack;
     public GameObject[] patrolPoints;
     private bool isIdle;
     private bool isPatroling;
-    private bool isChasing;
+    private bool isAttacking;
     private int patrolIndex = 0; //find better solution?
 
     public GameObject playerTarget;
@@ -38,15 +38,6 @@ public class EnemyFSM : MonoBehaviour
         enemyState = EnemyState.Idle;
         enemyScript = GetComponent<EnemyScript>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-    }
-    //Gizmo to visualize enemy sight range(FOV)
-    private void OnDrawGizmosSelected()
-    {
-        EnemySO enemySO = enemyScript.enemySO;
-
-        UnityEditor.Handles.color = Color.red * new Color(1f,1f,1f,0.3f);
-        Vector3 rotatedForward = Quaternion.Euler(0,-enemySO.enemyFOV / 2,0) * transform.forward;
-        UnityEditor.Handles.DrawSolidArc(transform.position, transform.up,rotatedForward , enemySO.enemyFOV, enemySO.enemyViewDistance);
     }
 
     private void Update()
@@ -73,7 +64,6 @@ public class EnemyFSM : MonoBehaviour
 
                     if (enemyState != EnemyState.Attack)
                     {
-
                         enemyState = EnemyState.Chase;
                     }
                     if (isIdle)
@@ -86,25 +76,24 @@ public class EnemyFSM : MonoBehaviour
                     }
                 }
             }
-            //Depending on current state, perform relevant actions
-            switch (enemyState)
-            {
-                case EnemyState.Idle:
-                    IdleActions();
-                    break;
-                case EnemyState.Patrol:
-                    PatrolActions();
-                    break;
-                case EnemyState.Chase:
-                    ChaseActions();
-                    break;
-                case EnemyState.Attack:
-                    AttackActions();
-                    break;
-            }
-
         }
 
+        //Depending on current state, perform relevant actions
+        switch (enemyState)
+        {
+            case EnemyState.Idle:
+                IdleActions();
+                break;
+            case EnemyState.Patrol:
+                PatrolActions();
+                break;
+            case EnemyState.Chase:
+                ChaseActions();
+                break;
+            case EnemyState.Attack:
+                AttackActions();
+                break;
+        }
     }
 
     // Start idle coroutine to wait specific seconds before swapping state to patrol.
@@ -169,57 +158,45 @@ public class EnemyFSM : MonoBehaviour
     // isnt found
     public void ChaseActions()
     {
-        if (isChasing)
+        if (playerSeen)
         {
+            Vector3 playerSnapShot = playerTarget.transform.position;
 
-            if (playerSeen)
+            if ((playerSnapShot - transform.position).magnitude < enemyScript.weaponSO.range)
             {
-                Vector3 playerSnapShot = playerTarget.transform.position;
-
-                if ((playerSnapShot - transform.position).magnitude < enemyScript.weaponSO.range)
-                {
-                    enemyState = EnemyState.Attack;
-                    isChasing = false;
-                }
-                else
-                {
-                    navMeshAgent.SetDestination(playerSnapShot);
-                    playerSeen = false;
-                }
+                enemyState = EnemyState.Attack;
             }
-            else if (!playerSeen && !navMeshAgent.hasPath)
+            else
             {
-                enemyState = EnemyState.Idle;
-                isChasing = false;
+                navMeshAgent.SetDestination(playerSnapShot);
+                playerSeen = false;
             }
         }
-        else
+        else if (!playerSeen && !navMeshAgent.hasPath)
         {
-            isChasing = true;
+            enemyState = EnemyState.Idle;
         }
     }
 
-    // Check Isattacking bool (from animator). If false, flip bool true and
-    // start attack coro
+    //Start AttackCoro
     public void AttackActions()
     {
-        if (!enemyScript.animator.GetBool("IsAttacking"))
+        if (!isAttacking)
         {
-            enemyScript.animator.SetBool("IsAttacking", true);
             StartCoroutine(AttackCoro());
+            isAttacking = true;
         }
     }
 
-    // Coroutine to trigger OnEnemyAttack event. Clears navmesh path and then
-    // resets IsAttacking and playerSeen bools to false before swapping state 
-    //to chase
+    // Coroutine to trigger OnEnemyAttack event, clear navmesh path, then resets
+    // IsAttacking and playerSeen bools to false before swapping state to chase
     public IEnumerator AttackCoro()
     {
         OnEnemyAttack?.Invoke();
-
         navMeshAgent.ResetPath();
+
         yield return new WaitForSecondsRealtime(enemyScript.weaponSO.attackAnimation.length);
-        enemyScript.animator.SetBool("IsAttacking", false);
+        isAttacking = false;
         playerSeen = false;
         enemyState = EnemyState.Chase;
     }

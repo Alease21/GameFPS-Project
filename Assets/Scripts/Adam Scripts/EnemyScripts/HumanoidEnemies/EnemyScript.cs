@@ -8,8 +8,8 @@ public class EnemyScript : MonoBehaviour
 {
     public EnemySO enemySO;
     public WeaponSO weaponSO;
-    public EnemyWeaponController e_WepControl;
-    public Animator animator;
+    private EnemyWeaponController e_WepControl;
+    private Animator animator;
     
     public string enemyName;
     public int enemyHealth;
@@ -18,6 +18,16 @@ public class EnemyScript : MonoBehaviour
     //public float enemySpeed;
     public float enemyFOV;
     public float enemyViewDist;
+
+    //Gizmo to visualize enemy sight range(FOV) in scene editor
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        UnityEditor.Handles.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
+        Vector3 rotatedForward = Quaternion.Euler(0, -enemySO.enemyFOV / 2, 0) * transform.forward;
+        UnityEditor.Handles.DrawSolidArc(transform.position, transform.up, rotatedForward, enemySO.enemyFOV, enemySO.enemyViewDistance);
+    }
+#endif
 
     private void Start()
     {
@@ -30,7 +40,6 @@ public class EnemyScript : MonoBehaviour
         enemyViewDist = enemySO.enemyViewDistance;
         enemyRotateSpeed = enemySO.enemyRotateSpeed;
         //enemySpeed = enemySO.enemySpeed; //adjust navmeshagent speed?
-
         enemyDamage = weaponSO.damage;
 
         switch (enemySO.enemyType)
@@ -57,18 +66,6 @@ public class EnemyScript : MonoBehaviour
         {
             enemyHealth = 0;
             OnEnemyDeath();
-        }
-    }
-    public void OnAttack()
-    {
-        switch (enemySO.enemyType)
-        {
-            case EnemySO.EnemyType.Range:
-                animator.Play("AttackRanged");
-                break;
-            case EnemySO.EnemyType.Melee:
-                animator.Play("AttackMelee");
-                break;
         }
     }
     public void OnEnemyDeath()

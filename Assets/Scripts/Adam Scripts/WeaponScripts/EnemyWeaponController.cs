@@ -27,9 +27,9 @@ public class EnemyWeaponController : MonoBehaviour
     [SerializeField] private GameObject hitScanShotPrefab;
 
     [SerializeField] private float continuousTickRate;
-    public bool isHoldingFire = false;
+    //private bool isHoldingFire = false;
 
-    public bool hasHitScan = false,
+    private bool hasHitScan = false,
                 hasProjectile = false,
                 hasContinuous = false;
 
@@ -61,8 +61,7 @@ public class EnemyWeaponController : MonoBehaviour
                     }
                     currWeapon = hitScanWeapon;
 
-                    weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage);
-                    weapon1.shootPoint = shootPoint;
+                    weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
                     myGun = weapon1;
 
                     hasHitScan = true;
@@ -80,10 +79,9 @@ public class EnemyWeaponController : MonoBehaviour
                     {
                         projectileWeapon.transform.GetChild(i).gameObject.layer = 8;
                     }
-                    currWeapon = projectileWeapon;
+                    //currWeapon = projectileWeapon;
 
-                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage);
-                    weapon2.shootPoint = shootPoint;
+                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
                     myGun = weapon2;
 
                     hasProjectile = true;
@@ -104,8 +102,7 @@ public class EnemyWeaponController : MonoBehaviour
 
                     //StartCoroutine(ContinuousWeaponFire());
 
-                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage);
-                    weapon3.shootPoint = shootPoint;
+                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
                     myGun = weapon3;
 
                     hasContinuous = true;

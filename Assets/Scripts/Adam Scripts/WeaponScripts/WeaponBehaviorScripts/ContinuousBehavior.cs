@@ -7,11 +7,6 @@ public class ContinuousBehavior : IGunBehavior
     public GameObject fireVisualPrefab;
     public float fireSpeed = 10f;
 
-    public ContinuousBehavior(GameObject fireVisualPrefab)
-    {
-        this.fireVisualPrefab = fireVisualPrefab;
-    }
-
     public void FireGun(Transform shootPoint, int damage)
     {
         GameObject projectile = GameObject.Instantiate(fireVisualPrefab, shootPoint.position, Quaternion.LookRotation(shootPoint.transform.up));

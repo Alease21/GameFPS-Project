@@ -27,7 +27,7 @@ public class MeleeHitBoxScript : MonoBehaviour
         if (other.tag == "Player")
         {
             other.GetComponent<PlayerStatsScript>().TakeDamage(enemyScript.weaponSO.damage);
-            other.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
+            //other.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
         }
     }
 }

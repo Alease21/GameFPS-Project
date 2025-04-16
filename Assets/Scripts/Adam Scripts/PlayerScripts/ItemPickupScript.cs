@@ -5,11 +5,11 @@ using UnityEngine.Events;
 
 public class ItemPickupScript : MonoBehaviour
 {
-    public WeaponController weaponController;
-    public PlayerStatsScript playerStatsScript;
-
     private void OnTriggerEnter(Collider other)
     {
+        var weaponController = WeaponController.instance;
+        var playerStatsScript = PlayerStatsScript.instance;
+
         if (other.tag == "ItemPickup")
         {
             ItemPackScript itemPackPickUp = other.transform.GetComponent<ItemPackScript>();
@@ -59,8 +59,9 @@ public class ItemPickupScript : MonoBehaviour
                     }
                     break;
             }
-            //update ui stuff every collision, whether item is consumed or not.
-            playerStatsScript.UiStatUpdate?.Invoke();
+
+            //update ui every item collision, whether item is consumed or not.
+            InventoryController.instance.UIUpdateEvent?.Invoke();
         }
         if (other.tag == "WeaponPickup")
         {
@@ -95,8 +96,9 @@ public class ItemPickupScript : MonoBehaviour
                     }
                     break;
             }
-            //update ui stuff every collision, whether item is consumed or not.
-            playerStatsScript.UiStatUpdate?.Invoke();
+
+            //update ui every weapon collision, whether weapon is consumed or not.
+            InventoryController.instance.UIUpdateEvent?.Invoke();
         }
     }
 }

@@ -7,24 +7,25 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CameraMovement _cameraMovement;
-
-    Rigidbody rb;
-    Animator _animator;
+    private Rigidbody _rb;
+    private Animator _animator;
 
     public float playerSpeed;
     public float playerJumpFactor;
     public float playerDashFactor;
-    public float camSensitivity;
-    public float dashCoolDown = 2f;
-    private float dashVerticalHold = .25f;
+    [SerializeField] private float _dashCoolDown = 2f;
+    [SerializeField] private float _dashVerticalHold = .25f;
 
-    public bool isJumping = false;
+    // public gets, protected sets (ask about this?)
+    public float DashCoolDown { get { return _dashCoolDown; } protected set { } }
+    public float DashVerticalHold { get { return _dashVerticalHold; } protected set { } }
+
+    private bool isJumping = false;
     private bool hasDashed = false;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
 
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Movement based on the direction the player is facing &
         // update animation controller to match movement direction
-        Vector3 offset = vertical * transform.forward + horizontal * transform.right;       
+        Vector3 offset = vertical * transform.forward + horizontal * transform.right;
         transform.position += offset * Time.deltaTime * playerSpeed;
 
         _animator.SetFloat("Horizontal", horizontal);
@@ -44,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         // Jump input, no double jump
         if (Input.GetKeyDown("space") && !isJumping)
         {
-            rb.AddForce(Vector3.up * playerJumpFactor);
+            _rb.AddForce(Vector3.up * playerJumpFactor);
         }
 
         // Dash in the direction player is currently moving or
@@ -52,18 +53,18 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
         {
             hasDashed = true;
-            StartCoroutine(DashCoolDown());
+            StartCoroutine(DashCoolDownCoro());
 
             if ((!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.UpArrow)) &&
                 (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.LeftArrow)) &&
                 (!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.DownArrow)) &&
                 (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.RightArrow)))
             {
-                rb.AddForce(transform.forward.normalized * playerDashFactor);
+                _rb.AddForce(transform.forward.normalized * playerDashFactor);
             }
             else
             {
-                rb.AddForce(offset.normalized * playerDashFactor);
+                _rb.AddForce(offset.normalized * playerDashFactor);
             }
         }
     }
@@ -87,14 +88,14 @@ public class PlayerMovement : MonoBehaviour
 
     // Coroutine to freeze Y position of player for short time after dash,
     // and then reenable dash after a cooldown
-    public IEnumerator DashCoolDown()
+    public IEnumerator DashCoolDownCoro()
     {
-        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        _rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
 
-        yield return new WaitForSecondsRealtime(dashVerticalHold);
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        yield return new WaitForSecondsRealtime(_dashVerticalHold);
+        _rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-        yield return new WaitForSecondsRealtime(dashCoolDown - dashVerticalHold);
+        yield return new WaitForSecondsRealtime(_dashCoolDown - _dashVerticalHold);
         hasDashed = false;
         Debug.Log("dash can be used again");
     }

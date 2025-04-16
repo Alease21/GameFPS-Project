@@ -7,7 +7,7 @@ public class ContinuousGun : GunBase
     //Constructor instantiates new ContinuousBehvaior then initializes ammoMax and ammoCount based on params
     public ContinuousGun(GameObject fireVisualPrefab, int initialAmmoMax, int initialAmmoCount, int damage)
     {
-        weaponBehavior = new ContinuousBehavior(fireVisualPrefab);
+        weaponBehavior = new ContinuousBehavior { fireVisualPrefab = fireVisualPrefab};
         ammoMax = initialAmmoMax;
         ammoCount = initialAmmoCount;
         weaponDamage = damage;

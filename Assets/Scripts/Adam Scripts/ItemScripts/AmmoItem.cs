@@ -16,7 +16,7 @@ public class AmmoItem : ItemBase
         packPrefab.gameObject.SetActive(false);
     }
 
-    public override void RechargeLink(float rechargeTime)
+    public override void RechargeLink()
     {
         //does not recharge
     }

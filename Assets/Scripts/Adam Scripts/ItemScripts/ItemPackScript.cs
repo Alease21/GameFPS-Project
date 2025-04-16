@@ -42,7 +42,7 @@ public class ItemPackScript : MonoBehaviour
         {
             yield return null;
         }
-        item.RechargeLink(itemPackSO.rechargeTime);
+        item.RechargeLink();
 
         StartCoroutine(ItemRechargeCoro());
     }

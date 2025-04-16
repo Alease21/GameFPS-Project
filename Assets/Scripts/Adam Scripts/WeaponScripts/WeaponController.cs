@@ -3,12 +3,22 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    public PlayerStatsScript playerStatsScript;
+    //Singleton setup
+    public static WeaponController instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
-    [SerializeField] private GunBase myWeapon;
+    private PlayerStatsScript playerStatsScript;
+
+    [SerializeField] private GunBase myGun;
     public GunBase weapon1,
-                      weapon2,
-                      weapon3;
+                   weapon2,
+                   weapon3;
 
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Transform gunSetPoint;
@@ -23,7 +33,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GameObject hitScanShotPrefab;
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
-    public bool isHoldingFire = false;
+    private bool isHoldingFire = false;
 
     private bool isHitScan,
                  isProjectile,
@@ -36,14 +46,11 @@ public class WeaponController : MonoBehaviour
 
     void Start()
     {
+        playerStatsScript = PlayerStatsScript.instance;//Does this make sense?
+
         //hard coded in hitscan values. not sure how to grab in a more dynamic way.
         //maybe start with no weapon and choose 1 of 3?
         WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
-        playerStatsScript = GetComponentInParent<PlayerStatsScript>();
-        isHitScan = true;
-        playerStatsScript.UiStatUpdate?.Invoke();
-
-        myWeapon = weapon1;
     }
     
     void Update()
@@ -53,60 +60,46 @@ public class WeaponController : MonoBehaviour
         {
             if (hasHitScan)
             {
-                myWeapon = weapon1;
+                myGun = weapon1;
                 WeaponPrefabSwap(WeaponSO.WeaponType.HitScan);
-
-                Debug.Log("Swapped to hitscan weapon");
             }
-            else
-            {
-                Debug.Log("No weapon in 1st slot");
-            }
+            //Debug.Log(hasContinuous ? "Swapped to hitscan weapon." : "No weapon in 1st slot.");
         }
         //if 2 key pressed and if player has projectile weapon, swap to projectile weapon
         if (Input.GetKeyDown(KeyCode.Alpha2) && !isProjectile)
         {
             if (hasProjectile)
             {
-                myWeapon = weapon2;
+                myGun = weapon2;
                 WeaponPrefabSwap(WeaponSO.WeaponType.Projectile);
-
-                Debug.Log("Swapped to projectile weapon");
             }
-            else
-            {
-                Debug.Log("No weapon in 2nd slot");
-            }
+            //Debug.Log(hasContinuous ? "Swapped to projectile weapon." : "No weapon in 2nd slot.");
         }
         //if 3 key pressed and if player has continuous weapon, swap to continuous weapon
         if (Input.GetKeyDown(KeyCode.Alpha3) && !isContinuous)
         {
             if (hasContinuous)
             {
-                myWeapon = weapon3;
+                myGun = weapon3;
                 WeaponPrefabSwap(WeaponSO.WeaponType.Continuous);
-
-                Debug.Log("Swapped to continuous weapon");
             }
-            else
-            {
-                Debug.Log("No weapon in 3rd slot");
-            }
+            //Debug.Log(hasContinuous ? "Swapped to continuous weapon." : "No weapon in 3rd slot.");
         }
         //On left mouse click, use currently equipped weapon and update ammo
         if (Input.GetMouseButtonDown(0) && !isContinuous)
         {
-            myWeapon.Use();
+            myGun.Use();
             AmmoStatUpdater();
         }
     }
+
     private void FixedUpdate()
     {
         //On left mouse hold and equipped weapon is continuous, use weapon and update ammocount.
         //Flip isHoldingFire true if it is false.
         if (Input.GetMouseButton(0) && isContinuous)
         {
-            myWeapon.Use();
+            myGun.Use();
 
             AmmoStatUpdater();
             if (!isHoldingFire)
@@ -131,9 +124,9 @@ public class WeaponController : MonoBehaviour
     public IEnumerator ContinuousWeaponFire()
     {
         yield return new WaitUntil(() => isHoldingFire);
-        if (myWeapon.ammoCount > 0)
+        if (myGun.ammoCount > 0)
         {
-            myWeapon.ammoCount--;
+            myGun.ammoCount--;
             yield return new WaitForSeconds(continuousTickRate);
         }
         yield return new WaitForFixedUpdate();
@@ -156,13 +149,12 @@ public class WeaponController : MonoBehaviour
                 if (!hasHitScan)
                 {
                     hitScanWeapon = GameObject.Instantiate(weaponPrefabs[0], gunSetPoint.position, gunSetPoint.transform.rotation);
-                    hitScanWeapon.transform.parent = transform;
+                    hitScanWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = hitScanWeapon;
 
-                    weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage);
-                    weapon1.shootPoint = shootPoint;
-                    myWeapon = weapon1;
-                    playerStatsScript.maxHitscanAmmo = myWeapon.ammoMax;
+                    weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    myGun = weapon1;
+                    playerStatsScript.maxHitscanAmmo = myGun.ammoMax;
 
                     hasHitScan = true;
                     Debug.Log("Hitscan weapon instantiated");
@@ -173,13 +165,12 @@ public class WeaponController : MonoBehaviour
                 if (!hasProjectile)
                 {
                     projectileWeapon = GameObject.Instantiate(weaponPrefabs[1], gunSetPoint.position, gunSetPoint.transform.rotation);
-                    projectileWeapon.transform.parent = transform;
+                    projectileWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = projectileWeapon;
 
-                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage);
-                    weapon2.shootPoint = shootPoint;
-                    myWeapon = weapon2;
-                    playerStatsScript.maxProjectileAmmo = myWeapon.ammoMax;
+                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    myGun = weapon2;
+                    playerStatsScript.maxProjectileAmmo = myGun.ammoMax;
 
                     hasProjectile = true;
                     Debug.Log("Projectile weapon instantiated");
@@ -189,15 +180,14 @@ public class WeaponController : MonoBehaviour
                 if (!hasContinuous)
                 {
                     continuousWeapon = GameObject.Instantiate(weaponPrefabs[2], gunSetPoint.position, gunSetPoint.transform.rotation);
-                    continuousWeapon.transform.parent = transform;
+                    continuousWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = continuousWeapon;
 
                     StartCoroutine(ContinuousWeaponFire());
 
-                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage);
-                    weapon3.shootPoint = shootPoint;
-                    myWeapon = weapon3;
-                    playerStatsScript.maxContinuousAmmo = myWeapon.ammoMax;
+                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    myGun = weapon3;
+                    playerStatsScript.maxContinuousAmmo = myGun.ammoMax;
 
                     hasContinuous = true;
                     Debug.Log("Continuous weapon instantiated");
@@ -207,7 +197,6 @@ public class WeaponController : MonoBehaviour
 
         EquippedWeaponBool(weaponType);
         AmmoStatUpdater();
-        playerStatsScript.UiStatUpdate?.Invoke();
     }
 
     //Swap between weapons that the player currently has, start/stop ContinuousWeaponFire
@@ -215,21 +204,22 @@ public class WeaponController : MonoBehaviour
     public void WeaponPrefabSwap(WeaponSO.WeaponType newWeaponType)
     {
         currWeapon.SetActive(false);
+        isHoldingFire = false;
         EquippedWeaponBool(newWeaponType);
 
         switch (newWeaponType)
         {
             case WeaponSO.WeaponType.HitScan:
                 currWeapon = hitScanWeapon;
-                myWeapon = weapon1;
+                myGun = weapon1;
                 break;
             case WeaponSO.WeaponType.Projectile:
                 currWeapon = projectileWeapon;
-                myWeapon = weapon2;
+                myGun = weapon2;
                 break;
             case WeaponSO.WeaponType.Continuous:
                 currWeapon = continuousWeapon;
-                myWeapon = weapon3;
+                myGun = weapon3;
                 break;
         }
         if (!currWeapon.activeInHierarchy)
@@ -264,6 +254,8 @@ public class WeaponController : MonoBehaviour
     //Updates player stats with current ammo count
     public void AmmoStatUpdater()
     {
+        //eventually implement switch for weapontype, add weapontype param and get
+        //weapon type from pickup for specific gun ammo packs
         if (weapon1 != null)
         {
             playerStatsScript.hitScanWeaponAmmo = weapon1.ammoCount;
@@ -276,6 +268,6 @@ public class WeaponController : MonoBehaviour
         {
             playerStatsScript.continuousWeaponAmmo = weapon3.ammoCount;
         }
-        playerStatsScript.UiStatUpdate?.Invoke();
+        InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 }

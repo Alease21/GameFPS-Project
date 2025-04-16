@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public PlayerMovement _playerMovement;
-    public GameObject player;
+    private Camera _mainCam;
 
-    float xRotate = 0f;
-    float yRotate = 0f;
-    public float camPivotMax = 50f;
+    private float _xRotate = 0f;
+    private float _yRotate = 0f;
+    [SerializeField] private float _camPivotMax = 50f;
+    [SerializeField] private float _camSensitivity;
+
+    // public get, protected set (ask about this?)
+    public float CamSensitivity { get { return _camSensitivity; } protected set { } }
 
     private void Start()
     {
+        _mainCam = GetComponentInChildren<Camera>();
+
         //hides cursor and locks it within the game window
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -20,15 +25,15 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        yRotate += -Input.GetAxis("Mouse Y") * _playerMovement.camSensitivity * Time.deltaTime;
-        xRotate += Input.GetAxis("Mouse X") * _playerMovement.camSensitivity * Time.deltaTime;
+        _yRotate += -Input.GetAxis("Mouse Y") * _camSensitivity * Time.deltaTime;
+        _xRotate += Input.GetAxis("Mouse X") * _camSensitivity * Time.deltaTime;
 
         // Limit player vertical camera movement to +/- camPivotMax
-        yRotate = Mathf.Clamp(yRotate, -camPivotMax, camPivotMax);
+        _yRotate = Mathf.Clamp(_yRotate, -_camPivotMax, _camPivotMax);
 
         // Move camera up/down (rotate around x axis) with mouse y
         // and rotate player left/right (rotate around y axis) with mouse x
-        transform.localEulerAngles = new Vector3(yRotate, 0f, 0f);
-        player.transform.localEulerAngles = new Vector3(0f, xRotate, 0f);
+        _mainCam.transform.localEulerAngles = new Vector3(_yRotate, 0f, 0f);
+        transform.localEulerAngles = new Vector3(0f, _xRotate, 0f);
     }
 }
