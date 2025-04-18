@@ -14,6 +14,10 @@ public class PlayerStatsScript : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     [SerializeField] private int _health;

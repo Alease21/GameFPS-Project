@@ -7,7 +7,7 @@ using UnityEngine;
 public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, IDealDamageEnviron
 {
     public EnvironmentalEnemySO environEnemySO;
-    [HideInInspector] public SphereCollider explodeSphere;
+    public SphereCollider explodeSphere;
 
     [Range(1,10)] public float explodeRange;
 
@@ -27,41 +27,12 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         health = environEnemySO.health;
         damage = environEnemySO.damage;
     }
+
     private void Update()
     {
         explodeSphere.radius = explodeRange; //change to update easier? on inspector update?
-
-        // Continuously check for destroyed/null elements in list, then delete if any are found
-        // potentially fix to remove from update (enemy destroy event?)
-        for (int i = 0; i < inRangeColliders.Count; i++)
-        {
-            if (inRangeColliders[i] == null || inRangeColliders[i].IsDestroyed())
-            {
-                inRangeColliders.Remove(inRangeColliders[i]);
-            }
-        }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player" || other.tag == "Enemy")
-        {
-            if (!inRangeColliders.Contains<GameObject>(other.gameObject))
-            {
-                inRangeColliders.Add(other.gameObject);
-            }
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player" || other.tag == "Enemy")
-        {
-            if (inRangeColliders.Contains<GameObject>(other.gameObject))
-            {
-                inRangeColliders.Remove(other.gameObject);
-            }
-        }
-    }
     public void OnTakeDamage(int damage)
     {
         // add CD for damage take? (continuous weapon is too quick?) 

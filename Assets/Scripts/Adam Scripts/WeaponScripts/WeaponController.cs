@@ -11,6 +11,10 @@ public class WeaponController : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private PlayerStatsScript playerStatsScript;

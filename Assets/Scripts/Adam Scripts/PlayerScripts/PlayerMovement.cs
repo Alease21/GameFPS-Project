@@ -44,17 +44,16 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat("Horizontal", horizontal);
         _animator.SetFloat("Vertical", vertical);
 
-        /*
         RaycastHit hit;
-        Physics.SphereCast(transform.position, _capsuleCollider.radius, -transform.up, out hit, _capsuleCollider.height / 2);
 
-        if (hit.transform == null)
+        /*
+        if (Physics.SphereCast(transform.position, _capsuleCollider.radius, -transform.up, out hit, _capsuleCollider.height / 2 - _capsuleCollider.radius))
         {
-            isJumping = true;
+            isJumping = false;
         }
         else
         {
-            isJumping = false;
+            isJumping = true;
         }
         */
 

@@ -19,6 +19,10 @@ public class InventoryController : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     [SerializeField] private GameObject inventoryPanel;
