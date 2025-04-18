@@ -10,7 +10,8 @@ public class WeaponSO : ScriptableObject
         HitScan,
         Projectile,
         Continuous,
-        Melee
+        Melee,
+        Throwable
     }
     //editor script to show relevant vars depending on weapon type? (no ammo for melee)
     public string weaponName;
@@ -21,4 +22,5 @@ public class WeaponSO : ScriptableObject
     public float range;
     public AnimationClip attackAnimation;
     public GameObject hitBoxPrefab;
+    public float explodeTime;
 }

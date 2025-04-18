@@ -44,9 +44,10 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat("Horizontal", horizontal);
         _animator.SetFloat("Vertical", vertical);
 
+        /*
+
         RaycastHit hit;
 
-        /*
         if (Physics.SphereCast(transform.position, _capsuleCollider.radius, -transform.up, out hit, _capsuleCollider.height / 2 - _capsuleCollider.radius))
         {
             isJumping = false;

@@ -7,7 +7,8 @@ using UnityEngine;
 public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, IDealDamageEnviron
 {
     public EnvironmentalEnemySO environEnemySO;
-    public SphereCollider explodeSphere;
+    private BarrelInRangeScript inRangeScript;
+    private SphereCollider explodeSphere;
 
     [Range(1,10)] public float explodeRange;
 
@@ -23,6 +24,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     void Start()
     {
         explodeSphere = GetComponentInChildren<SphereCollider>();
+        inRangeScript = GetComponent<BarrelInRangeScript>();
 
         health = environEnemySO.health;
         damage = environEnemySO.damage;
@@ -52,6 +54,9 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     }
     public void OnDestroyed()
     {
+        // clean up gameobject list from trigger sphere before dealing dmg
+        inRangeScript.InRangeCleanup();
+
         OnDealDamage();
         OnAffectSurrounding();
 

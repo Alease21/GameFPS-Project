@@ -28,7 +28,6 @@ public class ItemPickupScript : MonoBehaviour
                         }
                     }
                     break;
-
                 case ItemPackSO.ItemPackType.ShieldPack:
                     if (!itemPackPickUp.item.isRecharging)
                     {
@@ -93,6 +92,16 @@ public class ItemPickupScript : MonoBehaviour
                     {
                         weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Continuous, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage);
                         Destroy(other.gameObject);
+                    }
+                    break;
+                case WeaponSO.WeaponType.Throwable:
+                    if (ThrowableController.instance.ThrowableGet(weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
+                    {
+                        Destroy(other.gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("I don't need any of those throwables");
                     }
                     break;
             }

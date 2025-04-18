@@ -32,7 +32,6 @@ public class BarrelInRangeScript : MonoBehaviour
             {
                 barrelScript.inRangeColliders.Add(other.gameObject);
             }
-            Debug.Log($"objs in range: " + barrelScript.inRangeColliders.Count);
         }
     }
     private void OnTriggerExit(Collider other)

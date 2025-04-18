@@ -37,6 +37,11 @@ public class PlayerStatsScript : MonoBehaviour
                maxProjectileAmmo,
                maxContinuousAmmo;
 
+    public int grenadeCount,
+               maxGrenades,
+               smokeBombCount,
+               maxSmokeBombs;
+
     //public bool startupDone = false;
 
     private void Start()
