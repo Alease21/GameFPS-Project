@@ -24,7 +24,7 @@ public class ProjectileScripts : MonoBehaviour
     private SphereCollider sphereCollider;
     public float explodeRange;
     public float explodeTime;
-
+    
     public GameObject explodeSphere;
     private float explodeDur = 0.2f;
     private void Start()
@@ -37,13 +37,12 @@ public class ProjectileScripts : MonoBehaviour
         switch (projectileType)
         {
             case ProjectileType.GunProjectile:
-                //sphereCollider = GetComponent<SphereCollider>();
-                //sphereCollider.radius = explodeRange;
+                sphereCollider.radius = explodeRange;
                 break;
             case ProjectileType.ThrowProjectile:
                 sphereCollider.enabled = true;
                 sphereCollider.radius = explodeRange;
-                StartCoroutine(ThrowExplodeTimer());
+                StartCoroutine(ExplodeTimer());
                 break;
             case ProjectileType.Fire:
                 initialPos = transform.position;
@@ -67,13 +66,45 @@ public class ProjectileScripts : MonoBehaviour
             }
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (projectileType == ProjectileType.GunProjectile)
+        {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            StartCoroutine(ExplodeTimer());
+        }
+        else if (projectileType != ProjectileType.ThrowProjectile)
+        {
+            //'Collision' with any collider destroys projectile
+            OnDealDamage(collision.gameObject);
+            Destroy(gameObject);
+        }
+    }
+    public void OnDealDamage(GameObject other)
+    {
+        switch (other.tag)
+        {
+            case "Player":
+                other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
+                break;
+            case "Enemy":
+                other.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
+                break;
+            case "EnvironEnemy":
+                //if(other.GetComponent<EnvironEnemy>() is IDestructable destructable)
+                other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                break;
+        }
+        Destroy(gameObject);
+    }
 
+    #region ExplodingSphereStuff
     private void OnTriggerEnter(Collider other)
     {
         //adding enemyies/player to list if in range 
-        if (projectileType == ProjectileType.ThrowProjectile)
+        if (projectileType == ProjectileType.ThrowProjectile || projectileType == ProjectileType.GunProjectile)
         {
-            if (other.tag == "Player" || other.tag == "Enemy")
+            if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "EnvironEnemy")
             {
                 if (!inRangeColliders.Contains(other.gameObject))
                 {
@@ -81,32 +112,13 @@ public class ProjectileScripts : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            //'Collision' with any collider destroys projectile
-            switch (other.tag)
-            {
-                case "Player":
-                    other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
-                    break;
-                case "Enemy":
-                    other.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
-                    break;
-                case "EnvironEnemy":
-                    //if(other.GetComponent<EnvironEnemy>() is IDestructable destructable)
-                    other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage); 
-                    break;
-            }
-            Destroy(gameObject);
-            //Debug.Log($"{projectileType} projectile collided with {other.gameObject.name}. {projectileDamage} damage done.)");
-        }
     }
     private void OnTriggerExit(Collider other)
     {
         //remove enemies/player if out of range
-        if (projectileType == ProjectileType.ThrowProjectile)
+        if (projectileType == ProjectileType.ThrowProjectile || projectileType == ProjectileType.GunProjectile)
         {
-            if (other.tag == "Player" || other.tag == "Enemy")
+            if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "EnvironEnemy")
             {
                 if (inRangeColliders.Contains(other.gameObject))
                 {
@@ -128,15 +140,17 @@ public class ProjectileScripts : MonoBehaviour
                 case "Enemy":
                     inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
                     break;
+                case "EnvironEnemy":
+                    //if(other.GetComponent<EnvironEnemy>() is IDestructable destructable)
+                    inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                    break;
             }
         }
         Destroy(gameObject);
     }
 
-    //ThrowableProjectileMethods
-    #region ThrowableProjectileMethods
     //coroutine to track throwable explode timer and then trigger explode
-    public IEnumerator ThrowExplodeTimer()
+    public IEnumerator ExplodeTimer()
     {
         yield return new WaitForSecondsRealtime(explodeTime);
         InRangeCleanup();
@@ -165,7 +179,7 @@ public class ProjectileScripts : MonoBehaviour
             }
         }
     }
-    #endregion
+#endregion
 
     //HitScanWeaponMethod(s)
     #region HitScanVisualMethod

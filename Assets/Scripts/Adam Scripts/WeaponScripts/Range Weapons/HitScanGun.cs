@@ -41,7 +41,7 @@ public class HitScanGun : GunBase
         {
             if (ammoCount > 0)
             {
-                weaponBehavior.FireGun(shootPoint, weaponDamage);
+                weaponBehavior.FireGun(shootPoint, weaponDamage, 0f);//filler range for now (unused value)
                 ammoCount--;
             }
             else

@@ -42,7 +42,7 @@ public class PlayerStatsScript : MonoBehaviour
                smokeBombCount,
                maxSmokeBombs;
 
-    //public bool startupDone = false;
+    public bool isHidden;
 
     private void Start()
     {

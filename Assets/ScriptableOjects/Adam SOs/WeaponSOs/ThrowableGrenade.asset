@@ -20,4 +20,4 @@ MonoBehaviour:
   range: 5
   attackAnimation: {fileID: 0}
   hitBoxPrefab: {fileID: 0}
-  explodeTime: 5
+  explodeTime: 3

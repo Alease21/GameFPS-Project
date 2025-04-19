@@ -8,11 +8,12 @@ public class ProjectileBehavior : IGunBehavior
     public float projectileSpeed = 20f;
 
     // Instantiate projectile with projectileSpeed velocity (forward)
-    public void FireGun(Transform shootPoint, int damage)
+    public void FireGun(Transform shootPoint, int damage, float range)
     {
         GameObject projectile = GameObject.Instantiate(projectilePrefab, shootPoint.position, Quaternion.LookRotation(shootPoint.transform.up));
         projectile.GetComponent<Rigidbody>().velocity = shootPoint.forward * projectileSpeed;
         projectile.GetComponent<ProjectileScripts>().projectileDamage = damage;
+        projectile.GetComponent<ProjectileScripts>().explodeRange = range;
         //Debug.Log("Projectile launched.");
     }
 }

@@ -100,6 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: 1
   projectileDamage: 0
+  explodeRange: 0
+  explodeTime: 0
+  explodeSphere: {fileID: 0}
 --- !u!136 &3667846405711903325
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -115,7 +118,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

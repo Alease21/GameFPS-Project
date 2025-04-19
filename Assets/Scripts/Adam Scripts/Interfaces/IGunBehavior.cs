@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IGunBehavior
 {
-    void FireGun(Transform shootPoint, int damage);
+    void FireGun(Transform shootPoint, int damage, float range);
 }

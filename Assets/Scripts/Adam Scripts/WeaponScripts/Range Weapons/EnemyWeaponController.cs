@@ -29,9 +29,9 @@ public class EnemyWeaponController : MonoBehaviour
     [SerializeField] private float continuousTickRate;
     //private bool isHoldingFire = false;
 
-    private bool hasHitScan = false,
-                hasProjectile = false,
-                hasContinuous = false;
+    private bool hasHitScan = false;
+                //hasProjectile = false,
+                //hasContinuous = false;
 
     public void EnemyAttack()
     {
@@ -68,7 +68,8 @@ public class EnemyWeaponController : MonoBehaviour
                     //Debug.Log("Enemy Hitscan weapon instantiated");
                 }
                 break;
-
+            /* Commented out other enemy weapons as just hitscan is implemented fully
+             * 
             case WeaponSO.WeaponType.Projectile:
                 if (!hasProjectile)
                 {
@@ -81,7 +82,7 @@ public class EnemyWeaponController : MonoBehaviour
                     }
                     //currWeapon = projectileWeapon;
 
-                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage, range) { shootPoint = shootPoint };
                     myGun = weapon2;
 
                     hasProjectile = true;
@@ -109,6 +110,7 @@ public class EnemyWeaponController : MonoBehaviour
                     //Debug.Log("Enemy continuous weapon instantiated");
                 }
                 break;
+            */
         }
     }
 

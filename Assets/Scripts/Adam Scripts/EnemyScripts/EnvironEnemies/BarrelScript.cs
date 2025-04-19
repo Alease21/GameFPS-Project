@@ -24,7 +24,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     void Start()
     {
         explodeSphere = GetComponentInChildren<SphereCollider>();
-        inRangeScript = GetComponent<BarrelInRangeScript>();
+        inRangeScript = GetComponentInChildren<BarrelInRangeScript>();
 
         health = environEnemySO.health;
         damage = environEnemySO.damage;

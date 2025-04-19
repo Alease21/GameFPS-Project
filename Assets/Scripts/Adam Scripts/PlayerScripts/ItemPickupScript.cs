@@ -74,7 +74,7 @@ public class ItemPickupScript : MonoBehaviour
                     Debug.Log(weaponController.hasHitScan ? "I already have this weapon." : "HitScan weapon picked up");
                     if (!weaponController.hasHitScan)
                     {
-                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage);
+                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
                         Destroy(other.gameObject);
                     }
                     break;
@@ -82,7 +82,7 @@ public class ItemPickupScript : MonoBehaviour
                     Debug.Log(weaponController.hasProjectile ? "I already have this weapon." : "Projectile weapon picked up");
                     if (!weaponController.hasProjectile)
                     {
-                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Projectile, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage);
+                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Projectile, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
                         Destroy(other.gameObject);
                     }
                     break;
@@ -90,7 +90,7 @@ public class ItemPickupScript : MonoBehaviour
                     Debug.Log(weaponController.hasContinuous ? "I already have this weapon." : "Continuous weapon picked up");
                     if (!weaponController.hasContinuous)
                     {
-                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Continuous, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage);
+                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Continuous, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
                         Destroy(other.gameObject);
                     }
                     break;

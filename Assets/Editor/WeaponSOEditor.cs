@@ -41,7 +41,23 @@ public class WeaponSOEditor : Editor
 
         switch (_weaponType.enumValueIndex)
         {
-            case <= 2:
+            case 0:
+                EditorGUILayout.LabelField("Gun Info:", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
+                EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
+                EditorGUILayout.PropertyField(_damage, new GUIContent("Gun Damage"));
+                EditorGUILayout.PropertyField(_range, new GUIContent("Gun Range"));
+                EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Shoot Animation"));
+                break;
+            case 1:
+                EditorGUILayout.LabelField("Gun Info:", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
+                EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
+                EditorGUILayout.PropertyField(_damage, new GUIContent("Gun Damage"));
+                EditorGUILayout.PropertyField(_range, new GUIContent("Explode Range"));
+                EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Shoot Animation"));
+                break;
+            case  2:
                 EditorGUILayout.LabelField("Gun Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
                 EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));

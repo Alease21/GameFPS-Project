@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.026, y: -0.014, z: -6.149}
-  m_LocalScale: {x: 0.09148158, y: 0.07962314, z: 0.09148158}
+  m_LocalScale: {x: 0.09148158, y: 0.04210392, z: 0.09148158}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,6 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: 0
   projectileDamage: 0
+  explodeRange: 0
+  explodeTime: 0
+  explodeSphere: {fileID: 0}
 --- !u!136 &3216069486025108703
 CapsuleCollider:
   m_ObjectHideFlags: 0

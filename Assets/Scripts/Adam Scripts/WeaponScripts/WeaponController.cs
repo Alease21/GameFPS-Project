@@ -151,7 +151,7 @@ public class WeaponController : MonoBehaviour
 
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax, initialAmmoCount and damage.
     //Immediately swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
-    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, int damage)
+    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, int damage, float range)
     {
         if (currWeapon != null)
         {
@@ -184,7 +184,7 @@ public class WeaponController : MonoBehaviour
                     projectileWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = projectileWeapon;
 
-                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage, range) { shootPoint = shootPoint };
                     myGun = weapon2;
                     playerStatsScript.maxProjectileAmmo = myGun.ammoMax;
                     hasProjectile = true;
