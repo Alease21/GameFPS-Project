@@ -16,7 +16,8 @@ public class EnemyFSM : MonoBehaviour
         Idle,
         Patrol,
         Chase,
-        Attack
+        Attack,
+        GotShot
     }
     private EnemyState enemyState;
 
@@ -34,6 +35,21 @@ public class EnemyFSM : MonoBehaviour
 
     private Vector3 raycastOffset = new Vector3(0, 1, 0);
 
+    public bool gotShot;
+    private void OnDrawGizmosSelected()
+    {
+        for (int i=0; i < patrolPoints.Length; i++)
+        {
+            int next = i + 1;
+            if (next == patrolPoints.Length)
+            {
+                next = 0;
+            }
+            Gizmos.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
+
+            Gizmos.DrawLine(patrolPoints[i].transform.position, patrolPoints[next].transform.position);
+        }
+    }
     private void Start()
     {
         isIdle = false;
@@ -51,13 +67,20 @@ public class EnemyFSM : MonoBehaviour
         Vector3 raycastStart = transform.position + raycastOffset;
         RaycastHit hit;
         Physics.Raycast(raycastStart, playerTargetDir.normalized, out hit);
+        //Debug.DrawRay(raycastStart, playerTargetDir.normalized, Color.green, 1);
 
-        Debug.DrawRay(raycastStart, playerTargetDir.normalized, Color.green, 1);
+        if (gotShot)
+        {
+            var rotation = Quaternion.LookRotation(playerTargetDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
 
+            enemyState = EnemyState.Idle;
+            gotShot = false;
+        }
         // If raycast hits player, and player is within enemy FOV, rotate to face player and swap state to attack
         if (hit.transform != null)
         {
-            if (hit.transform.tag == "Player")
+            if (hit.transform.tag == "Player" && !PlayerStatsScript.instance.isHidden)
             {
                 if (playerTargetDist < enemyScript.enemyViewDist &&
                     Vector3.Angle(transform.forward, playerTargetDir.normalized) < enemyScript.enemyFOV / 2)
@@ -96,6 +119,9 @@ public class EnemyFSM : MonoBehaviour
                 break;
             case EnemyState.Attack:
                 AttackActions();
+                break;
+            case EnemyState.GotShot:
+                GotShotActions();
                 break;
         }
     }
@@ -203,5 +229,10 @@ public class EnemyFSM : MonoBehaviour
         isAttacking = false;
         playerSeen = false;
         enemyState = EnemyState.Chase;
+    }
+
+    public void GotShotActions()
+    {
+
     }
 }

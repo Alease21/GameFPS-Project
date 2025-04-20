@@ -10,6 +10,7 @@ public class EnemyScript : MonoBehaviour
     public WeaponSO weaponSO;
     private EnemyWeaponController e_WepControl;
     private Animator animator;
+    private EnemyFSM enemyFSM;
     
     public string enemyName;
     public int enemyHealth;
@@ -33,6 +34,7 @@ public class EnemyScript : MonoBehaviour
     {
         e_WepControl = GetComponent<EnemyWeaponController>();
         animator = GetComponent<Animator>();
+        enemyFSM = GetComponent<EnemyFSM>();
 
         enemyName = enemySO.enemyName;
         enemyHealth = enemySO.enemyHealth;
@@ -67,6 +69,7 @@ public class EnemyScript : MonoBehaviour
             enemyHealth = 0;
             OnEnemyDeath();
         }
+        enemyFSM.gotShot = true;
     }
     public void OnEnemyDeath()
     {

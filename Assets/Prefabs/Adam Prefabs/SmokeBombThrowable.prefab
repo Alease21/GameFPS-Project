@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4406141331261786376}
   - component: {fileID: 1642721380431880187}
   - component: {fileID: 5346813625002175534}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8688614019843272044}
   - component: {fileID: 5156507082203187839}
   - component: {fileID: 3246950187126420733}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: ExplodeSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 1212906351849262478}
   - component: {fileID: 3343542433150249578}
   - component: {fileID: 8318028442554341138}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Capsule (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,9 +274,10 @@ GameObject:
   - component: {fileID: 1346597310909895198}
   - component: {fileID: 3386204368280157793}
   - component: {fileID: 8922133606269187539}
-  m_Layer: 0
-  m_Name: SmokeGrenadeThrowable
-  m_TagString: Untagged
+  - component: {fileID: 5440030601671183903}
+  m_Layer: 7
+  m_Name: SmokeBombThrowable
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,8 +291,8 @@ Transform:
   m_GameObject: {fileID: 4577862281744191463}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.23892, y: 0.48, z: -9.747}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.7513, y: 1.7513, z: 1.7513}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3253133142707112513}
@@ -313,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c79486fc2cead409a4bdc4fa43e2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileType: 3
+  projectileType: 4
   projectileDamage: 0
   explodeRange: 0
   explodeTime: 0
@@ -362,6 +363,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.14082956
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5440030601671183903
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4577862281744191463}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4757265935713749333
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +401,7 @@ GameObject:
   - component: {fileID: 3253133142707112513}
   - component: {fileID: 7625793012475903065}
   - component: {fileID: 8210385652796548029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +484,7 @@ GameObject:
   - component: {fileID: 3083954145501086235}
   - component: {fileID: 624190588152371769}
   - component: {fileID: 3444377216823956076}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

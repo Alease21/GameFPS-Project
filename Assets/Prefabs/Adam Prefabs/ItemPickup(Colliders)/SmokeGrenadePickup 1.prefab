@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1331259740567990675}
   - component: {fileID: 6796277649673098383}
   - component: {fileID: 4736439024414953087}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8766681309980896140}
   - component: {fileID: 1306618712488526104}
   - component: {fileID: 7191195095642058216}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 1865179664993793084}
   - component: {fileID: 3085347935517083030}
   - component: {fileID: 3642061725275909358}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,10 +424,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8346993515261622985}
+  - component: {fileID: 3874864899676613664}
   - component: {fileID: 5326273358622821760}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmokeGrenadePickup 1
-  m_TagString: Untagged
+  m_TagString: WeaponPickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,8 +442,8 @@ Transform:
   m_GameObject: {fileID: 8831862604257000543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.23892, y: 0.48, z: -9.747}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.7513, y: 1.7513, z: 1.7513}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8766681309980896140}
@@ -452,6 +453,20 @@ Transform:
   - {fileID: 1892862335688917005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3874864899676613664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8831862604257000543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d88b9b247fc314e9c2c3cec3d13286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSO: {fileID: 11400000, guid: aadb928a3b874864c98b795d8d6c9b8e, type: 2}
+  weaponPrefab: {fileID: 4577862281744191463, guid: 5538ed0b5474ea841b06c19086dd1619, type: 3}
 --- !u!136 &5326273358622821760
 CapsuleCollider:
   m_ObjectHideFlags: 0

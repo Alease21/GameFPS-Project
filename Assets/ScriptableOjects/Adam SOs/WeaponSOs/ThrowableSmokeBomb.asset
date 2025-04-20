@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: ThrowableSmokeBomb
   m_EditorClassIdentifier: 
   weaponName: 
-  weaponType: 4
+  weaponType: 5
   ammoMax: 5
   ammoCount: 1
   damage: 0
-  range: 8
+  range: 5
   attackAnimation: {fileID: 0}
   hitBoxPrefab: {fileID: 0}
   explodeTime: 3

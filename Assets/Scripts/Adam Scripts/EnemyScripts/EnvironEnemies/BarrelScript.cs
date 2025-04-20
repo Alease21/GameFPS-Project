@@ -26,13 +26,9 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         explodeSphere = GetComponentInChildren<SphereCollider>();
         inRangeScript = GetComponentInChildren<BarrelInRangeScript>();
 
+        explodeSphere.radius = explodeRange / 2;
         health = environEnemySO.health;
         damage = environEnemySO.damage;
-    }
-
-    private void Update()
-    {
-        explodeSphere.radius = explodeRange; //change to update easier? on inspector update?
     }
 
     public void OnTakeDamage(int damage)
@@ -109,4 +105,13 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         // maybe add fire on ground after explosion
         Debug.Log("This is where I'd knock you back, if i had the code");
     }
+
+#if UNITY_EDITOR
+    //Gizmo for explosion radius visualization
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red * new Color(1f, 1f, 1f, 0.5f);
+        Gizmos.DrawWireSphere(transform.position, explodeRange / 2);
+    }
+#endif
 }

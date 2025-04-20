@@ -94,8 +94,18 @@ public class ItemPickupScript : MonoBehaviour
                         Destroy(other.gameObject);
                     }
                     break;
-                case WeaponSO.WeaponType.Throwable:
-                    if (ThrowableController.instance.ThrowableGet(weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
+                case WeaponSO.WeaponType.Grenade: // can this fall through?
+                    /*if (ThrowableController.instance.ThrowableGet(weaponPickUpSO.weaponType, weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
+                    {
+                        Destroy(other.gameObject);
+                    }
+                    else
+                    {
+                        Debug.Log("I don't need any of those throwables");
+                    }
+                    break;*/
+                case WeaponSO.WeaponType.SmokeBomb:
+                    if (ThrowableController.instance.ThrowableGet(weaponPickUpSO.weaponType, weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
                     {
                         Destroy(other.gameObject);
                     }

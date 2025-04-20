@@ -21,10 +21,12 @@ public class ThrowableController : MonoBehaviour
     public GameObject[] throwablePrefabs;
     public Transform throwPoint;
 
-    public ThrowableBase throwable1;
+    public ThrowableBase throwable1,
+                         throwable2;
     public ThrowableBase currThrowable;
 
     public bool hasGrenade = false;
+    public bool hasSmokeBomb = false;
 
     void Start()
     {
@@ -33,11 +35,21 @@ public class ThrowableController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            currThrowable = throwable1;
+            Debug.Log("Grenade Equipped");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            currThrowable = throwable2;
+            Debug.Log("Smoke Bomb Equipped");
+        }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (hasGrenade || PlayerStatsScript.instance.grenadeCount != 0)
+            if ((hasGrenade || hasSmokeBomb) && currThrowable.throwableCount > 0)
             {
-                throwable1.Use(throwPoint.transform);//add ammo--
+                currThrowable?.Use(throwPoint.transform);
             }
             else
             {
@@ -47,24 +59,50 @@ public class ThrowableController : MonoBehaviour
     }
 
     //check if player has Grenade "weapon" picked up, if false instantiate it. if true add 'ammo' to it's count 
-    public bool ThrowableGet(int count, int countMax, int damage, float range, float timer)
+    public bool ThrowableGet(WeaponSO.WeaponType throwableType, int count, int countMax, int damage, float range, float timer)
     {
-        if (throwable1 == null)
+        switch (throwableType)
         {
-            throwable1 = new GrenadeThrowable(throwablePrefabs[0], count, countMax, damage, range, timer);
-            hasGrenade = true;
-            return true;
-        }
-        else
-        {
-            if (throwable1.CountGet(count))
-            {
-                return true;
-            }
-            else
-            {
+            case WeaponSO.WeaponType.Grenade:
+                if (throwable1 == null)
+                {
+                    throwable1 = new GrenadeThrowable(throwablePrefabs[0], count, countMax, damage, range, timer);
+                    hasGrenade = true;
+                    currThrowable = throwable1;
+                    return true;
+                }
+                else
+                {
+                    if (throwable1.CountGet(count))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            case WeaponSO.WeaponType.SmokeBomb:
+                if (throwable2 == null)
+                {
+                    throwable2 = new SmokeBombThrowable(throwablePrefabs[1], count, countMax, range, timer);
+                    currThrowable = throwable2;
+                    hasSmokeBomb = true;
+                    return true;
+                }
+                else
+                {
+                    if (throwable1.CountGet(count))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            default:
                 return false;
-            }
         }
     }
 

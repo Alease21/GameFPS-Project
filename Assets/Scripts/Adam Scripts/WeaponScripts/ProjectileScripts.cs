@@ -10,7 +10,8 @@ public class ProjectileScripts : MonoBehaviour
         GunProjectile,
         Fire,
         HitScan,
-        ThrowProjectile
+        Grenade,
+        SmokeBomb
     }
 
     //custom inspectorize me
@@ -27,6 +28,10 @@ public class ProjectileScripts : MonoBehaviour
     
     public GameObject explodeSphere;
     private float explodeDur = 0.2f;
+
+    private float smokeDur = 5f;
+    [SerializeField]private bool isSmokin = false;
+
     private void Start()
     {
         //does this make sense? will it still cause errors for projectiles without these comps?
@@ -37,11 +42,12 @@ public class ProjectileScripts : MonoBehaviour
         switch (projectileType)
         {
             case ProjectileType.GunProjectile:
-                sphereCollider.radius = explodeRange;
+                sphereCollider.radius = explodeRange / 2;
                 break;
-            case ProjectileType.ThrowProjectile:
+            case ProjectileType.Grenade:
+            case ProjectileType.SmokeBomb:
                 sphereCollider.enabled = true;
-                sphereCollider.radius = explodeRange;
+                sphereCollider.radius = explodeRange / 2;
                 StartCoroutine(ExplodeTimer());
                 break;
             case ProjectileType.Fire:
@@ -73,7 +79,8 @@ public class ProjectileScripts : MonoBehaviour
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(ExplodeTimer());
         }
-        else if (projectileType != ProjectileType.ThrowProjectile)
+        else if (projectileType != ProjectileType.Grenade 
+            && projectileType != ProjectileType.SmokeBomb)
         {
             //'Collision' with any collider destroys projectile
             OnDealDamage(collision.gameObject);
@@ -102,7 +109,8 @@ public class ProjectileScripts : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //adding enemyies/player to list if in range 
-        if (projectileType == ProjectileType.ThrowProjectile || projectileType == ProjectileType.GunProjectile)
+        if (projectileType == ProjectileType.GunProjectile 
+            || projectileType == ProjectileType.Grenade)
         {
             if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "EnvironEnemy")
             {
@@ -112,11 +120,19 @@ public class ProjectileScripts : MonoBehaviour
                 }
             }
         }
+        else if (projectileType == ProjectileType.SmokeBomb)
+        {
+            if (isSmokin && other.tag == "Player")
+            {
+                PlayerStatsScript.instance.isHidden = true;
+            }
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         //remove enemies/player if out of range
-        if (projectileType == ProjectileType.ThrowProjectile || projectileType == ProjectileType.GunProjectile)
+        if (projectileType == ProjectileType.GunProjectile
+            || projectileType == ProjectileType.Grenade)
         {
             if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "EnvironEnemy")
             {
@@ -126,34 +142,47 @@ public class ProjectileScripts : MonoBehaviour
                 }
             }
         }
-    }
-    //General explode, used for throwables and possibly for projectile gun as well
-    public void OnExplode()
-    {
-        for (int i = 0; i < inRangeColliders.Count; i++)
+        else if (projectileType == ProjectileType.SmokeBomb)
         {
-            switch (inRangeColliders[i].tag)
+            if (isSmokin && other.tag == "Player")
             {
-                case "Player":
-                    inRangeColliders[i]?.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
-                    break;
-                case "Enemy":
-                    inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
-                    break;
-                case "EnvironEnemy":
-                    //if(other.GetComponent<EnvironEnemy>() is IDestructable destructable)
-                    inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
-                    break;
+                PlayerStatsScript.instance.isHidden = false;
             }
         }
-        Destroy(gameObject);
+    }
+    //General explode, used for throwables and for projectile gun
+    public void OnExplode()
+    {
+        if (projectileType != ProjectileType.SmokeBomb)
+        {
+            for (int i = 0; i < inRangeColliders.Count; i++)
+            {
+                switch (inRangeColliders[i].tag)
+                {
+                    case "Player":
+                        PlayerStatsScript.instance.TakeDamage(projectileDamage);
+                        break;
+                    case "Enemy":
+                        inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
+                        break;
+                    case "EnvironEnemy":
+                        inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                        break;
+                }
+            }
+            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(SmokeCoro());
+        }
     }
 
     //coroutine to track throwable explode timer and then trigger explode
     public IEnumerator ExplodeTimer()
     {
         yield return new WaitForSecondsRealtime(explodeTime);
-        InRangeCleanup();
+        //InRangeCleanup();
 
         Vector3 initSphereScale = explodeSphere.transform.localScale;
 
@@ -164,8 +193,17 @@ public class ProjectileScripts : MonoBehaviour
             explodeSphere.transform.localScale = Vector3.Lerp(initSphereScale, new Vector3(explodeRange, explodeRange, explodeRange), explodeLerpRatio);
             yield return null;
         }
-
+        //clean up after lerp to avoid error? possible enemy dying during lerp causing null ref exception with list
+        InRangeCleanup();
         OnExplode();
+    }
+    public IEnumerator SmokeCoro()
+    {
+        isSmokin = true;
+        yield return new WaitForSecondsRealtime(smokeDur);
+        isSmokin = false;
+        PlayerStatsScript.instance.isHidden = false; //probably causes issues with multiple smoke areas when one disappears
+        Destroy(gameObject);
     }
 
     // Check for destroyed/null elements in list, then delete if any are found

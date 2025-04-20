@@ -11,7 +11,8 @@ public class WeaponSO : ScriptableObject
         Projectile,
         Continuous,
         Melee,
-        Throwable
+        Grenade,
+        SmokeBomb
     }
     //editor script to show relevant vars depending on weapon type? (no ammo for melee)
     public string weaponName;

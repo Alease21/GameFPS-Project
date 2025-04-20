@@ -80,6 +80,14 @@ public class WeaponSOEditor : Editor
                 EditorGUILayout.PropertyField(_range, new GUIContent("Grenade Range"));
                 EditorGUILayout.PropertyField(_explodeTime, new GUIContent("Grenade Timer"));
                 break;
+            case 5:
+                EditorGUILayout.LabelField("Throwable Info:", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
+                EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
+                //EditorGUILayout.PropertyField(_damage, new GUIContent("Grenade Damage"));
+                EditorGUILayout.PropertyField(_range, new GUIContent("Smoke Bomb Range"));
+                EditorGUILayout.PropertyField(_explodeTime, new GUIContent("Smoke Bomb Timer"));
+                break;
         }
 
         serializedObject.ApplyModifiedProperties(); //applies everything

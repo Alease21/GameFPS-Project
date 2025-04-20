@@ -208,8 +208,6 @@ public class WeaponController : MonoBehaviour
                     Debug.Log("Continuous weapon instantiated");
                 }
                 break;
-            case WeaponSO.WeaponType.Throwable:
-                break;
         }
 
         EquippedWeaponBool(weaponType);
