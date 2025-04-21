@@ -38,7 +38,7 @@ public class ThrowableController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha4) && hasGrenade)
+        if (Input.GetKeyDown(KeyCode.Q) && hasGrenade)
         {
             currThrowable = throwable1;
             isGrenade = true;
@@ -46,7 +46,7 @@ public class ThrowableController : MonoBehaviour
             InventoryController.instance.OnWeaponSwap();
             Debug.Log("Grenade Equipped");
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5) && hasSmokeBomb)
+        if (Input.GetKeyDown(KeyCode.E) && hasSmokeBomb)
         {
             currThrowable = throwable2;
             isGrenade = false;
