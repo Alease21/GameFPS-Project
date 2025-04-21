@@ -39,7 +39,7 @@ public class GrenadeThrowable : ThrowableBase
 
     public override void Use(Transform throwPoint)
     {
-        GameObject projectile = GameObject.Instantiate(throwablePrefab, throwPoint.position, Quaternion.LookRotation(throwPoint.transform.up));
+        GameObject projectile = GameObject.Instantiate(throwablePrefab, throwPoint.position, Quaternion.LookRotation(throwPoint.transform.forward));
         projectile.GetComponent<Rigidbody>().velocity = throwPoint.forward * throwableSpeed;
         projectile.GetComponent<ProjectileScripts>().projectileDamage = damage;
         projectile.GetComponent<ProjectileScripts>().explodeRange = range;

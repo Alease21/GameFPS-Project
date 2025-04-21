@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !hasDashed)
         {
             hasDashed = true;
+            StartCoroutine(InventoryController.instance.OnDash());//UI coro for dash CD visual
             StartCoroutine(DashCoolDownCoro());
 
             if ((!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.UpArrow)) &&

@@ -9,6 +9,7 @@ public class ItemPickupScript : MonoBehaviour
     {
         var weaponController = WeaponController.instance;
         var playerStatsScript = PlayerStatsScript.instance;
+        var throwableController = ThrowableController.instance;
 
         if (other.tag == "ItemPickup")
         {
@@ -46,7 +47,7 @@ public class ItemPickupScript : MonoBehaviour
                         weaponController.weapon2?.ammoCount < weaponController.weapon2?.ammoMax ||
                         weaponController.weapon3?.ammoCount < weaponController.weapon3?.ammoMax)
                     {
-                        //just for testing so ammo pack affects all guns player currently has
+                        //ammo pack affects all guns player currently has
                         weaponController.weapon1?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
                         weaponController.weapon2?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
                         weaponController.weapon3?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
@@ -94,19 +95,12 @@ public class ItemPickupScript : MonoBehaviour
                         Destroy(other.gameObject);
                     }
                     break;
-                case WeaponSO.WeaponType.Grenade: // can this fall through?
-                    /*if (ThrowableController.instance.ThrowableGet(weaponPickUpSO.weaponType, weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
-                    {
-                        Destroy(other.gameObject);
-                    }
-                    else
-                    {
-                        Debug.Log("I don't need any of those throwables");
-                    }
-                    break;*/
+                case WeaponSO.WeaponType.Grenade:
                 case WeaponSO.WeaponType.SmokeBomb:
-                    if (ThrowableController.instance.ThrowableGet(weaponPickUpSO.weaponType, weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
+                    if (throwableController.ThrowableGet(weaponPickUpSO.weaponType, weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
                     {
+                        throwableController.ThrowableCountUpdater();
+                        InventoryController.instance.OnWeaponSwap();
                         Destroy(other.gameObject);
                     }
                     else

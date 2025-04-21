@@ -19,7 +19,7 @@ public class WeaponController : MonoBehaviour
 
     private PlayerStatsScript playerStatsScript;
 
-    [SerializeField] private GunBase myGun;
+    public GunBase myGun;
     public GunBase weapon1,
                    weapon2,
                    weapon3;
@@ -40,9 +40,9 @@ public class WeaponController : MonoBehaviour
     private bool isHoldingFire = false;
     private float continusousTimer = 0f;
 
-    private bool isHitScan,
-                 isProjectile,
-                 isContinuous;
+    public bool isHitScan,
+                isProjectile,
+                isContinuous;
 
     //set up to never flip false after true, could change for dropping weapons in future.
     public bool hasHitScan = false,
@@ -211,6 +211,7 @@ public class WeaponController : MonoBehaviour
         }
 
         EquippedWeaponBool(weaponType);
+        InventoryController.instance.OnWeaponSwap();
         AmmoStatUpdater();
     }
 
@@ -221,6 +222,7 @@ public class WeaponController : MonoBehaviour
         currWeapon.SetActive(false);
         isHoldingFire = false;
         EquippedWeaponBool(newWeaponType);
+        InventoryController.instance.OnWeaponSwap();
 
         switch (newWeaponType)
         {
@@ -235,6 +237,7 @@ public class WeaponController : MonoBehaviour
             case WeaponSO.WeaponType.Continuous:
                 currWeapon = continuousWeapon;
                 myGun = weapon3;
+                StartCoroutine(ContinuousWeaponFire());
                 break;
         }
         if (!currWeapon.activeInHierarchy)

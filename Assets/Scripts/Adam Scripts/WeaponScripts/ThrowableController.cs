@@ -28,6 +28,9 @@ public class ThrowableController : MonoBehaviour
     public bool hasGrenade = false;
     public bool hasSmokeBomb = false;
 
+    public bool isGrenade = false;
+    public bool isSmokeBomb = false;
+
     void Start()
     {
         
@@ -35,14 +38,20 @@ public class ThrowableController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Alpha4) && hasGrenade)
         {
             currThrowable = throwable1;
+            isGrenade = true;
+            isSmokeBomb = false;
+            InventoryController.instance.OnWeaponSwap();
             Debug.Log("Grenade Equipped");
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        if (Input.GetKeyDown(KeyCode.Alpha5) && hasSmokeBomb)
         {
             currThrowable = throwable2;
+            isGrenade = false;
+            isSmokeBomb = true;
+            InventoryController.instance.OnWeaponSwap();
             Debug.Log("Smoke Bomb Equipped");
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -50,6 +59,7 @@ public class ThrowableController : MonoBehaviour
             if ((hasGrenade || hasSmokeBomb) && currThrowable.throwableCount > 0)
             {
                 currThrowable?.Use(throwPoint.transform);
+                ThrowableCountUpdater();
             }
             else
             {
@@ -67,8 +77,10 @@ public class ThrowableController : MonoBehaviour
                 if (throwable1 == null)
                 {
                     throwable1 = new GrenadeThrowable(throwablePrefabs[0], count, countMax, damage, range, timer);
-                    hasGrenade = true;
                     currThrowable = throwable1;
+                    hasGrenade = true;
+                    isGrenade = true;
+                    isSmokeBomb = false;
                     return true;
                 }
                 else
@@ -88,11 +100,13 @@ public class ThrowableController : MonoBehaviour
                     throwable2 = new SmokeBombThrowable(throwablePrefabs[1], count, countMax, range, timer);
                     currThrowable = throwable2;
                     hasSmokeBomb = true;
+                    isGrenade = false;
+                    isSmokeBomb = true;
                     return true;
                 }
                 else
                 {
-                    if (throwable1.CountGet(count))
+                    if (throwable2.CountGet(count))
                     {
                         return true;
                     }
@@ -106,11 +120,18 @@ public class ThrowableController : MonoBehaviour
         }
     }
 
-    public void ThrowableCountUIUpdater()
+    public void ThrowableCountUpdater()
     {
         if (throwable1 != null)
         {
             PlayerStatsScript.instance.grenadeCount = throwable1.throwableCount;
+            PlayerStatsScript.instance.maxGrenades = throwable1.throwableMax;
         }
+        if (throwable2 != null)
+        {
+            PlayerStatsScript.instance.smokeBombCount = throwable2.throwableCount;
+            PlayerStatsScript.instance.maxSmokeBombs = throwable2.throwableMax;
+        }
+        InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 }
