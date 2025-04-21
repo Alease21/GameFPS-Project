@@ -29,6 +29,8 @@ public class ItemPickupScript : MonoBehaviour
                         }
                     }
                     break;
+                case ItemPackSO.ItemPackType.HOTPack:
+                    break;
                 case ItemPackSO.ItemPackType.ShieldPack:
                     if (!itemPackPickUp.item.isRecharging)
                     {

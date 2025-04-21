@@ -6,8 +6,8 @@ public class CameraMovement : MonoBehaviour
 {
     private Camera _mainCam;
 
-    private float _xRotate = 0f;
-    private float _yRotate = 0f;
+    private float _xRotate;
+    private float _yRotate;
     [SerializeField] private float _camPivotMax = 50f;
     [SerializeField] private float _camSensitivity;
 
@@ -17,6 +17,8 @@ public class CameraMovement : MonoBehaviour
     private void Start()
     {
         _mainCam = GetComponentInChildren<Camera>();
+
+        _xRotate = transform.localRotation.eulerAngles.y;
 
         //hides cursor and locks it within the game window
         Cursor.visible = false;

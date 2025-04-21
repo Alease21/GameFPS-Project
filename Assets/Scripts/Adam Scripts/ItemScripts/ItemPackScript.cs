@@ -15,6 +15,7 @@ public class ItemPackScript : MonoBehaviour
         //In case of HealhPack or ShieldPack ItemPackTypes, start ItemRechargeCoro().
         switch (itemPackSO.itemPackType)
         {
+            case ItemPackSO.ItemPackType.HOTPack:
             case ItemPackSO.ItemPackType.HealthPack:
                 item = new HealthItem { packAmount = itemPackSO.packAmount, packPrefab = itemPackPrefab };
 

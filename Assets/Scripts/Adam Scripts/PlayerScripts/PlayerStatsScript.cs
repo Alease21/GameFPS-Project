@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -49,6 +50,13 @@ public class PlayerStatsScript : MonoBehaviour
         _health = _maxHealth;
         _shield = 0;
 
+        StartCoroutine(StartupCoro());
+    }
+
+    //Bandaid fix for startup error (error wasn't causing any issues though)
+    public IEnumerator StartupCoro()
+    {
+        yield return new WaitForEndOfFrameUnit();
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 

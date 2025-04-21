@@ -26,11 +26,11 @@ public class ProjectileScripts : MonoBehaviour
     public float explodeRange;
     public float explodeTime;
     
-    public GameObject explodeSphere;
+    [SerializeField] private GameObject explodeSphere;
     private float explodeDur = 0.2f;
 
-    private float smokeDur = 5f;
-    [SerializeField]private bool isSmokin = false;
+    [SerializeField] private float smokeDur = 5f;
+    [SerializeField] private bool isSmokin = false;
 
     private void Start()
     {
@@ -45,9 +45,11 @@ public class ProjectileScripts : MonoBehaviour
                 sphereCollider.radius = explodeRange / 2;
                 break;
             case ProjectileType.Grenade:
-            case ProjectileType.SmokeBomb:
                 sphereCollider.enabled = true;
                 sphereCollider.radius = explodeRange / 2;
+                break;
+            case ProjectileType.SmokeBomb:
+                sphereCollider.enabled = true;
                 StartCoroutine(ExplodeTimer());
                 break;
             case ProjectileType.Fire:
@@ -98,7 +100,6 @@ public class ProjectileScripts : MonoBehaviour
                 other.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
                 break;
             case "EnvironEnemy":
-                //if(other.GetComponent<EnvironEnemy>() is IDestructable destructable)
                 other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
                 break;
         }
@@ -120,9 +121,12 @@ public class ProjectileScripts : MonoBehaviour
                 }
             }
         }
-        else if (projectileType == ProjectileType.SmokeBomb)
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (isSmokin)
         {
-            if (isSmokin && other.tag == "Player")
+            if (other.tag == "Player")
             {
                 PlayerStatsScript.instance.isHidden = true;
             }
@@ -157,7 +161,7 @@ public class ProjectileScripts : MonoBehaviour
         {
             for (int i = 0; i < inRangeColliders.Count; i++)
             {
-                switch (inRangeColliders[i].tag)
+                switch (inRangeColliders[i]?.tag)
                 {
                     case "Player":
                         PlayerStatsScript.instance.TakeDamage(projectileDamage);
@@ -182,18 +186,26 @@ public class ProjectileScripts : MonoBehaviour
     public IEnumerator ExplodeTimer()
     {
         yield return new WaitForSecondsRealtime(explodeTime);
-        //InRangeCleanup();
 
         Vector3 initSphereScale = explodeSphere.transform.localScale;
+        float initColliderRadius = sphereCollider.radius;
+        Color smokeSphereColor = explodeSphere.GetComponent<Renderer>().material.color;
 
         for (float timer = 0f; timer < explodeDur; timer += Time.deltaTime)
         {
             float explodeLerpRatio = timer / explodeDur;
 
             explodeSphere.transform.localScale = Vector3.Lerp(initSphereScale, new Vector3(explodeRange, explodeRange, explodeRange), explodeLerpRatio);
+            
+            //smoke bomb specific stuff: lerping collider radius to fix enter/exit issues & color fade in
+            if (projectileType == ProjectileType.SmokeBomb)
+            {
+                explodeSphere.GetComponent<Renderer>().material.color = Color.Lerp(smokeSphereColor, smokeSphereColor + new Color(0f,0f,0f,0.7f), explodeLerpRatio);
+                sphereCollider.radius = Mathf.Lerp(initColliderRadius, explodeRange / 2, explodeLerpRatio);
+            }
             yield return null;
         }
-        //clean up after lerp to avoid error? possible enemy dying during lerp causing null ref exception with list
+
         InRangeCleanup();
         OnExplode();
     }
@@ -201,8 +213,19 @@ public class ProjectileScripts : MonoBehaviour
     {
         isSmokin = true;
         yield return new WaitForSecondsRealtime(smokeDur);
-        isSmokin = false;
-        PlayerStatsScript.instance.isHidden = false; //probably causes issues with multiple smoke areas when one disappears
+
+        float initColliderRadius = sphereCollider.radius;
+        Color smokeSphereColor = explodeSphere.GetComponent<Renderer>().material.color;
+
+        //Collider radius lerp to fix enter/exit issues, color fade out
+        for (float timer = 0f; timer < 1f;  timer += Time.deltaTime)
+        {                           //hard coded in value for smoke fade duration
+            float smokeFadeRatio = timer / 1f;
+
+            explodeSphere.GetComponent<Renderer>().material.color = Color.Lerp(smokeSphereColor, smokeSphereColor * new Color(1f,1f,1f,0f), smokeFadeRatio);
+            sphereCollider.radius = Mathf.Lerp(initColliderRadius, 0f, smokeFadeRatio);
+            yield return null;
+        }
         Destroy(gameObject);
     }
 

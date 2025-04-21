@@ -62,8 +62,8 @@ public class InventoryController : MonoBehaviour
                                              grenadeCountIG,
                                              smokeBombCountIG;
 
-[SerializeField] private TextMeshProUGUI healthTextInv,
-                                         shieldTextInv;
+    [SerializeField] private TextMeshProUGUI healthTextInv,
+                                             shieldTextInv;
 
     [SerializeField] private UnityEngine.UI.Slider healthBar,
                                                    shieldBar,
