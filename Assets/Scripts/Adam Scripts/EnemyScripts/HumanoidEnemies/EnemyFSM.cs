@@ -36,20 +36,7 @@ public class EnemyFSM : MonoBehaviour
     private Vector3 raycastOffset = new Vector3(0, 1, 0);
 
     public bool gotShot;
-    private void OnDrawGizmosSelected()
-    {
-        for (int i=0; i < patrolPoints.Length; i++)
-        {
-            int next = i + 1;
-            if (next == patrolPoints.Length)
-            {
-                next = 0;
-            }
-            Gizmos.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
 
-            Gizmos.DrawLine(patrolPoints[i].transform.position, patrolPoints[next].transform.position);
-        }
-    }
     private void Start()
     {
         isIdle = false;

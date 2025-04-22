@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: HOT-HealthPack
   m_EditorClassIdentifier: 
   itemPackName: HOT Health Pack
-  packAmount: 25
+  packAmount: 5
   itemPackType: 1
   rechargeTime: 10
+  tickTime: 1
+  numTicks: 5

@@ -18,4 +18,8 @@ public class ItemPackSO : ScriptableObject
 
     // edit inspector to show only on iRechargableItem items?
     public float rechargeTime;
+
+    //hots only
+    public float tickTime;
+    public int numTicks;
 }

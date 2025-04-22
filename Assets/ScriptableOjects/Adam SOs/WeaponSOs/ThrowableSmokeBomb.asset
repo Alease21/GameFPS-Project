@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce912048a57c934285f17a51e9143f5, type: 3}
   m_Name: ThrowableSmokeBomb
   m_EditorClassIdentifier: 
-  weaponName: 
+  weaponName: Smoke Bomb 1
   weaponType: 5
   ammoMax: 5
   ammoCount: 1

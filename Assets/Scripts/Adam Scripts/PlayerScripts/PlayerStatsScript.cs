@@ -78,7 +78,15 @@ public class PlayerStatsScript : MonoBehaviour
         }
         InventoryController.instance.UIUpdateEvent?.Invoke();
         return true;
-
+    }
+    public IEnumerator HOTHealCoro(float hotTimer, int numTicks, int amount)
+    {
+        while (numTicks > 0)
+        {
+            yield return new WaitForSecondsRealtime(hotTimer);
+            GetHealed(amount);
+            numTicks--;
+        }
     }
 
     //Check if player can be shielded, if amount to added to shield > maxShield, cap shield at maxShield

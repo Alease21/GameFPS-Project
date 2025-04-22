@@ -731,10 +731,10 @@ PrefabInstance:
       addedObject: {fileID: 9088537065654500537}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa2bd3460a3ecf246a51964bd7115480, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7033001330818864691}
+      addedObject: {fileID: 6149007220552334363}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa2bd3460a3ecf246a51964bd7115480, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6149007220552334363}
+      addedObject: {fileID: 7033001330818864691}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa2bd3460a3ecf246a51964bd7115480, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9099809329458954434}
@@ -777,6 +777,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6149007220552334363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654065763291456644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0319ad4387016b499250b45939664b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showFOV: 0
+  showPatPath: 0
+  enemySO: {fileID: 11400000, guid: cc8723d0b3b425345ba1771c8acea04f, type: 2}
+  weaponSO: {fileID: 11400000, guid: 3f1156aa820591248a36377865c97c38, type: 2}
+  enemyName: Melee Enemy
+  enemyHealth: 0
+  enemyDamage: 0
+  enemyRotateSpeed: 0
+  enemyFOV: 0
+  enemyViewDist: 0
 --- !u!114 &7033001330818864691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,26 +845,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerTarget: {fileID: 0}
---- !u!114 &6149007220552334363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654065763291456644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0319ad4387016b499250b45939664b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemySO: {fileID: 11400000, guid: cc8723d0b3b425345ba1771c8acea04f, type: 2}
-  weaponSO: {fileID: 11400000, guid: 3f1156aa820591248a36377865c97c38, type: 2}
-  enemyName: Melee Enemy
-  enemyHealth: 0
-  enemyDamage: 0
-  enemyRotateSpeed: 0
-  enemyFOV: 0
-  enemyViewDist: 0
+  gotShot: 0
 --- !u!114 &9099809329458954434
 MonoBehaviour:
   m_ObjectHideFlags: 0

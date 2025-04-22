@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ProjectileScripts : MonoBehaviour
@@ -47,6 +48,7 @@ public class ProjectileScripts : MonoBehaviour
             case ProjectileType.Grenade:
                 sphereCollider.enabled = true;
                 sphereCollider.radius = explodeRange / 2;
+                StartCoroutine(ExplodeTimer());
                 break;
             case ProjectileType.SmokeBomb:
                 sphereCollider.enabled = true;
@@ -81,7 +83,7 @@ public class ProjectileScripts : MonoBehaviour
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(ExplodeTimer());
         }
-        else if (projectileType != ProjectileType.Grenade 
+        else if (projectileType != ProjectileType.Grenade
             && projectileType != ProjectileType.SmokeBomb)
         {
             //'Collision' with any collider destroys projectile
@@ -105,7 +107,6 @@ public class ProjectileScripts : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
     #region ExplodingSphereStuff
     private void OnTriggerEnter(Collider other)
     {
@@ -161,17 +162,20 @@ public class ProjectileScripts : MonoBehaviour
         {
             for (int i = 0; i < inRangeColliders.Count; i++)
             {
-                switch (inRangeColliders[i]?.tag)
+                if (inRangeColliders[i] != null)
                 {
-                    case "Player":
-                        PlayerStatsScript.instance.TakeDamage(projectileDamage);
-                        break;
-                    case "Enemy":
-                        inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
-                        break;
-                    case "EnvironEnemy":
-                        inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
-                        break;
+                    switch (inRangeColliders[i]?.tag)
+                    {
+                        case "Player":
+                            PlayerStatsScript.instance.TakeDamage(projectileDamage);
+                            break;
+                        case "Enemy":
+                            inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
+                            break;
+                        case "EnvironEnemy":
+                            inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                            break;
+                    }
                 }
             }
             Destroy(gameObject);

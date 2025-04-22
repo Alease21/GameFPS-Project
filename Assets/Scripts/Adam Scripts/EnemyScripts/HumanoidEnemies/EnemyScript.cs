@@ -6,6 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyWeaponController))]
 public class EnemyScript : MonoBehaviour
 {
+    [Header("Gizmo Bools:")]
+    [Space(5)]
+    //GizmoBools to flip in inspector
+    public bool showFOV;
+    public bool showPatPath;
+    //
+    [Space(20)]
+
     public EnemySO enemySO;
     public WeaponSO weaponSO;
     private EnemyWeaponController e_WepControl;
@@ -20,13 +28,33 @@ public class EnemyScript : MonoBehaviour
     public float enemyFOV;
     public float enemyViewDist;
 
+    //public bool isTakeDOT;
+
     //Gizmo to visualize enemy sight range(FOV) in scene editor
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-        UnityEditor.Handles.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
-        Vector3 rotatedForward = Quaternion.Euler(0, -enemySO.enemyFOV / 2, 0) * transform.forward;
-        UnityEditor.Handles.DrawSolidArc(transform.position, transform.up, rotatedForward, enemySO.enemyFOV, enemySO.enemyViewDistance);
+        if (showFOV)
+        {
+            UnityEditor.Handles.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
+            Vector3 rotatedForward = Quaternion.Euler(0, -enemySO.enemyFOV / 2, 0) * transform.forward;
+            UnityEditor.Handles.DrawSolidArc(transform.position, transform.up, rotatedForward, enemySO.enemyFOV, enemySO.enemyViewDistance);
+        }
+        if (showPatPath)
+        {
+            for (int i = 0; i < GetComponent<EnemyFSM>().patrolPoints.Length; i++)
+            {
+                int next = i + 1;
+                if (next == GetComponent<EnemyFSM>().patrolPoints.Length)
+                {
+                    next = 0;
+                }
+                Gizmos.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
+
+                Gizmos.DrawLine(GetComponent<EnemyFSM>().patrolPoints[i].transform.position, GetComponent<EnemyFSM>().patrolPoints[next].transform.position);
+            }
+        }
+
     }
 #endif
 
@@ -71,6 +99,7 @@ public class EnemyScript : MonoBehaviour
         }
         enemyFSM.gotShot = true;
     }
+
     public void OnEnemyDeath()
     {
         Destroy(gameObject);

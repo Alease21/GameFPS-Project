@@ -30,6 +30,20 @@ public class ItemPickupScript : MonoBehaviour
                     }
                     break;
                 case ItemPackSO.ItemPackType.HOTPack:
+                    if (!itemPackPickUp.item.isRecharging)
+                    {
+                        //send initial heal ticks, if player can be healed then start coro heal the remainder of HOT amount over numTicks intervals
+                        //int initHeal = itemPackPickUp.itemPackSO.packAmount / itemPackPickUp.itemPackSO.numTicks;
+                        if (playerStatsScript.GetHealed(itemPackPickUp.itemPackSO.packAmount))
+                        {
+                            StartCoroutine(playerStatsScript.HOTHealCoro(itemPackPickUp.itemPackSO.tickTime, 
+                                itemPackPickUp.itemPackSO.numTicks - 1, // -1 to numTicks b/c of initial heal done in header
+
+                                itemPackPickUp.itemPackSO.packAmount));
+                            itemPackPickUp.item.OnPackConsume(other.gameObject);
+                            Debug.Log("HOT Pack used");
+                        }
+                    }
                     break;
                 case ItemPackSO.ItemPackType.ShieldPack:
                     if (!itemPackPickUp.item.isRecharging)

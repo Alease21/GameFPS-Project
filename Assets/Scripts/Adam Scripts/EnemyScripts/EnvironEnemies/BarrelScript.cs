@@ -85,14 +85,17 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     {
         for (int i = 0; i < inRangeColliders.Count; i++)
         {
-            switch (inRangeColliders[i].tag)
+            if (inRangeColliders[i] != null)
             {
-                case "Player":
-                    inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage);
-                    break;
-                case "Enemy":
-                    inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage);
-                    break;
+                switch (inRangeColliders?[i].tag)
+                {
+                    case "Player":
+                        inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage);
+                        break;
+                    case "Enemy":
+                        inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage);
+                        break;
+                }
             }
         }
         hasExploded = false;
