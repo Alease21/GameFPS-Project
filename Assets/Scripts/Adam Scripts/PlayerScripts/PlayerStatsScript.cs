@@ -60,6 +60,24 @@ public class PlayerStatsScript : MonoBehaviour
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 
+    /// <summary>
+    /// DELETE ME************************
+    /// </summary>
+    
+    /*
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine(TakeDOTDamage(5, 5, 1));
+        }
+    }
+    */
+    /// <summary>
+    /// DELETE ME*************************
+    /// </summary>
+
+
     //Check if player can be healed, if amount to be healed > maxHealth, cap health at maxHealth
     //return true if player can be healed and increment health by amount, else false
     public bool GetHealed(int amount)
@@ -131,5 +149,19 @@ public class PlayerStatsScript : MonoBehaviour
             Debug.Log("health is 0 now :(");
         }
         InventoryController.instance.UIUpdateEvent?.Invoke();
+    }
+
+    //fix me? i run fine but not if triggered by something else?
+    public IEnumerator TakeDOTDamage(int damage, int ticks, float tickTime)
+    {
+        //Debug.Log("DOT coro started");
+
+        while (ticks > 0)
+        {
+            yield return new WaitForSecondsRealtime(tickTime);
+            TakeDamage(damage);
+            ticks--;
+            //Debug.Log("Damage Tick. ticks: " + ticks);
+        }
     }
 }

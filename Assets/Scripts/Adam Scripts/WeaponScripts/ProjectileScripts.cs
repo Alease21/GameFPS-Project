@@ -83,6 +83,13 @@ public class ProjectileScripts : MonoBehaviour
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(ExplodeTimer());
         }
+        //using this elseif for fire DOT dealing
+        else if (projectileType == ProjectileType.Fire)
+        {
+            //OnDealDOTDamage(collision.gameObject);
+            OnDealDamage(collision.gameObject);
+            Destroy(gameObject);
+        }
         else if (projectileType != ProjectileType.Grenade
             && projectileType != ProjectileType.SmokeBomb)
         {
@@ -105,7 +112,22 @@ public class ProjectileScripts : MonoBehaviour
                 other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
                 break;
         }
-        Destroy(gameObject);
+    }
+    //Fix me?? calling to start coro like this not working?
+    public void OnDealDOTDamage(GameObject other)
+    {
+        switch (other.tag)
+        {
+            case "Player":
+                //other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
+                break;
+            case "Enemy":
+                StartCoroutine(other.GetComponent<EnemyScript>().TakeDOTDamage(projectileDamage, 5, 1));
+                break;
+            case "EnvironEnemy":
+                //other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                break;
+        }
     }
     #region ExplodingSphereStuff
     private void OnTriggerEnter(Collider other)

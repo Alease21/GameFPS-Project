@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class WeaponController : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
     private bool isHoldingFire = false;
-    private float continusousTimer = 0f;
+    private float continuousTimer = 0f;
 
     public bool isHitScan,
                 isProjectile,
@@ -62,7 +63,7 @@ public class WeaponController : MonoBehaviour
     {
         if (myGun != null)
         {
-            //if 1 key pressed and if player has hitscan weapon, swap to hitscan weapon
+            //if player has hitscan weapon, swap to hitscan weapon
             if (Input.GetKeyDown(KeyCode.Alpha1) && !isHitScan)
             {
                 if (hasHitScan)
@@ -70,9 +71,8 @@ public class WeaponController : MonoBehaviour
                     myGun = weapon1;
                     WeaponPrefabSwap(WeaponSO.WeaponType.HitScan);
                 }
-                //Debug.Log(hasContinuous ? "Swapped to hitscan weapon." : "No weapon in 1st slot.");
             }
-            //if 2 key pressed and if player has projectile weapon, swap to projectile weapon
+            //if player has projectile weapon, swap to projectile weapon
             if (Input.GetKeyDown(KeyCode.Alpha2) && !isProjectile)
             {
                 if (hasProjectile)
@@ -80,9 +80,8 @@ public class WeaponController : MonoBehaviour
                     myGun = weapon2;
                     WeaponPrefabSwap(WeaponSO.WeaponType.Projectile);
                 }
-                //Debug.Log(hasContinuous ? "Swapped to projectile weapon." : "No weapon in 2nd slot.");
             }
-            //if 3 key pressed and if player has continuous weapon, swap to continuous weapon
+            //if player has continuous weapon, swap to continuous weapon
             if (Input.GetKeyDown(KeyCode.Alpha3) && !isContinuous)
             {
                 if (hasContinuous)
@@ -90,21 +89,16 @@ public class WeaponController : MonoBehaviour
                     myGun = weapon3;
                     WeaponPrefabSwap(WeaponSO.WeaponType.Continuous);
                 }
-                //Debug.Log(hasContinuous ? "Swapped to continuous weapon." : "No weapon in 3rd slot.");
             }
-            //On left mouse click, use currently equipped weapon and update ammo
+            //if equipped weapon is not continuous, use currently equipped weapon and update ammo
             if (Input.GetMouseButtonDown(0) && !isContinuous)
             {
                 myGun.Use();
                 AmmoStatUpdater();
             }
-
-            //On left mouse hold and equipped weapon is continuous, use weapon and update ammocount.
-            //Flip isHoldingFire true if it is false.
+            //if equipped weapon is continuous, use weapon at continouousTickRate intervals
             if (Input.GetMouseButton(0) && isContinuous)
             {
-                //myGun.Use();
-
                 if (!isHoldingFire)
                 {
                     isHoldingFire = true;
@@ -112,21 +106,20 @@ public class WeaponController : MonoBehaviour
                 }
                 else
                 {
-                    continusousTimer += Time.deltaTime;
-                    if (continusousTimer >= continuousTickRate / 5)
+                    continuousTimer += Time.deltaTime;
+                    if (continuousTimer >= continuousTickRate / 5)
                     {
                         myGun.Use();
-                        continusousTimer = 0f;
+                        continuousTimer = 0f;
                     }
                 }
                 AmmoStatUpdater();
             }
-
             //On left mouse release, update ammo and flip isHoldingFire to false if it is true
             if (Input.GetMouseButtonUp(0) && isContinuous)
             {
                 AmmoStatUpdater();
-
+                Debug.Log("test button up");
                 if (isHoldingFire)
                 {
                     isHoldingFire = false;

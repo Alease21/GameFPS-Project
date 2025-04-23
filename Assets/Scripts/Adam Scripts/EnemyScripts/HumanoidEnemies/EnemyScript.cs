@@ -100,6 +100,19 @@ public class EnemyScript : MonoBehaviour
         enemyFSM.gotShot = true;
     }
 
+    //Fix me, i don't continue running for some reason after triggers
+    public IEnumerator TakeDOTDamage(int damage, int ticks, float tickTime)
+    {
+        Debug.Log("Enemy DOT coro started");
+
+        while (ticks > 0)
+        {
+            yield return new WaitForSecondsRealtime(tickTime);
+            TakeDamage(damage);
+            ticks--;
+            Debug.Log("Enemy Damage Tick. ticks: " + ticks);
+        }
+    }
     public void OnEnemyDeath()
     {
         Destroy(gameObject);
