@@ -12,8 +12,8 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
     [Range(1,10)] public float explodeRange;
 
-    [SerializeField] private int health;
-    [SerializeField] private int damage;
+    [SerializeField] private float health;
+    [SerializeField] private float damage;
 
     public List<GameObject> inRangeColliders;
     private bool hasExploded = false;
@@ -31,8 +31,13 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         damage = environEnemySO.damage;
     }
 
-    public void OnTakeDamage(int damage)
+    public void OnTakeDamage(float damage, bool useDOTDamage = false)
     {
+        if (useDOTDamage)
+        {
+            StopCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));
+            StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
+        }
         // add CD for damage take? (continuous weapon is too quick?) 
         if (!hasExploded)
         {
@@ -48,6 +53,16 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
             }
         }
     }
+    public IEnumerator TakeDOTDamage(float damage, int ticks, float tickTime)
+    {
+        while (ticks > 0)
+        {
+            yield return new WaitForSecondsRealtime(tickTime);
+            OnTakeDamage(damage);
+            ticks--;
+        }
+    }
+
     public void OnDestroyed()
     {
         // clean up gameobject list from trigger sphere before dealing dmg
@@ -90,10 +105,10 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
                 switch (inRangeColliders?[i].tag)
                 {
                     case "Player":
-                        inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage);
+                        inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage, true);
                         break;
                     case "Enemy":
-                        inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage);
+                        inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage, true);
                         break;
                 }
             }

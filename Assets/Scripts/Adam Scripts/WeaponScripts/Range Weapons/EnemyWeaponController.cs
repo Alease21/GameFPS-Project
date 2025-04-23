@@ -39,7 +39,7 @@ public class EnemyWeaponController : MonoBehaviour
         myMelee?.Use();
     }
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax, initialAmmoCount
-    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, int damage)
+    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, float damage)
     {
         if (currWeapon != null)
         {

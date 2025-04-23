@@ -17,7 +17,7 @@ public class ProjectileScripts : MonoBehaviour
 
     //custom inspectorize me
     public ProjectileType projectileType;
-    public int projectileDamage;
+    public float projectileDamage;
 
     private Vector3 initialPos;
     private float fireDistance = 2.255f;//make this adjustable in inspector?
@@ -80,14 +80,11 @@ public class ProjectileScripts : MonoBehaviour
     {
         if (projectileType == ProjectileType.GunProjectile)
         {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(ExplodeTimer());
         }
-        //using this elseif for fire DOT dealing
         else if (projectileType == ProjectileType.Fire)
         {
-            //OnDealDOTDamage(collision.gameObject);
-            OnDealDamage(collision.gameObject);
+            OnDealDamage(collision.gameObject, true);
             Destroy(gameObject);
         }
         else if (projectileType != ProjectileType.Grenade
@@ -98,7 +95,7 @@ public class ProjectileScripts : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void OnDealDamage(GameObject other)
+    public void OnDealDamage(GameObject other, bool useDOTDamage = false)
     {
         switch (other.tag)
         {
@@ -106,10 +103,10 @@ public class ProjectileScripts : MonoBehaviour
                 other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
                 break;
             case "Enemy":
-                other.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
+                other.GetComponent<EnemyScript>().TakeDamage(projectileDamage, useDOTDamage);
                 break;
             case "EnvironEnemy":
-                other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, useDOTDamage);
                 break;
         }
     }
@@ -189,13 +186,13 @@ public class ProjectileScripts : MonoBehaviour
                     switch (inRangeColliders[i]?.tag)
                     {
                         case "Player":
-                            PlayerStatsScript.instance.TakeDamage(projectileDamage);
+                            PlayerStatsScript.instance.TakeDamage(projectileDamage, true);
                             break;
                         case "Enemy":
-                            inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage);
+                            inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage, true);
                             break;
                         case "EnvironEnemy":
-                            inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
+                            inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, true);
                             break;
                     }
                 }
@@ -204,6 +201,7 @@ public class ProjectileScripts : MonoBehaviour
         }
         else
         {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(SmokeCoro());
         }
     }

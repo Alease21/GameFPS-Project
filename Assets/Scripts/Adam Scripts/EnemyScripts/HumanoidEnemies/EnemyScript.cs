@@ -6,13 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyWeaponController))]
 public class EnemyScript : MonoBehaviour
 {
+    //Gizmo bools to flip in inspector
     [Header("Gizmo Bools:")]
     [Space(5)]
-    //GizmoBools to flip in inspector
     public bool showFOV;
     public bool showPatPath;
-    //
     [Space(20)]
+    //
 
     public EnemySO enemySO;
     public WeaponSO weaponSO;
@@ -21,14 +21,12 @@ public class EnemyScript : MonoBehaviour
     private EnemyFSM enemyFSM;
     
     public string enemyName;
-    public int enemyHealth;
-    public int enemyDamage;
+    public float enemyHealth;
+    public float enemyDamage;
     public float enemyRotateSpeed;
     //public float enemySpeed;
     public float enemyFOV;
     public float enemyViewDist;
-
-    //public bool isTakeDOT;
 
     //Gizmo to visualize enemy sight range(FOV) in scene editor
 #if UNITY_EDITOR
@@ -86,8 +84,12 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage, bool useDOTDamage = false)
     {
+        if (useDOTDamage)
+        {
+            StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
+        }
         if (enemyHealth > 0 && enemyHealth > damage)
         {
             enemyHealth -= damage;
@@ -101,20 +103,19 @@ public class EnemyScript : MonoBehaviour
     }
 
     //Fix me, i don't continue running for some reason after triggers
-    public IEnumerator TakeDOTDamage(int damage, int ticks, float tickTime)
+    public IEnumerator TakeDOTDamage(float damage, int ticks, float tickTime)
     {
-        Debug.Log("Enemy DOT coro started");
-
         while (ticks > 0)
         {
             yield return new WaitForSecondsRealtime(tickTime);
             TakeDamage(damage);
             ticks--;
-            Debug.Log("Enemy Damage Tick. ticks: " + ticks);
         }
     }
+
     public void OnEnemyDeath()
     {
+        //add ondeath animation?
         Destroy(gameObject);
     }
 }

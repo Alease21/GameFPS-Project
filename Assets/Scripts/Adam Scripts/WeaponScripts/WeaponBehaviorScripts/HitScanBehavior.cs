@@ -8,7 +8,7 @@ public class HitScanBehavior : IGunBehavior
     public GameObject hitScanShotPrefab;
 
     // raycast forward from shootpoint position and deal damage to hit target
-    public void FireGun(Transform shootPoint, int damage, float range)
+    public void FireGun(Transform shootPoint, float damage, float range)
     {
         RaycastHit hit;
 

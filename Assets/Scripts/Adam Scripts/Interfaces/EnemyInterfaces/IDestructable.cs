@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IDestructable
 {
-    public void OnTakeDamage(int damage);
+    public void OnTakeDamage(float damage, bool useDOTDamage = false);
     public void OnDestroyed();
 }

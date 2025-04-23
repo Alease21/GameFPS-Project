@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileGun : GunBase
 {
     //Constructor instantiates new ProjectileBehavior then initializes ammoMax, ammoCount, and weaponDamage based on params
-    public ProjectileGun(GameObject projectilePrefab, int initialAmmoMax, int initialAmmoCount, int damage, float range)
+    public ProjectileGun(GameObject projectilePrefab, int initialAmmoMax, int initialAmmoCount, float damage, float range)
     {
         weaponBehavior = new ProjectileBehavior { projectilePrefab = projectilePrefab };
         ammoMax = initialAmmoMax;

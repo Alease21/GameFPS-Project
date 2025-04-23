@@ -21,15 +21,15 @@ public class PlayerStatsScript : MonoBehaviour
         }
     }
 
-    [SerializeField] private int _health;
-    [SerializeField] private int _shield;
-    [SerializeField] private int _maxHealth = 100;
-    [SerializeField] private int _maxShield = 50;
+    [SerializeField] private float _health;
+    [SerializeField] private float _shield;
+    [SerializeField] private float _maxHealth = 100;
+    [SerializeField] private float _maxShield = 50;
     
-    public int Health { get { return _health; } protected set { } }
-    public int MaxHealth { get { return _maxHealth; } protected set { } }
-    public int Shield { get { return _shield; } protected set { } }
-    public int MaxShield { get { return _maxShield; } protected set { } }
+    public float Health { get { return _health; } protected set { } }
+    public float MaxHealth { get { return _maxHealth; } protected set { } }
+    public float Shield { get { return _shield; } protected set { } }
+    public float MaxShield { get { return _maxShield; } protected set { } }
 
     public int hitScanWeaponAmmo,
                projectileWeaponAmmo,
@@ -60,27 +60,9 @@ public class PlayerStatsScript : MonoBehaviour
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 
-    /// <summary>
-    /// DELETE ME************************
-    /// </summary>
-    
-    /*
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            StartCoroutine(TakeDOTDamage(5, 5, 1));
-        }
-    }
-    */
-    /// <summary>
-    /// DELETE ME*************************
-    /// </summary>
-
-
     //Check if player can be healed, if amount to be healed > maxHealth, cap health at maxHealth
     //return true if player can be healed and increment health by amount, else false
-    public bool GetHealed(int amount)
+    public bool GetHealed(float amount)
     {
         if (_health == _maxHealth)
         {
@@ -97,7 +79,7 @@ public class PlayerStatsScript : MonoBehaviour
         InventoryController.instance.UIUpdateEvent?.Invoke();
         return true;
     }
-    public IEnumerator HOTHealCoro(float hotTimer, int numTicks, int amount)
+    public IEnumerator HOTHealCoro(float hotTimer, int numTicks, float amount)
     {
         while (numTicks > 0)
         {
@@ -109,7 +91,7 @@ public class PlayerStatsScript : MonoBehaviour
 
     //Check if player can be shielded, if amount to added to shield > maxShield, cap shield at maxShield
     //return true if player can be shielded and increment shield by amount, else false
-    public bool GetShielded(int amount)
+    public bool GetShielded(float amount)
     {
         if (_shield == MaxShield)
         {
@@ -128,20 +110,25 @@ public class PlayerStatsScript : MonoBehaviour
     }
 
     //Decrement health by amount if health > 0, else set health to 0 and display debug message
-    public void TakeDamage(int amount)
+    public void TakeDamage(float damage, bool useDOTDamage = false)
     {
-        if (_shield > 0 && amount < _shield)
+        if (useDOTDamage)
         {
-            _shield-= amount;
+            StopCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));
+            StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
         }
-        else if (_shield > 0 && amount >= _shield)
+        if (_shield > 0 && damage < _shield)
         {
-            _health -= amount - _shield;
+            _shield-= damage;
+        }
+        else if (_shield > 0 && damage >= _shield)
+        {
+            _health -= damage - _shield;
             _shield = 0;
         }
-        else if (_health > 0 && (_health - amount) > 0)
+        else if (_health > 0 && (_health - damage) > 0)
         {
-            _health -= amount;
+            _health -= damage;
         }
         else
         {
@@ -151,17 +138,13 @@ public class PlayerStatsScript : MonoBehaviour
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 
-    //fix me? i run fine but not if triggered by something else?
-    public IEnumerator TakeDOTDamage(int damage, int ticks, float tickTime)
+    public IEnumerator TakeDOTDamage(float damage, int ticks, float tickTime)
     {
-        //Debug.Log("DOT coro started");
-
         while (ticks > 0)
         {
             yield return new WaitForSecondsRealtime(tickTime);
             TakeDamage(damage);
             ticks--;
-            //Debug.Log("Damage Tick. ticks: " + ticks);
         }
     }
 }
