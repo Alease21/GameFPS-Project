@@ -6,7 +6,7 @@ public class MeleeHitBoxScript : MonoBehaviour
 {
     public EnemyScript enemyScript;
     public Animator animator;
-
+    float timer = 0f;
     private void Start()
     {
         enemyScript = GetComponentInParent<EnemyScript>();
@@ -14,8 +14,9 @@ public class MeleeHitBoxScript : MonoBehaviour
     }
     private void Update()
     {
+        timer += Time.deltaTime;
         // Auto destroy this object once attack is completed
-        if (!animator.GetBool("IsAttacking"))
+        if (timer > 1.14f)//hard coded time in, make more dynamic?
         {
             Destroy(gameObject);
         }

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class ProjectileScripts : MonoBehaviour
 {
@@ -80,6 +80,7 @@ public class ProjectileScripts : MonoBehaviour
     {
         if (projectileType == ProjectileType.GunProjectile)
         {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(ExplodeTimer());
         }
         else if (projectileType == ProjectileType.Fire)
@@ -110,7 +111,8 @@ public class ProjectileScripts : MonoBehaviour
                 break;
         }
     }
-    //Fix me?? calling to start coro like this not working?
+
+    //Call for enemyscript to start DOT coroutine
     public void OnDealDOTDamage(GameObject other)
     {
         switch (other.tag)
@@ -119,7 +121,7 @@ public class ProjectileScripts : MonoBehaviour
                 //other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
                 break;
             case "Enemy":
-                StartCoroutine(other.GetComponent<EnemyScript>().TakeDOTDamage(projectileDamage, 5, 1));
+                StartCoroutine(other.GetComponent<EnemyScript>().TakeDOTDamage(projectileDamage, 5, 1));//hard coded in tick rate for now
                 break;
             case "EnvironEnemy":
                 //other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
