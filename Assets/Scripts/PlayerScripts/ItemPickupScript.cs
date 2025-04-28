@@ -92,7 +92,6 @@ public class ItemPickupScript : MonoBehaviour
                     if (!weaponController.hasHitScan)
                     {
                         weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
-                        Destroy(other.gameObject);
                     }
                     break;
                 case WeaponSO.WeaponType.Projectile:
@@ -100,7 +99,6 @@ public class ItemPickupScript : MonoBehaviour
                     if (!weaponController.hasProjectile)
                     {
                         weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Projectile, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
-                        Destroy(other.gameObject);
                     }
                     break;
                 case WeaponSO.WeaponType.Continuous:
@@ -108,7 +106,6 @@ public class ItemPickupScript : MonoBehaviour
                     if (!weaponController.hasContinuous)
                     {
                         weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Continuous, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
-                        Destroy(other.gameObject);
                     }
                     break;
                 case WeaponSO.WeaponType.Grenade:
@@ -117,7 +114,6 @@ public class ItemPickupScript : MonoBehaviour
                     {
                         throwableController.ThrowableCountUpdater();
                         InventoryController.instance.OnWeaponSwap();
-                        Destroy(other.gameObject);
                     }
                     else
                     {
@@ -125,6 +121,7 @@ public class ItemPickupScript : MonoBehaviour
                     }
                     break;
             }
+            other.GetComponent<WeaponScript>().OnPickUp();//move to weapon base scripts?
 
             //update ui every weapon collision, whether weapon is consumed or not.
             InventoryController.instance.UIUpdateEvent?.Invoke();

@@ -9,6 +9,8 @@ public class ItemPackScript : MonoBehaviour
 
     public ItemBase item;
 
+    public bool isConsumed;//bool for save/load
+
     private void Start()
     {
         //Instantiate new itemBase based of the itempacktype of the attached itemPackSO.
@@ -37,6 +39,7 @@ public class ItemPackScript : MonoBehaviour
     //from item and restarting the coroutine
     public IEnumerator ItemRechargeCoro()
     {
+        isConsumed = true;
         yield return new WaitUntil(() => item.isRecharging);
 
         for (float timer = 0f; timer < itemPackSO.rechargeTime; timer += Time.deltaTime)
@@ -44,7 +47,7 @@ public class ItemPackScript : MonoBehaviour
             yield return null;
         }
         item.RechargeLink();
-
+        isConsumed = false;
         StartCoroutine(ItemRechargeCoro());
     }
 }

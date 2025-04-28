@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyWeaponController))]
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour, ICanDie
 {
     //Gizmo bools to flip in inspector
     [Header("Gizmo Bools:")]
@@ -27,6 +27,8 @@ public class EnemyScript : MonoBehaviour
     //public float enemySpeed;
     public float enemyFOV;
     public float enemyViewDist;
+
+    public bool hasDied;//bool for save/load
 
     //Gizmo to visualize enemy sight range(FOV) in scene editor
 #if UNITY_EDITOR
@@ -97,7 +99,7 @@ public class EnemyScript : MonoBehaviour
         else
         {
             enemyHealth = 0;
-            OnEnemyDeath();
+            OnDeath();
         }
         enemyFSM.gotShot = true;
     }
@@ -113,9 +115,11 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    public void OnEnemyDeath()
+    public void OnDeath()
     {
-        //add ondeath animation?
-        Destroy(gameObject);
+        //add ondeath animation? setactive false after animation play
+
+        //setactive to false instead of destroy for save/loading
+        gameObject.SetActive(false);
     }
 }

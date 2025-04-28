@@ -94,7 +94,8 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
             yield return null;
         }
 
-        Destroy(gameObject);
+        //setactive to false instead of destroy for save/loading
+        gameObject.SetActive(false);
     }
     public void OnDealDamage()
     {
@@ -121,7 +122,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     {
         // add in kockback, directly away from gameobject (raycast from other.position using on triggerstay?)
         // maybe add fire on ground after explosion
-        Debug.Log("This is where I'd knock you back, if i had the code");
+        //Debug.Log("This is where I'd knock you back, if i had the code");
     }
 
 #if UNITY_EDITOR
