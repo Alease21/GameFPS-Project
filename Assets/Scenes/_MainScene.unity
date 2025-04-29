@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -497,7 +497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 817704488698833085, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488363671011401900, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: playerTarget
@@ -8075,7 +8075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 817704488698833085, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4488363671011401900, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: playerTarget
@@ -8471,7 +8471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 654065763291456644, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6149007220552334363, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: showFOV
@@ -17243,7 +17243,7 @@ PrefabInstance:
     - {fileID: 1732992224773653984, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5957431842660811007, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
-      insertIndex: -1
+      insertIndex: 0
       addedObject: {fileID: 1698252793}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
@@ -18470,13 +18470,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1698252793}
+  - component: {fileID: 1698252794}
+  - component: {fileID: 1698252795}
   m_Layer: 6
-  m_Name: SFX_Controller
+  m_Name: Player SFXController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1698252793
 Transform:
   m_ObjectHideFlags: 0
@@ -18492,6 +18494,131 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2000410495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1698252794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698252792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160d3558ef2ca1347b0eb8a50d179da0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  hitScanGunFire: {fileID: 8300000, guid: f7fc2b1643ccaf447aa439a56011b70e, type: 3}
+  projectileGunFire: {fileID: 8300000, guid: 17c652df8a631934d923cbe5c5456a8f, type: 3}
+  continuousGunFire: {fileID: 0}
+  noAmmoFire: {fileID: 8300000, guid: 36597650cfe1e2446858e893d9958a8c, type: 3}
+  explosion: {fileID: 8300000, guid: 06f594a5321e6b9489a69875508e8896, type: 3}
+  ammoPickUp: {fileID: 8300000, guid: 50c302cddb26a5242b6fa276302f0c2e, type: 3}
+  healthPickUp: {fileID: 8300000, guid: 98f1556a78813d04f9ee35dacb58c869, type: 3}
+  shieldPickUp: {fileID: 8300000, guid: 98f1556a78813d04f9ee35dacb58c869, type: 3}
+  weaponPickUp: {fileID: 8300000, guid: 50c302cddb26a5242b6fa276302f0c2e, type: 3}
+  confirmedHitAudio: {fileID: 0}
+  walkAudio: {fileID: 8300000, guid: aeaee4ed757b538428a4f537993e6bb9, type: 3}
+  playerHitSounds:
+  - {fileID: 8300000, guid: 145af680505490b41a10dc14e7bcd2e2, type: 3}
+  - {fileID: 8300000, guid: 09de35c739a360148a5142e993e9831b, type: 3}
+  - {fileID: 8300000, guid: 46668a97fe1c7144f8e505d8da54741d, type: 3}
+  - {fileID: 8300000, guid: b11c643f75812a649a422cf1709ebf60, type: 3}
+--- !u!82 &1698252795
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698252792}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1699606405
 GameObject:
   m_ObjectHideFlags: 0
@@ -20954,7 +21081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 654065763291456644, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7033001330818864691, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: playerTarget

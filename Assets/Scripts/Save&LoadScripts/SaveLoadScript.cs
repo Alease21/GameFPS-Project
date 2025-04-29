@@ -9,7 +9,7 @@ public static class SaveLoadScript
     public static void Save(string fileName, GameData gameData)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/" + fileName + ".cam";
+        string path = Application.persistentDataPath + "/" + fileName + ".AL";
         FileStream fs = new FileStream(path, FileMode.Create);
         bf.Serialize(fs, gameData);
         fs.Close();
@@ -17,7 +17,7 @@ public static class SaveLoadScript
 
     public static GameData Load(string fileName)
     {
-        string path = Application.persistentDataPath + "/" + fileName + ".cam";
+        string path = Application.persistentDataPath + "/" + fileName + ".AL";
         if (File.Exists(path))
         {
             BinaryFormatter bf = new BinaryFormatter();

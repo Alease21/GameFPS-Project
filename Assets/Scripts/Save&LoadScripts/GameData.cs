@@ -45,14 +45,16 @@ public class GUIDObjectToken
         _guid = guid;
         _position = new Vector3Token(go.transform.position);
         _rotation = new Vector3Token(go.transform.rotation.eulerAngles);
-        _isActive = GOBoolChecker(go);
-        //add in bool stuff?
+        _isActive = GOBoolChecker(go); //recharge timers handled inside
     }
+
+    //Check if gameobject is rechargeable item (if true - grab recharge time with RechargeChecker()),
+    //if object is consumed/inactive
     public bool GOBoolChecker(GameObject go)
     {
         if (go.GetComponent<ItemPackScript>())
         {
-            //RechargeChecker(go);
+            RechargeChecker(go);//condense into 1 call? if isconsumed, return bool and call RechargeChecker()
             return go.GetComponent<ItemPackScript>().isConsumed ? false : true;
         }
         else
@@ -60,13 +62,16 @@ public class GUIDObjectToken
             return go.activeInHierarchy ? true : false;
         }
     }
-    /*public float RechargeChecker(GameObject go)
+    public void RechargeChecker(GameObject go)
     {
-        if (go.GetComponent<ItemPackScript>() is iRechargeableItem)
+        ItemPackScript objItemScript = go.GetComponent<ItemPackScript>();
+
+        if (objItemScript is iRechargeableItem && objItemScript.isConsumed)
         {
-            _rechargeTimer = go.GetComponent<ItemPackScript>().;
+            _rechargeTimer = objItemScript.rechargeTimeRemaining;
         }
-    }*/
+    }
+
     public void LoadGUID()
     {
         GameObject obj = GUIDRegistry.GetGameObjectFromKey(_guid);

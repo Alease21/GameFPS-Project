@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -44,6 +45,9 @@ public class PlayerStatsScript : MonoBehaviour
                maxSmokeBombs;
 
     public bool isHidden;
+
+    public Action OnTakeDamage;
+    public Action OnPlayerDeath;
 
     private void Start()
     {
@@ -135,6 +139,7 @@ public class PlayerStatsScript : MonoBehaviour
             _health = 0;
             Debug.Log("health is 0 now :(");
         }
+        OnTakeDamage?.Invoke();
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 

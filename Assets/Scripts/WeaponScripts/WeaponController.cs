@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
@@ -51,11 +52,15 @@ public class WeaponController : MonoBehaviour
                 hasProjectile = false,
                 hasContinuous = false;
 
+    public Action OnFireWeapon; //sfx
+    public Action OnSwapWeapon; //sfx
+
     void Start()
     {
         playerStatsScript = PlayerStatsScript.instance;//Does this make sense?
 
         isUnarmed = true;
+
         //hard coded in hitscan values. not sure how to grab in a more dynamic way.
         //maybe start with no weapon and choose 1 of 3?
         //WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
@@ -95,6 +100,8 @@ public class WeaponController : MonoBehaviour
             //if equipped weapon is not continuous, use currently equipped weapon and update ammo
             if (Input.GetMouseButtonDown(0) && !isContinuous)
             {
+                OnFireWeapon?.Invoke();
+
                 myGun.Use();
                 AmmoStatUpdater();
             }
@@ -103,6 +110,8 @@ public class WeaponController : MonoBehaviour
             {
                 if (!isHoldingFire)
                 {
+                    OnFireWeapon?.Invoke();
+
                     isHoldingFire = true;
                     myGun.Use();
                 }
@@ -111,6 +120,8 @@ public class WeaponController : MonoBehaviour
                     continuousTimer += Time.deltaTime;
                     if (continuousTimer >= continuousTickRate / 5)
                     {
+                        OnFireWeapon?.Invoke();
+
                         myGun.Use();
                         continuousTimer = 0f;
                     }
@@ -207,6 +218,7 @@ public class WeaponController : MonoBehaviour
 
         EquippedWeaponBool(weaponType);
         InventoryController.instance.OnWeaponSwap();
+        OnSwapWeapon?.Invoke();
         AmmoStatUpdater();
     }
 

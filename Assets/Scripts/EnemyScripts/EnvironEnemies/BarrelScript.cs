@@ -33,7 +33,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
     public void OnTakeDamage(float damage, bool useDOTDamage = false)
     {
-        if (useDOTDamage)
+        if (gameObject.activeInHierarchy && useDOTDamage)
         {
             StopCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));
             StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time

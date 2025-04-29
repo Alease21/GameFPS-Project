@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class ItemPackScript : MonoBehaviour
@@ -10,6 +11,10 @@ public class ItemPackScript : MonoBehaviour
     public ItemBase item;
 
     public bool isConsumed;//bool for save/load
+            //if ^this then set item obj bool to isRecharging as well
+    public float rechargeTimeRemaining;
+
+    //add stop coros method to listen for load event?
 
     private void Start()
     {
@@ -37,13 +42,14 @@ public class ItemPackScript : MonoBehaviour
     //Coroutine to wait until instantiated item bool isRecharging is true, then
     //wait rechargeTime(from attached itemSO) seconds before calling RechargeLink
     //from item and restarting the coroutine
-    public IEnumerator ItemRechargeCoro()
+    public IEnumerator ItemRechargeCoro(float timer = 0f)//optional param for loading based on rechargeTimeRemaining value, default to 0
     {
         isConsumed = true;
         yield return new WaitUntil(() => item.isRecharging);
 
-        for (float timer = 0f; timer < itemPackSO.rechargeTime; timer += Time.deltaTime)
+        for (timer = 0f; timer < itemPackSO.rechargeTime; timer += Time.deltaTime)
         {
+            rechargeTimeRemaining = itemPackSO.rechargeTime - timer;// for save/load value grabbing
             yield return null;
         }
         item.RechargeLink();

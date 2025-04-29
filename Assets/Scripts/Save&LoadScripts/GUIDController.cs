@@ -18,17 +18,38 @@ public class GUIDController : MonoBehaviour
         if (SceneManager.GetActiveScene().isLoaded)
         {
             GameObject[] objsInScene = SceneManager.GetActiveScene().GetRootGameObjects();
+            GameObject obj;
 
+            //Loop through all scene objs & their children, then adds obj to
+            //temp registry once and checks children if any
             for (int i = 0; i < objsInScene.Length; i++)
             {
-                if (objsInScene[i].GetComponent<EnemyScript>() || objsInScene[i].GetComponent<BarrelScript>()
-                    || objsInScene[i].GetComponent<PlayerStatsScript>() || objsInScene[i].GetComponent<ItemPackScript>())
+                AddToTempRegistry(objsInScene[i]);
+
+                //possible problem if child of child has needed script (no check),
+                //but scene is set up such that this shouldn't happen
+                if (objsInScene[i].transform.childCount != 0)
                 {
-                    if (!tempRegistry.ContainsValue(objsInScene[i]))
+                    for (int j = 0; j < objsInScene[i].transform.childCount; j++)
                     {
-                        tempRegistry.Add(GenerateGUID(), objsInScene[i]);
+                        obj = objsInScene[i].transform.GetChild(j).gameObject;
+                        AddToTempRegistry(obj);
                     }
                 }
+            }
+        }
+    }
+
+    //Check if incoming obj has any of there scripts, if true then generate GUID &
+    //add to registry (if not already contained in)
+    private void AddToTempRegistry(GameObject obj)
+    {
+        if (obj.GetComponent<EnemyScript>() || obj.GetComponent<BarrelScript>() || 
+                obj.GetComponent<PlayerStatsScript>() || obj.GetComponent<ItemPackScript>())
+        {
+            if (!tempRegistry.ContainsValue(obj))
+            {
+                tempRegistry.Add(GenerateGUID(), obj);
             }
         }
     }

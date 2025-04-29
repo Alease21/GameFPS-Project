@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class ThrowableController : MonoBehaviour
 
     public bool isGrenade = false;
     public bool isSmokeBomb = false;
+
+    public Action OnThrowableUse;
 
     void Start()
     {
