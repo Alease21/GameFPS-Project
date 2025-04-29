@@ -16,15 +16,27 @@ public class ReticleScript : MonoBehaviour
     {
         if (WeaponController.instance.isProjectile)
         {
-            gunReticle.sprite = spriteArray[1];
+            if (gunReticle.sprite != spriteArray[1])
+            {
+                gunReticle.sprite = spriteArray[1];
+                transform.localPosition = new Vector3(0, -13.572f, 0);
+            }
         }
         else if (WeaponController.instance.isContinuous)
         {
-            gunReticle.sprite = spriteArray[2];
+            if (gunReticle.sprite != spriteArray[2])
+            {
+                gunReticle.sprite = spriteArray[2];
+                transform.localPosition = Vector3.zero;
+            }
         }
         else 
         {
-            gunReticle.sprite = spriteArray[0];
+            if (gunReticle.sprite != spriteArray[0])
+            {
+                gunReticle.sprite = spriteArray[0];
+                transform.localPosition = Vector3.zero;
+            }
         }
     }
 }

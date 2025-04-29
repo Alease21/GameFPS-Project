@@ -8,14 +8,14 @@ public class GrenadeThrowable : ThrowableBase
     public float timer;
     public float range;
 
-    public GrenadeThrowable(GameObject throwablePrefab, int throwableCount, int throwableMax, int damage, float range, float timer)
+    public GrenadeThrowable(WeaponSO weaponSO)
     {
-        this.throwablePrefab = throwablePrefab;
-        this.throwableCount = throwableCount;
-        this.throwableMax = throwableMax;
-        this.damage = damage;
-        this.range = range;
-        this.timer = timer;
+        throwablePrefab = weaponSO.weaponPrefab;
+        throwableCount = weaponSO.ammoCount;
+        throwableMax = weaponSO.ammoMax;
+        range = weaponSO.range;
+        timer = weaponSO.explodeTime;
+        throwableSpeed = weaponSO.projectileSpeed;
     }
     public override bool CountGet(int amount)
     {

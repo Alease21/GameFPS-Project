@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ProjectileGun : GunBase
 {
+    private float explodeRange;
+
     //Constructor instantiates new ProjectileBehavior then initializes ammoMax, ammoCount, and weaponDamage based on params
-    public ProjectileGun(GameObject projectilePrefab, int initialAmmoMax, int initialAmmoCount, float damage, float range)
+    public ProjectileGun(WeaponSO weaponSO)
     {
-        weaponBehavior = new ProjectileBehavior { projectilePrefab = projectilePrefab };
-        ammoMax = initialAmmoMax;
-        ammoCount = initialAmmoCount;
-        weaponDamage = damage;
-        weaponRange = range;
+        weaponBehavior = new ProjectileBehavior(weaponSO.projectilePrefab, weaponSO.projectileSpeed);
+        ammoMax = weaponSO.ammoMax;
+        ammoCount = weaponSO.ammoCount;
+        weaponDamage = weaponSO.damage;
+        explodeRange = weaponSO.range;
     }
 
     //Checks ammo count against ammo max and decides if ammo should be added
@@ -42,7 +44,7 @@ public class ProjectileGun : GunBase
         {
             if (ammoCount > 0)
             {
-                weaponBehavior.FireGun(shootPoint, weaponDamage, weaponRange);
+                weaponBehavior.FireGun(shootPoint, weaponDamage, explodeRange);
                 ammoCount--;
             }
             else

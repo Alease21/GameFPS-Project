@@ -98,36 +98,20 @@ public class ProjectileScripts : MonoBehaviour
     }
     public void OnDealDamage(GameObject other, bool useDOTDamage = false)
     {
-        switch (other.tag)
+        if (other.GetComponent<PlayerStatsScript>())
         {
-            case "Player":
-                other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
-                break;
-            case "Enemy":
-                other.GetComponent<EnemyScript>().TakeDamage(projectileDamage, useDOTDamage);
-                break;
-            case "EnvironEnemy":
-                other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, useDOTDamage);
-                break;
+            other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
+        }
+        else if (other.GetComponent<EnemyScript>())
+        {
+            other.GetComponent<EnemyScript>().TakeDamage(projectileDamage, useDOTDamage);
+        }
+        else if (other.GetComponent<BarrelScript>())
+        {
+            other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, useDOTDamage);
         }
     }
 
-    //Call for enemyscript to start DOT coroutine
-    public void OnDealDOTDamage(GameObject other)
-    {
-        switch (other.tag)
-        {
-            case "Player":
-                //other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
-                break;
-            case "Enemy":
-                StartCoroutine(other.GetComponent<EnemyScript>().TakeDOTDamage(projectileDamage, 5, 1));//hard coded in tick rate for now
-                break;
-            case "EnvironEnemy":
-                //other.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage);
-                break;
-        }
-    }
     #region ExplodingSphereStuff
     private void OnTriggerEnter(Collider other)
     {
@@ -135,7 +119,7 @@ public class ProjectileScripts : MonoBehaviour
         if (projectileType == ProjectileType.GunProjectile 
             || projectileType == ProjectileType.Grenade)
         {
-            if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "EnvironEnemy")
+            if (other.GetComponent<PlayerStatsScript>() || other.GetComponent<EnemyScript>() || other.GetComponent<BarrelScript>())
             {
                 if (!inRangeColliders.Contains(other.gameObject))
                 {
@@ -148,7 +132,7 @@ public class ProjectileScripts : MonoBehaviour
     {
         if (isSmokin)
         {
-            if (other.tag == "Player")
+            if (other.GetComponent<PlayerStatsScript>())
             {
                 PlayerStatsScript.instance.isHidden = true;
             }
@@ -160,7 +144,7 @@ public class ProjectileScripts : MonoBehaviour
         if (projectileType == ProjectileType.GunProjectile
             || projectileType == ProjectileType.Grenade)
         {
-            if (other.tag == "Player" || other.tag == "Enemy" || other.tag == "EnvironEnemy")
+            if (other.GetComponent<PlayerStatsScript>() || other.GetComponent<EnemyScript>() || other.GetComponent<BarrelScript>())
             {
                 if (inRangeColliders.Contains(other.gameObject))
                 {
@@ -170,7 +154,7 @@ public class ProjectileScripts : MonoBehaviour
         }
         else if (projectileType == ProjectileType.SmokeBomb)
         {
-            if (isSmokin && other.tag == "Player")
+            if (isSmokin && other.GetComponent<PlayerStatsScript>())
             {
                 PlayerStatsScript.instance.isHidden = false;
             }
@@ -185,17 +169,17 @@ public class ProjectileScripts : MonoBehaviour
             {
                 if (inRangeColliders[i] != null)
                 {
-                    switch (inRangeColliders[i]?.tag)
+                    if (inRangeColliders[i]?.GetComponent<PlayerStatsScript>())
                     {
-                        case "Player":
-                            PlayerStatsScript.instance.TakeDamage(projectileDamage, true);
-                            break;
-                        case "Enemy":
-                            inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage, true);
-                            break;
-                        case "EnvironEnemy":
-                            inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, true);
-                            break;
+                        PlayerStatsScript.instance.TakeDamage(projectileDamage, true);
+                    }
+                    else if (inRangeColliders[i]?.GetComponent<EnemyScript>())
+                    {
+                        inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage, true);
+                    }
+                    else if (inRangeColliders[i]?.GetComponent<BarrelScript>())
+                    {
+                        inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, true);
                     }
                 }
             }

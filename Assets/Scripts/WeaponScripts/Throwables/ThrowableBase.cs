@@ -8,7 +8,7 @@ public abstract class ThrowableBase
     public Transform throwPoint;
     public int throwableCount;
     public int throwableMax;
-    public float throwableSpeed = 20f;
+    public float throwableSpeed;
 
     public abstract bool CountGet(int amount);
 

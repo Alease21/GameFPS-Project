@@ -72,14 +72,14 @@ public class ThrowableController : MonoBehaviour
     }
 
     //check if player has Grenade "weapon" picked up, if false instantiate it. if true add 'ammo' to it's count 
-    public bool ThrowableGet(WeaponSO.WeaponType throwableType, int count, int countMax, int damage, float range, float timer)
+    public bool ThrowableGet(WeaponSO weaponSO)
     {
-        switch (throwableType)
+        switch (weaponSO.weaponType)
         {
             case WeaponSO.WeaponType.Grenade:
                 if (throwable1 == null)
                 {
-                    throwable1 = new GrenadeThrowable(throwablePrefabs[0], count, countMax, damage, range, timer);
+                    throwable1 = new GrenadeThrowable(weaponSO);
                     currThrowable = throwable1;
                     hasGrenade = true;
                     isGrenade = true;
@@ -88,7 +88,7 @@ public class ThrowableController : MonoBehaviour
                 }
                 else
                 {
-                    if (throwable1.CountGet(count))
+                    if (throwable1.CountGet(weaponSO.ammoCount))
                     {
                         return true;
                     }
@@ -100,7 +100,7 @@ public class ThrowableController : MonoBehaviour
             case WeaponSO.WeaponType.SmokeBomb:
                 if (throwable2 == null)
                 {
-                    throwable2 = new SmokeBombThrowable(throwablePrefabs[1], count, countMax, range, timer);
+                    throwable2 = new SmokeBombThrowable(weaponSO);
                     currThrowable = throwable2;
                     hasSmokeBomb = true;
                     isGrenade = false;
@@ -109,7 +109,7 @@ public class ThrowableController : MonoBehaviour
                 }
                 else
                 {
-                    if (throwable2.CountGet(count))
+                    if (throwable2.CountGet(weaponSO.ammoCount))
                     {
                         return true;
                     }

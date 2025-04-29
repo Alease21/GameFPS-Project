@@ -5,8 +5,12 @@ using UnityEngine;
 public class ContinuousBehavior : IGunBehavior
 {
     public GameObject fireVisualPrefab;
-    public float fireSpeed = 10f;
-
+    public float fireSpeed; //= 10f;
+    public ContinuousBehavior(GameObject projectilePrefab, float projectileSpeed)
+    {
+        fireVisualPrefab = projectilePrefab;
+        fireSpeed = projectileSpeed;
+    }
     public void FireGun(Transform shootPoint, float damage, float range)
     {
         GameObject projectile = GameObject.Instantiate(fireVisualPrefab, shootPoint.position, Quaternion.LookRotation(shootPoint.transform.up));

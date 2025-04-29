@@ -5,10 +5,16 @@ using UnityEngine;
 
 public class MeleeBasicBehavior : IMeleeBehavior
 {
-    public GameObject hitBox;
-    public float weaponRange;
     public Transform meleeSetPoint;
+    public GameObject hitBox;
+    //public float weaponRange;
 
+    public MeleeBasicBehavior(Transform meleeSetPoint, GameObject hitBoxPrefab)
+    {
+        this.meleeSetPoint = meleeSetPoint;
+        hitBox = hitBoxPrefab;
+        //weaponRange = range;
+    }
     // Instantiate new object to serve as weapon hitbox
     public void SwingWeapon()
     {

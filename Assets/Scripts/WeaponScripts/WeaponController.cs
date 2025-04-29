@@ -28,15 +28,11 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Transform gunSetPoint;
-    
+
     private GameObject hitScanWeapon,
                        projectileWeapon,
                        continuousWeapon;
-    [SerializeField] private GameObject[] weaponPrefabs;//change to grab from weaponSO with projectile/fire prefabs?
-    public GameObject currWeapon;
-    [SerializeField] private GameObject projectilePreFab;
-    [SerializeField] private GameObject fireVisualPrefab;
-    [SerializeField] private GameObject hitScanShotPrefab;
+    [SerializeField] private GameObject currWeapon;
 
     [SerializeField] private float continuousTickRate;//possible to grab from weaponSO upon item pickup?
     private bool isHoldingFire = false;
@@ -60,12 +56,8 @@ public class WeaponController : MonoBehaviour
         playerStatsScript = PlayerStatsScript.instance;//Does this make sense?
 
         isUnarmed = true;
-
-        //hard coded in hitscan values. not sure how to grab in a more dynamic way.
-        //maybe start with no weapon and choose 1 of 3?
-        //WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, 20, 20, 10);
     }
-    
+
     void Update()
     {
         if (myGun != null)
@@ -132,7 +124,6 @@ public class WeaponController : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && isContinuous)
             {
                 AmmoStatUpdater();
-                Debug.Log("test button up");
                 if (isHoldingFire)
                 {
                     isHoldingFire = false;
@@ -157,7 +148,7 @@ public class WeaponController : MonoBehaviour
 
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax, initialAmmoCount and damage.
     //Immediately swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
-    public void WeaponPrefabSpawn(WeaponSO.WeaponType weaponType, int initialAmmoMax, int initialAmmoCount, int damage, float range)
+    public void WeaponPrefabSpawn(WeaponSO weaponSO) //int initialAmmoMax, int initialAmmoCount, int damage, float range)
     {
         if (currWeapon != null)
         {
@@ -165,16 +156,17 @@ public class WeaponController : MonoBehaviour
         }
 
         //Based on weaponType, check if player has that weapon (bool), if false then instantiate gameobject and gun object and flip appropriate bool true
-        switch (weaponType)
+        switch (weaponSO.weaponType)
         {
             case WeaponSO.WeaponType.HitScan:
                 if (!hasHitScan)
                 {
-                    hitScanWeapon = GameObject.Instantiate(weaponPrefabs[0], gunSetPoint.position, gunSetPoint.transform.rotation);
+                    hitScanWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
+                    //hitScanWeapon = GameObject.Instantiate(weaponPrefabs[0], gunSetPoint.position, gunSetPoint.transform.rotation);
                     hitScanWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = hitScanWeapon;
 
-                    weapon1 = new HitScanGun(hitScanShotPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    weapon1 = new HitScanGun(weaponSO) { shootPoint = shootPoint }; //give SO transform for specfic weapon shootpoint?
                     myGun = weapon1;
                     playerStatsScript.maxHitscanAmmo = myGun.ammoMax;
                     hasHitScan = true;
@@ -186,11 +178,11 @@ public class WeaponController : MonoBehaviour
             case WeaponSO.WeaponType.Projectile:
                 if (!hasProjectile)
                 {
-                    projectileWeapon = GameObject.Instantiate(weaponPrefabs[1], gunSetPoint.position, gunSetPoint.transform.rotation);
+                    projectileWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                     projectileWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = projectileWeapon;
 
-                    weapon2 = new ProjectileGun(projectilePreFab, initialAmmoMax, initialAmmoCount, damage, range) { shootPoint = shootPoint };
+                    weapon2 = new ProjectileGun(weaponSO) { shootPoint = shootPoint };//give SO transform for specfic weapon shootpoint?
                     myGun = weapon2;
                     playerStatsScript.maxProjectileAmmo = myGun.ammoMax;
                     hasProjectile = true;
@@ -201,11 +193,11 @@ public class WeaponController : MonoBehaviour
             case WeaponSO.WeaponType.Continuous:
                 if (!hasContinuous)
                 {
-                    continuousWeapon = GameObject.Instantiate(weaponPrefabs[2], gunSetPoint.position, gunSetPoint.transform.rotation);
+                    continuousWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                     continuousWeapon.transform.parent = gunSetPoint.transform;
                     currWeapon = continuousWeapon;
 
-                    weapon3 = new ContinuousGun(fireVisualPrefab, initialAmmoMax, initialAmmoCount, damage) { shootPoint = shootPoint };
+                    weapon3 = new ContinuousGun(weaponSO) { shootPoint = shootPoint };//give SO transform for specfic weapon shootpoint?
                     myGun = weapon3;
                     playerStatsScript.maxContinuousAmmo = myGun.ammoMax;
                     StartCoroutine(ContinuousWeaponFire());
@@ -216,7 +208,7 @@ public class WeaponController : MonoBehaviour
                 break;
         }
 
-        EquippedWeaponBool(weaponType);
+        EquippedWeaponBool(weaponSO.weaponType);
         InventoryController.instance.OnWeaponSwap();
         OnSwapWeapon?.Invoke();
         AmmoStatUpdater();

@@ -5,12 +5,19 @@ using UnityEngine;
 public class HitScanGun : GunBase
 {
     //Constructor instantiates new HitScanBehavior then initializes ammoMax and ammoCount based on params
-    public HitScanGun(GameObject hitScanShotPrefab, int initialAmmoMax, int initialAmmoCount, float damage)
+    public HitScanGun(WeaponSO weaponSO)
     {
-        weaponBehavior = new HitScanBehavior { hitScanShotPrefab = hitScanShotPrefab};
-        ammoMax = initialAmmoMax;
-        ammoCount = initialAmmoCount;
-        weaponDamage = damage;
+        weaponBehavior = new HitScanBehavior(weaponSO.projectilePrefab);
+        ammoMax = weaponSO.ammoMax;
+        ammoCount = weaponSO.ammoCount;
+        weaponDamage = weaponSO.damage;
+    }
+    public HitScanGun(WeaponSO weaponSO, int cheatAmmo)
+    {
+        weaponBehavior = new HitScanBehavior(weaponSO.projectilePrefab);
+        ammoMax = cheatAmmo;
+        ammoCount = cheatAmmo;
+        weaponDamage = weaponSO.damage;
     }
 
     //Checks ammo count against ammo max and decides if ammo should be added

@@ -24,4 +24,7 @@ public class WeaponSO : ScriptableObject
     public AnimationClip attackAnimation;
     public GameObject hitBoxPrefab;
     public float explodeTime;
+    public GameObject weaponPrefab;
+    public GameObject projectilePrefab;
+    public float projectileSpeed;
 }

@@ -25,8 +25,9 @@ public class MeleeHitBoxScript : MonoBehaviour
     // On collision with player, deal damage and update player stats
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.GetComponent<PlayerStatsScript>())
         {
+            Debug.Log("test dmg: " + enemyScript.weaponSO.damage);
             other.GetComponent<PlayerStatsScript>().TakeDamage(enemyScript.weaponSO.damage);
             //other.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
         }

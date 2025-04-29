@@ -12,9 +12,10 @@ public class ItemPackSO : ScriptableObject
         ShieldPack,
         AmmoPack
     }
+    public ItemPackType itemPackType;
+
     public string itemPackName;
     public int packAmount;
-    public ItemPackType itemPackType;
 
     // edit inspector to show only on iRechargableItem items?
     public float rechargeTime;

@@ -8,13 +8,14 @@ public class SmokeBombThrowable : ThrowableBase
     public float timer;
     public float range;
 
-    public SmokeBombThrowable(GameObject throwablePrefab, int throwableCount, int throwableMax, float range, float timer)
+    public SmokeBombThrowable(WeaponSO weaponSO)
     {
-        this.throwablePrefab = throwablePrefab;
-        this.throwableCount = throwableCount;
-        this.throwableMax = throwableMax;
-        this.range = range;
-        this.timer = timer;
+        throwablePrefab = weaponSO.weaponPrefab;
+        throwableCount = weaponSO.ammoCount;
+        throwableMax = weaponSO.ammoMax;
+        range = weaponSO.range;
+        timer = weaponSO.explodeTime;
+        throwableSpeed = weaponSO.projectileSpeed;
     }
     public override bool CountGet(int amount)
     {

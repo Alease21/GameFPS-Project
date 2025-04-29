@@ -5,12 +5,12 @@ using UnityEngine;
 public class ContinuousGun : GunBase
 {
     //Constructor instantiates new ContinuousBehvaior then initializes ammoMax and ammoCount based on params
-    public ContinuousGun(GameObject fireVisualPrefab, int initialAmmoMax, int initialAmmoCount, float damage)
+    public ContinuousGun(WeaponSO weaponSO)
     {
-        weaponBehavior = new ContinuousBehavior { fireVisualPrefab = fireVisualPrefab};
-        ammoMax = initialAmmoMax;
-        ammoCount = initialAmmoCount;
-        weaponDamage = damage;
+        weaponBehavior = new ContinuousBehavior(weaponSO.projectilePrefab, weaponSO.projectileSpeed);
+        ammoMax = weaponSO.ammoMax;
+        ammoCount = weaponSO.ammoCount;
+        weaponDamage = weaponSO.damage;
     }
 
     //Checks ammo count against ammo max and decides if ammo should be added

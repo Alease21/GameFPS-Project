@@ -103,14 +103,13 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         {
             if (inRangeColliders[i] != null)
             {
-                switch (inRangeColliders?[i].tag)
+                if (inRangeColliders[i]?.GetComponent<PlayerStatsScript>())
                 {
-                    case "Player":
-                        inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage, true);
-                        break;
-                    case "Enemy":
-                        inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage, true);
-                        break;
+                    inRangeColliders[i].GetComponent<PlayerStatsScript>().TakeDamage(damage, true);
+                }
+                else if (inRangeColliders[i]?.GetComponent<EnemyScript>())
+                {
+                    inRangeColliders[i].GetComponent<EnemyScript>().TakeDamage(damage, true);
                 }
             }
         }
@@ -122,6 +121,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     {
         // add in kockback, directly away from gameobject (raycast from other.position using on triggerstay?)
         // maybe add fire on ground after explosion
+
         //Debug.Log("This is where I'd knock you back, if i had the code");
     }
 

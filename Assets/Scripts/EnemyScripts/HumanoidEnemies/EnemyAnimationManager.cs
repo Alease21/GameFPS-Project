@@ -39,7 +39,6 @@ public class EnemyAnimationManager : MonoBehaviour
                 animator.Play("AttackRanged");
                 break;
             case EnemySO.EnemyType.Melee:
-                Debug.Log("test melee atack anim");
                 animator.Play("AttackMelee");
                 break;
         }

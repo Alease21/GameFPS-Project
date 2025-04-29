@@ -9,8 +9,8 @@ public class EnemyScript : MonoBehaviour, ICanDie
     //Gizmo bools to flip in inspector
     [Header("Gizmo Bools:")]
     [Space(5)]
-    public bool showFOV;
-    public bool showPatPath;
+    [SerializeField] private bool showFOV;
+    [SerializeField] private bool showPatPath;
     [Space(20)]
     //
 
@@ -28,7 +28,7 @@ public class EnemyScript : MonoBehaviour, ICanDie
     public float enemyFOV;
     public float enemyViewDist;
 
-    public bool hasDied;//bool for save/load
+    public bool hasDied = false;//bool for save/load
 
     //Gizmo to visualize enemy sight range(FOV) in scene editor
 #if UNITY_EDITOR
@@ -75,10 +75,10 @@ public class EnemyScript : MonoBehaviour, ICanDie
         switch (enemySO.enemyType)
         {
             case EnemySO.EnemyType.Range:
-                e_WepControl.WeaponPrefabSpawn(weaponSO.weaponType, 9999, 9999, enemyDamage);
+                e_WepControl.WeaponPrefabSpawn(weaponSO);
                 break;
             case EnemySO.EnemyType.Melee:
-                e_WepControl.WeaponPrefabSpawn(weaponSO.weaponType, weaponSO.hitBoxPrefab, weaponSO.range);
+                e_WepControl.WeaponPrefabSpawn(weaponSO);
                 break;
             default:
                 Debug.Log("No enemy type on enemySO");
@@ -120,6 +120,7 @@ public class EnemyScript : MonoBehaviour, ICanDie
         //add ondeath animation? setactive false after animation play
 
         //setactive to false instead of destroy for save/loading
+        hasDied = true;
         gameObject.SetActive(false);
     }
 }

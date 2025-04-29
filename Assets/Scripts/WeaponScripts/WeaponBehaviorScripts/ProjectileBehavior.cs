@@ -5,7 +5,13 @@ using UnityEngine;
 public class ProjectileBehavior : IGunBehavior
 {
     public GameObject projectilePrefab;
-    public float projectileSpeed = 20f;
+    public float projectileSpeed; //= 20f;
+
+    public ProjectileBehavior(GameObject projectilePrefab, float projectileSpeed)
+    {
+        this.projectilePrefab = projectilePrefab;
+        this.projectileSpeed = projectileSpeed;
+    }
 
     // Instantiate projectile with projectileSpeed velocity (forward)
     public void FireGun(Transform shootPoint, float damage, float range)
@@ -14,6 +20,5 @@ public class ProjectileBehavior : IGunBehavior
         projectile.GetComponent<Rigidbody>().velocity = shootPoint.forward * projectileSpeed;
         projectile.GetComponent<ProjectileScripts>().projectileDamage = damage;
         projectile.GetComponent<ProjectileScripts>().explodeRange = range;
-        //Debug.Log("Projectile launched.");
     }
 }

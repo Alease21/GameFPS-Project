@@ -11,7 +11,7 @@ public class ItemPickupScript : MonoBehaviour
         var playerStatsScript = PlayerStatsScript.instance;
         var throwableController = ThrowableController.instance;
 
-        if (other.tag == "ItemPickup")
+        if (other.GetComponent<ItemPackScript>())
         {
             ItemPackScript itemPackPickUp = other.transform.GetComponent<ItemPackScript>();
             
@@ -83,44 +83,43 @@ public class ItemPickupScript : MonoBehaviour
             //update ui every item collision, whether item is consumed or not.
             InventoryController.instance.UIUpdateEvent?.Invoke();
         }
-        if (other.tag == "WeaponPickup")
+        if (other.GetComponent<WeaponScript>())
         {
             WeaponSO weaponPickUpSO = other.transform.GetComponent<WeaponScript>().weaponSO;
+
+            //switch statement to assign hasWeapon properly based on collected weapons
+            bool hasWeapon = false;
+            switch (weaponPickUpSO.weaponType)
+            {
+                case WeaponSO.WeaponType.HitScan:
+                    hasWeapon = weaponController.hasHitScan;
+                    break;
+                case WeaponSO.WeaponType.Projectile:
+                    hasWeapon = weaponController.hasProjectile;
+                    break;
+                case WeaponSO.WeaponType.Continuous:
+                    hasWeapon = weaponController.hasContinuous;
+                    break;
+            }
 
             //If weapon pickup is of certain Weapontype (cases), check if player has this weapon or not. If not, call weaponPrefabSpawn() to instantiate the weapon and
             //destroy item on successful pickup
             switch (weaponPickUpSO.weaponType)
             {
                 case WeaponSO.WeaponType.HitScan:
-                    Debug.Log(weaponController.hasHitScan ? "I already have this weapon." : "HitScan weapon picked up");
-                    if (!weaponController.hasHitScan)
-                    {
-                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.HitScan, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
-                        //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
-                        other.GetComponent<WeaponScript>().OnPickUp();
-                    }
-                    break;
                 case WeaponSO.WeaponType.Projectile:
-                    Debug.Log(weaponController.hasProjectile ? "I already have this weapon." : "Projectile weapon picked up");
-                    if (!weaponController.hasProjectile)
-                    {
-                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Projectile, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
-                        //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
-                        other.GetComponent<WeaponScript>().OnPickUp();
-                    }
-                    break;
                 case WeaponSO.WeaponType.Continuous:
-                    Debug.Log(weaponController.hasContinuous ? "I already have this weapon." : "Continuous weapon picked up");
-                    if (!weaponController.hasContinuous)
+                    Debug.Log(hasWeapon ? "I already have this weapon." : $"{weaponPickUpSO.weaponType} weapon picked up");
+                    if (!hasWeapon)
                     {
-                        weaponController.WeaponPrefabSpawn(WeaponSO.WeaponType.Continuous, weaponPickUpSO.ammoMax, weaponPickUpSO.ammoCount, weaponPickUpSO.damage, weaponPickUpSO.range);
+                        weaponController.WeaponPrefabSpawn(weaponPickUpSO);
                         //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
                         other.GetComponent<WeaponScript>().OnPickUp();
                     }
                     break;
                 case WeaponSO.WeaponType.Grenade:
                 case WeaponSO.WeaponType.SmokeBomb:
-                    if (throwableController.ThrowableGet(weaponPickUpSO.weaponType, weaponPickUpSO.ammoCount, weaponPickUpSO.ammoMax, weaponPickUpSO.damage, weaponPickUpSO.range, weaponPickUpSO.explodeTime))
+                    if (throwableController.ThrowableGet(weaponPickUpSO))
                     {
                         throwableController.ThrowableCountUpdater();
                         InventoryController.instance.OnWeaponSwap();

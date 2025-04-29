@@ -21,3 +21,6 @@ MonoBehaviour:
   attackAnimation: {fileID: 0}
   hitBoxPrefab: {fileID: 0}
   explodeTime: 3
+  weaponPrefab: {fileID: 4577862281744191463, guid: 5538ed0b5474ea841b06c19086dd1619, type: 3}
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 15

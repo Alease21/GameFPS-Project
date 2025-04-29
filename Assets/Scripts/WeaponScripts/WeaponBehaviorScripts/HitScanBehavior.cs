@@ -6,7 +6,10 @@ using UnityEngine;
 public class HitScanBehavior : IGunBehavior
 {
     public GameObject hitScanShotPrefab;
-
+    public HitScanBehavior(GameObject hitScanShot)
+    {
+        hitScanShotPrefab = hitScanShot;
+    }
     // raycast forward from shootpoint position and deal damage to hit target
     public void FireGun(Transform shootPoint, float damage, float range)
     {
@@ -14,18 +17,17 @@ public class HitScanBehavior : IGunBehavior
 
         if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit))
         {
-            switch (hit.transform.tag)
+            if (hit.transform.GetComponent<PlayerStatsScript>())
             {
-                case "Player":
-                    hit.transform.GetComponent<PlayerStatsScript>().TakeDamage(damage);
-                    //hit.transform.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
-                    break;
-                case "Enemy":
-                    hit.transform.GetComponent<EnemyScript>().TakeDamage(damage);
-                    break;
-                case "EnvironEnemy":
-                    hit.transform.GetComponent<BarrelScript>().OnTakeDamage(damage);
-                    break;
+                hit.transform.GetComponent<PlayerStatsScript>().TakeDamage(damage);
+            }
+            else if (hit.transform.GetComponent<EnemyScript>())
+            {
+                hit.transform.GetComponent<EnemyScript>().TakeDamage(damage);
+            }
+            else if (hit.transform.GetComponent<BarrelScript>())
+            {
+                hit.transform.GetComponent<BarrelScript>().OnTakeDamage(damage);
             }
             //Debug.Log($"Shot {hit.transform.name}. (raycast)");
         }

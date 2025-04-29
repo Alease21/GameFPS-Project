@@ -26,7 +26,7 @@ public class BarrelInRangeScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Enemy")
+        if (other.GetComponent<PlayerStatsScript>() || other.GetComponent<EnemyScript>())
         {
             if (!barrelScript.inRangeColliders.Contains(other.gameObject))
             {
@@ -36,7 +36,7 @@ public class BarrelInRangeScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Enemy")
+        if (other.GetComponent<PlayerStatsScript>() || other.GetComponent<EnemyScript>())
         {
             if (barrelScript.inRangeColliders.Contains(other.gameObject))
             {

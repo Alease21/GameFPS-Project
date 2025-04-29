@@ -15,7 +15,9 @@ public class WeaponSOEditor : Editor
     public SerializedProperty _attackAnimation;
     public SerializedProperty _hitBoxPrefab;
     public SerializedProperty _explodeTime;
-
+    public SerializedProperty _weaponPrefab;
+    public SerializedProperty _projectilePrefab;
+    public SerializedProperty _projectileSpeed;
     private void OnEnable()
     {
         _weaponName = serializedObject.FindProperty("weaponName");
@@ -27,6 +29,9 @@ public class WeaponSOEditor : Editor
         _attackAnimation = serializedObject.FindProperty("attackAnimation");
         _hitBoxPrefab = serializedObject.FindProperty("hitBoxPrefab");
         _explodeTime = serializedObject.FindProperty("explodeTime");
+        _weaponPrefab = serializedObject.FindProperty("weaponPrefab");
+        _projectilePrefab = serializedObject.FindProperty("projectilePrefab");
+        _projectileSpeed = serializedObject.FindProperty("projectileSpeed");
     }
 
     public override void OnInspectorGUI()
@@ -41,52 +46,65 @@ public class WeaponSOEditor : Editor
 
         switch (_weaponType.enumValueIndex)
         {
-            case 0:
+            case 0: //hitscan
                 EditorGUILayout.LabelField("Gun Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
                 EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
                 EditorGUILayout.PropertyField(_damage, new GUIContent("Gun Damage"));
                 EditorGUILayout.PropertyField(_range, new GUIContent("Gun Range"));
                 EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Shoot Animation"));
+                EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("HitScan Gun Prefab"));
+                EditorGUILayout.PropertyField(_projectilePrefab, new GUIContent("HitScan 'Shot' Prefab"));
                 break;
-            case 1:
+            case 1: //projectile
                 EditorGUILayout.LabelField("Gun Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
                 EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
                 EditorGUILayout.PropertyField(_damage, new GUIContent("Gun Damage"));
                 EditorGUILayout.PropertyField(_range, new GUIContent("Explode Range"));
                 EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Shoot Animation"));
+                EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Projectile Gun Prefab"));
+                EditorGUILayout.PropertyField(_projectilePrefab, new GUIContent("Projectile Prefab"));
+                EditorGUILayout.PropertyField(_projectileSpeed, new GUIContent("Projectile Speed"));
                 break;
-            case  2:
+            case  2: //continuous
                 EditorGUILayout.LabelField("Gun Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
                 EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
                 EditorGUILayout.PropertyField(_damage, new GUIContent("Gun Damage"));
-                EditorGUILayout.PropertyField(_range, new GUIContent("Gun Range"));
+                EditorGUILayout.PropertyField(_range, new GUIContent("Gun Range")); //use me for projectile deleting?
                 EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Shoot Animation"));
+                EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Continuous Gun Prefab"));
+                EditorGUILayout.PropertyField(_projectilePrefab, new GUIContent("Fire Projectile Prefab"));
+                EditorGUILayout.PropertyField(_projectileSpeed, new GUIContent("Fire Projectile Speed"));
                 break;
-            case 3:
+            case 3: //melee weapon
                 EditorGUILayout.LabelField("Melee Weapon Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_damage, new GUIContent("Weapon Damage"));
                 //EditorGUILayout.PropertyField(_range, new GUIContent("Weapon Range"));
                 EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Swing Animation"));
+                EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Melee Weapon Prefab"));
                 EditorGUILayout.PropertyField(_hitBoxPrefab, new GUIContent("Weapon HitBox Prefab"));
                 break;
-            case 4:
+            case 4: //grenade throwable
                 EditorGUILayout.LabelField("Throwable Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
                 EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
                 EditorGUILayout.PropertyField(_damage, new GUIContent("Grenade Damage"));
                 EditorGUILayout.PropertyField(_range, new GUIContent("Grenade Range"));
                 EditorGUILayout.PropertyField(_explodeTime, new GUIContent("Grenade Timer"));
+                EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Grenade Prefab"));
+                EditorGUILayout.PropertyField(_projectileSpeed, new GUIContent("Throwable Speed"));
                 break;
-            case 5:
+            case 5: //smoke bomb throwable
                 EditorGUILayout.LabelField("Throwable Info:", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(_ammoMax, new GUIContent("Max Ammo"));
                 EditorGUILayout.PropertyField(_ammoCount, new GUIContent("Initial Ammo Count"));
                 //EditorGUILayout.PropertyField(_damage, new GUIContent("Grenade Damage"));
                 EditorGUILayout.PropertyField(_range, new GUIContent("Smoke Bomb Range"));
                 EditorGUILayout.PropertyField(_explodeTime, new GUIContent("Smoke Bomb Timer"));
+                EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Smoke Bomb Prefab"));
+                EditorGUILayout.PropertyField(_projectileSpeed, new GUIContent("Throwable Speed"));
                 break;
         }
 

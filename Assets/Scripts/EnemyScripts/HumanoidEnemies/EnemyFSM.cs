@@ -67,7 +67,7 @@ public class EnemyFSM : MonoBehaviour
         // If raycast hits player, and player is within enemy FOV, rotate to face player and swap state to attack
         if (hit.transform != null)
         {
-            if (hit.transform.tag == "Player" && !PlayerStatsScript.instance.isHidden)
+            if (hit.transform.GetComponent<PlayerStatsScript>() && !PlayerStatsScript.instance.isHidden)
             {
                 if (playerTargetDist < enemyScript.enemyViewDist &&
                     Vector3.Angle(transform.forward, playerTargetDir.normalized) < enemyScript.enemyFOV / 2)

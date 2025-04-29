@@ -10,7 +10,6 @@ public abstract class GunBase
     public int ammoCount;
     public int ammoMax;
     public float weaponDamage;
-    public float weaponRange;
 
     public abstract void AmmoGet(int amount);
     public abstract void Use();
