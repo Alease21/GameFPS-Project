@@ -11,6 +11,8 @@ public class ContinuousBehavior : IGunBehavior
         fireVisualPrefab = projectilePrefab;
         fireSpeed = projectileSpeed;
     }
+
+    //projectiles firing sideways sometimes???
     public void FireGun(Transform shootPoint, float damage, float range)
     {
         GameObject projectile = GameObject.Instantiate(fireVisualPrefab, shootPoint.position, Quaternion.LookRotation(shootPoint.transform.up));

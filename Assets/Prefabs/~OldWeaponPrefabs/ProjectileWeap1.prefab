@@ -83,37 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7886521475175875409
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4493818030301553518}
-  m_Layer: 3
-  m_Name: ItemSpawnPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4493818030301553518
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7886521475175875409}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 882355674060821010}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &882355674060949650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,15 +125,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.498288
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.16180609
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.261293
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
       propertyPath: m_LocalRotation.w
@@ -240,9 +209,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 400000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
       insertIndex: 2
       addedObject: {fileID: 5099435072818425794}
-    - targetCorrespondingSourceObject: {fileID: 400000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4493818030301553518}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e42a245ddc40f744994b4b96b407ec47, type: 3}
 --- !u!4 &882355674060821010 stripped

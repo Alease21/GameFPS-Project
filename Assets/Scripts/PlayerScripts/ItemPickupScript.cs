@@ -62,14 +62,14 @@ public class ItemPickupScript : MonoBehaviour
                 //If item is of ItemPackType ammoPack: check if each weapon (if player currently has) ammoCount < ammoMax.
                 //if true, call onPackConsume(), then call AmmoGet() for each weapon and update ammo stats
                 case ItemPackSO.ItemPackType.AmmoPack:
-                    if (weaponController.weapon1?.ammoCount < weaponController.weapon1?.ammoMax ||
-                        weaponController.weapon2?.ammoCount < weaponController.weapon2?.ammoMax ||
-                        weaponController.weapon3?.ammoCount < weaponController.weapon3?.ammoMax)
+                    if (weaponController.Weapon1?.ammoCount < weaponController.Weapon1?.ammoMax ||
+                        weaponController.Weapon2?.ammoCount < weaponController.Weapon2?.ammoMax ||
+                        weaponController.Weapon3?.ammoCount < weaponController.Weapon3?.ammoMax)
                     {
                         //ammo pack affects all guns player currently has
-                        weaponController.weapon1?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                        weaponController.weapon2?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                        weaponController.weapon3?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        weaponController.Weapon1?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        weaponController.Weapon2?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        weaponController.Weapon3?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
                         //
 
                         itemPackPickUp.item.OnPackConsume(other.gameObject);
@@ -92,13 +92,13 @@ public class ItemPickupScript : MonoBehaviour
             switch (weaponPickUpSO.weaponType)
             {
                 case WeaponSO.WeaponType.HitScan:
-                    hasWeapon = weaponController.hasHitScan;
+                    hasWeapon = weaponController.HasHitScan;
                     break;
                 case WeaponSO.WeaponType.Projectile:
-                    hasWeapon = weaponController.hasProjectile;
+                    hasWeapon = weaponController.HasProjectile;
                     break;
                 case WeaponSO.WeaponType.Continuous:
-                    hasWeapon = weaponController.hasContinuous;
+                    hasWeapon = weaponController.HasContinuous;
                     break;
             }
 

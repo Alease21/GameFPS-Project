@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSO: {fileID: 11400000, guid: f9a2db4e2cc1e2b488507393cf13b875, type: 2}
-  weaponPrefab: {fileID: 1511739984642140153}
+  weaponPrefab: {fileID: 913030546108642415, guid: fd2396c2c959d83459cf942dabef217d, type: 3}
 --- !u!4 &1511739984642505689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3316595089500110603, guid: 60cdbf161eed99f499f3c42b5af91873, type: 3}

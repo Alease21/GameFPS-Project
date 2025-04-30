@@ -6,7 +6,6 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
     public WeaponSO weaponSO;
-    public GameObject weaponPrefab;
 
     public void OnPickUp()
     {

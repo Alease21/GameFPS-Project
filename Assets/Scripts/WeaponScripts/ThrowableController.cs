@@ -19,18 +19,23 @@ public class ThrowableController : MonoBehaviour
         }
     }
 
-    public GameObject[] throwablePrefabs;
+    private bool _hasGrenade = false,
+                 _hasSmokeBomb = false,
+                 _isGrenade = false,
+                 _isSmokeBomb = false;
+
+    //at some point make all calls through property (private stuff sets field atm)
+    public bool HasGrenade { get { return _hasGrenade; } private set { _hasGrenade = value; } }
+    public bool HasSmokeBomb { get { return _hasSmokeBomb; } private set { _hasSmokeBomb = value; } }
+    public bool IsGrenade { get { return _isGrenade; } private set { _isGrenade = value; } }
+    public bool IsSmokeBomb { get { return _isSmokeBomb; } private set { _isSmokeBomb = value; } }
+
     public Transform throwPoint;
 
-    public ThrowableBase throwable1,
-                         throwable2;
-    public ThrowableBase currThrowable;
+    private ThrowableBase _throwable1,
+                          _throwable2,
+                          _currThrowable;
 
-    public bool hasGrenade = false;
-    public bool hasSmokeBomb = false;
-
-    public bool isGrenade = false;
-    public bool isSmokeBomb = false;
 
     public Action OnThrowableUse;
 
@@ -41,27 +46,27 @@ public class ThrowableController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && hasGrenade)
+        if (Input.GetKeyDown(KeyCode.Q) && _hasGrenade)
         {
-            currThrowable = throwable1;
-            isGrenade = true;
-            isSmokeBomb = false;
+            _currThrowable = _throwable1;
+            _isGrenade = true;
+            _isSmokeBomb = false;
             InventoryController.instance.OnWeaponSwap();
             Debug.Log("Grenade Equipped");
         }
-        if (Input.GetKeyDown(KeyCode.E) && hasSmokeBomb)
+        if (Input.GetKeyDown(KeyCode.E) && _hasSmokeBomb)
         {
-            currThrowable = throwable2;
-            isGrenade = false;
-            isSmokeBomb = true;
+            _currThrowable = _throwable2;
+            _isGrenade = false;
+            _isSmokeBomb = true;
             InventoryController.instance.OnWeaponSwap();
             Debug.Log("Smoke Bomb Equipped");
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if ((hasGrenade || hasSmokeBomb) && currThrowable.throwableCount > 0)
+            if ((_hasGrenade || _hasSmokeBomb) && _currThrowable.throwableCount > 0)
             {
-                currThrowable?.Use(throwPoint.transform);
+                _currThrowable?.Use(throwPoint.transform);
                 ThrowableCountUpdater();
             }
             else
@@ -77,18 +82,18 @@ public class ThrowableController : MonoBehaviour
         switch (weaponSO.weaponType)
         {
             case WeaponSO.WeaponType.Grenade:
-                if (throwable1 == null)
+                if (_throwable1 == null)
                 {
-                    throwable1 = new GrenadeThrowable(weaponSO);
-                    currThrowable = throwable1;
-                    hasGrenade = true;
-                    isGrenade = true;
-                    isSmokeBomb = false;
+                    _throwable1 = new GrenadeThrowable(weaponSO);
+                    _currThrowable = _throwable1;
+                    _hasGrenade = true;
+                    _isGrenade = true;
+                    _isSmokeBomb = false;
                     return true;
                 }
                 else
                 {
-                    if (throwable1.CountGet(weaponSO.ammoCount))
+                    if (_throwable1.CountGet(weaponSO.ammoCount))
                     {
                         return true;
                     }
@@ -98,18 +103,18 @@ public class ThrowableController : MonoBehaviour
                     }
                 }
             case WeaponSO.WeaponType.SmokeBomb:
-                if (throwable2 == null)
+                if (_throwable2 == null)
                 {
-                    throwable2 = new SmokeBombThrowable(weaponSO);
-                    currThrowable = throwable2;
-                    hasSmokeBomb = true;
-                    isGrenade = false;
-                    isSmokeBomb = true;
+                    _throwable2 = new SmokeBombThrowable(weaponSO);
+                    _currThrowable = _throwable2;
+                    _hasSmokeBomb = true;
+                    _isGrenade = false;
+                    _isSmokeBomb = true;
                     return true;
                 }
                 else
                 {
-                    if (throwable2.CountGet(weaponSO.ammoCount))
+                    if (_throwable2.CountGet(weaponSO.ammoCount))
                     {
                         return true;
                     }
@@ -125,15 +130,15 @@ public class ThrowableController : MonoBehaviour
 
     public void ThrowableCountUpdater()
     {
-        if (throwable1 != null)
+        if (_throwable1 != null)
         {
-            PlayerStatsScript.instance.grenadeCount = throwable1.throwableCount;
-            PlayerStatsScript.instance.maxGrenades = throwable1.throwableMax;
+            PlayerStatsScript.instance.grenadeCount = _throwable1.throwableCount;
+            PlayerStatsScript.instance.maxGrenades = _throwable1.throwableMax;
         }
-        if (throwable2 != null)
+        if (_throwable2 != null)
         {
-            PlayerStatsScript.instance.smokeBombCount = throwable2.throwableCount;
-            PlayerStatsScript.instance.maxSmokeBombs = throwable2.throwableMax;
+            PlayerStatsScript.instance.smokeBombCount = _throwable2.throwableCount;
+            PlayerStatsScript.instance.maxSmokeBombs = _throwable2.throwableMax;
         }
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }

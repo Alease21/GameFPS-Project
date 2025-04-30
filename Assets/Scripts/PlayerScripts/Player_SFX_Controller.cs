@@ -22,6 +22,7 @@ public class Player_SFX_Controller : MonoBehaviour
 
     public AudioSource audioSource;
 
+    //make dict?
     public AudioClip hitScanGunFire,
         projectileGunFire,
         continuousGunFire,//edit me, my clip is very long
@@ -49,22 +50,22 @@ public class Player_SFX_Controller : MonoBehaviour
     //player gun SFX for player to hear. expand into sound system the enemies hear based on dist?
     public void OnFireGun()//subbed to weaponcontroller onfireweapon
     {
-        if (WeaponController.instance.myGun.ammoCount == 0)
+        if (WeaponController.instance.MyGun.ammoCount == 0)
         {
             audioSource.clip = noAmmoFire;
             Debug.Log("no ammo in waepon");//swap to have diff sounds for each weapon?
         }
-        else if (WeaponController.instance.isHitScan)
+        else if (WeaponController.instance.IsHitScan)
         {
             audioSource.clip = hitScanGunFire;
             Debug.Log("hitscan shot");
         }
-        else if (WeaponController.instance.isProjectile)
+        else if (WeaponController.instance.IsProjectile)
         {
             audioSource.clip = projectileGunFire;
             Debug.Log("proj shot");
         }
-        else if (WeaponController.instance.isContinuous)
+        else if (WeaponController.instance.IsContinuous)
         {
             //audioSource.clip = continuousGunFire;
             Debug.Log("cont shot");

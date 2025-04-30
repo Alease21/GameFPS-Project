@@ -18,6 +18,7 @@ public class WeaponSOEditor : Editor
     public SerializedProperty _weaponPrefab;
     public SerializedProperty _projectilePrefab;
     public SerializedProperty _projectileSpeed;
+
     private void OnEnable()
     {
         _weaponName = serializedObject.FindProperty("weaponName");
@@ -85,6 +86,7 @@ public class WeaponSOEditor : Editor
                 EditorGUILayout.PropertyField(_attackAnimation, new GUIContent("Swing Animation"));
                 EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Melee Weapon Prefab"));
                 EditorGUILayout.PropertyField(_hitBoxPrefab, new GUIContent("Weapon HitBox Prefab"));
+
                 break;
             case 4: //grenade throwable
                 EditorGUILayout.LabelField("Throwable Info:", EditorStyles.boldLabel);
@@ -95,6 +97,7 @@ public class WeaponSOEditor : Editor
                 EditorGUILayout.PropertyField(_explodeTime, new GUIContent("Grenade Timer"));
                 EditorGUILayout.PropertyField(_weaponPrefab, new GUIContent("Grenade Prefab"));
                 EditorGUILayout.PropertyField(_projectileSpeed, new GUIContent("Throwable Speed"));
+
                 break;
             case 5: //smoke bomb throwable
                 EditorGUILayout.LabelField("Throwable Info:", EditorStyles.boldLabel);

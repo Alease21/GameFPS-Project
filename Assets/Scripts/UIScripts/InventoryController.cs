@@ -31,9 +31,9 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject healthShieldCanvas;
     
-    //find better solution
+    //find better solution?
     [SerializeField] private GameObject grenadeAlphaScreen,
-        SmokeBombAlphaScreen;
+                                        SmokeBombAlphaScreen;
 
     [SerializeField] private GameObject hitScanWeaponIcon,
                                         projWeapIcon,
@@ -78,28 +78,30 @@ public class InventoryController : MonoBehaviour
 
         playerMovement = playerStatsScript.gameObject.GetComponent<PlayerMovement>();
 
+        weaponController.OnSwapWeapon += OnWeaponSwap;
+
         dashBar.value = 1;
 
         //Initial checks for what weapon is equipped. uncollected weapons' ammo
         //counts are disabled until weaopn collected
-        if (!weaponController.hasHitScan)
+        if (!weaponController.HasHitScan)
         {
             hitScanAmmoCount.gameObject.SetActive(false);
         }
-        if (!weaponController.hasProjectile)
+        if (!weaponController.HasProjectile)
         {
             projAmmoCount.gameObject.SetActive(false);
         }
-        if (!weaponController.hasContinuous)
+        if (!weaponController.HasContinuous)
         {
             contAmmoCount.gameObject.SetActive(false);
         }
-        if (!throwableController.hasGrenade)
+        if (!throwableController.HasGrenade)
         {
             grenadeCount.gameObject.SetActive(false);
             grenadeCountIG.gameObject.SetActive(false);
         }
-        if (!throwableController.hasSmokeBomb)
+        if (!throwableController.HasSmokeBomb)
         {
             smokeBombCount.gameObject.SetActive(false);
             smokeBombCountIG.gameObject.SetActive(false);
@@ -127,7 +129,6 @@ public class InventoryController : MonoBehaviour
     public IEnumerator OnDash()
     {
         dashIcon.color = Color.red * new Color(1f, 1f, 1f, 0.5f);
-        //dashRedCircle.gameObject.SetActive(true);
         dashBar.GetComponentInChildren<UnityEngine.UI.Image>().color = Color.red;
         for (float timer = 0f; timer < playerMovement.DashCoolDown; timer += Time.deltaTime)
         {
@@ -136,7 +137,6 @@ public class InventoryController : MonoBehaviour
         }
 
         dashIcon.color = Color.white;
-        //dashRedCircle.gameObject.SetActive(false);
         dashBar.GetComponentInChildren<UnityEngine.UI.Image>().color = Color.green;
         for (float timer = 0f; timer < 0.3f; timer += Time.deltaTime)
         {                           // hard coded in float value for green bar "recharge"
@@ -151,23 +151,24 @@ public class InventoryController : MonoBehaviour
 
         AmmoTextUpdate();
     }
+
     public void InGameThrowableStuff()
     {
-        if (throwableController.hasGrenade && !grenadeCountIG.gameObject.activeInHierarchy)
+        if (throwableController.HasGrenade && !grenadeCountIG.gameObject.activeInHierarchy)
         {
             grenadeCountIG.gameObject.SetActive(true);
         }
-        if (throwableController.hasSmokeBomb && !smokeBombCountIG.gameObject.activeInHierarchy)
+        if (throwableController.HasSmokeBomb && !smokeBombCountIG.gameObject.activeInHierarchy)
         {
             smokeBombCountIG.gameObject.SetActive(true);
         }
 
-        if (throwableController.isGrenade)
+        if (throwableController.IsGrenade)
         {
             grenadeAlphaScreen.SetActive(false);
             SmokeBombAlphaScreen.SetActive(true);
         }
-        else if (throwableController.isSmokeBomb)
+        else if (throwableController.IsSmokeBomb)
         {
             grenadeAlphaScreen.SetActive(true);
             SmokeBombAlphaScreen.SetActive(false);
@@ -175,24 +176,24 @@ public class InventoryController : MonoBehaviour
     }
     public void InGameWeaponIconStuff()
     {
-        if (!weaponInGameIcon.gameObject.activeInHierarchy && weaponController.myGun != null)
+        if (!weaponInGameIcon.gameObject.activeInHierarchy && weaponController.MyGun != null)
         {
             weaponInGameIcon.gameObject.SetActive(true);
         }
-        if (!currGunAmmoCount.gameObject.activeInHierarchy && weaponController.myGun != null)
+        if (!currGunAmmoCount.gameObject.activeInHierarchy && weaponController.MyGun != null)
         {
             currGunAmmoCount.gameObject.SetActive(true);
         }
 
-        if (weaponController.isHitScan)
+        if (weaponController.IsHitScan)
         {
             weaponInGameIcon.sprite = spriteArray[0];
         }
-        else if (weaponController.isProjectile)
+        else if (weaponController.IsProjectile)
         {
             weaponInGameIcon.sprite = spriteArray[1];
         }
-        else if (weaponController.isContinuous)
+        else if (weaponController.IsContinuous)
         {
             weaponInGameIcon.sprite = spriteArray[2];
         }
@@ -203,30 +204,30 @@ public class InventoryController : MonoBehaviour
     //that weapon active
     public void ItemGetColorChange()
     {
-        if (weaponController.hasHitScan)
+        if (weaponController.HasHitScan)
         {
             hitScanWeaponIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             hitScanAmmoIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             hitScanAmmoCount.gameObject.SetActive(true);
         }
-        if (weaponController.hasProjectile)
+        if (weaponController.HasProjectile)
         {
             projWeapIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             projAmmoIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             projAmmoCount.gameObject.SetActive(true);
         }
-        if (weaponController.hasContinuous)
+        if (weaponController.HasContinuous)
         {
             contWeapIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             contAmmoIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             contAmmoCount.gameObject.SetActive(true);
         }
-        if (throwableController.hasGrenade)
+        if (throwableController.HasGrenade)
         {
             grenadeIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             grenadeCount.gameObject.SetActive(true);
         }
-        if (throwableController.hasSmokeBomb)
+        if (throwableController.HasSmokeBomb)
         {
             smokeBombIcon.transform.GetComponent<UnityEngine.UI.Image>().color = Color.white;
             smokeBombCount.gameObject.SetActive(true);
@@ -237,6 +238,11 @@ public class InventoryController : MonoBehaviour
     public void HealthAndShieldUpdate()
     {
         healthBar.value = (float)playerStatsScript.Health / (float)playerStatsScript.MaxHealth;
+        shieldBar.value = (float)playerStatsScript.Shield / (float)playerStatsScript.MaxShield;
+        healthTextInv.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
+        shieldTextInv.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
+
+        /* Old color change on health value
         if (healthBar.value == 0)
         {
             healthBar.GetComponentInChildren<UnityEngine.UI.Image>().color *= new Color(1f,1f,1f,0f);
@@ -245,8 +251,7 @@ public class InventoryController : MonoBehaviour
         {
             healthBar.GetComponentInChildren<UnityEngine.UI.Image>().color += new Color(0f, 0f, 0f, 1f);
         }
-
-        shieldBar.value = (float)playerStatsScript.Shield / (float)playerStatsScript.MaxShield;
+        
         if (shieldBar.value == 0)
         {
             shieldBar.GetComponentInChildren<UnityEngine.UI.Image>().color *= new Color(1f,1f,1f,0f);
@@ -255,11 +260,7 @@ public class InventoryController : MonoBehaviour
         {
             shieldBar.GetComponentInChildren<UnityEngine.UI.Image>().color += new Color(0f, 0f, 0f, 1f);
         }
-
-        //healthTextGame.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
-        //shieldTextGame.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
-        healthTextInv.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
-        shieldTextInv.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
+        */
     }
 
     //UI update of ammo counts
@@ -269,9 +270,9 @@ public class InventoryController : MonoBehaviour
         projAmmoCount.text = $"{playerStatsScript.projectileWeaponAmmo} / {playerStatsScript.maxProjectileAmmo}";
         contAmmoCount.text = $"{playerStatsScript.continuousWeaponAmmo} / {playerStatsScript.maxContinuousAmmo}";
 
-        if(weaponController.myGun != null)
+        if(weaponController.MyGun != null)
         {
-            currGunAmmoCount.text = $"{weaponController.myGun.ammoCount} / {weaponController.myGun.ammoMax}";
+            currGunAmmoCount.text = $"{weaponController.MyGun.ammoCount} / {weaponController.MyGun.ammoMax}";
         }
 
         grenadeCount.text = $"{playerStatsScript.grenadeCount} / {playerStatsScript.maxGrenades}";

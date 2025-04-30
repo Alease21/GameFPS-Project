@@ -22,24 +22,23 @@ public class PlayerStatsScript : MonoBehaviour
         }
     }
 
-    [SerializeField] private float _health;
-    [SerializeField] private float _shield;
-    [SerializeField] private float _maxHealth = 100;
-    [SerializeField] private float _maxShield = 50;
+    [SerializeField] private float _health,
+                                   _shield,
+                                   _maxHealth = 100,
+                                   _maxShield = 50;
     
-    public float Health { get { return _health; } protected set { } }
-    public float MaxHealth { get { return _maxHealth; } protected set { } }
-    public float Shield { get { return _shield; } protected set { } }
-    public float MaxShield { get { return _maxShield; } protected set { } }
+    public float Health { get { return _health; } private set { _health = value; } }
+    public float MaxHealth { get { return _maxHealth; } private set { _maxHealth = value; } }
+    public float Shield { get { return _shield; } private set { _shield = value; } }
+    public float MaxShield { get { return _maxShield; } private set { _maxShield = value; } }
 
     public int hitScanWeaponAmmo,
                projectileWeaponAmmo,
                continuousWeaponAmmo,
                maxHitscanAmmo,
                maxProjectileAmmo,
-               maxContinuousAmmo;
-
-    public int grenadeCount,
+               maxContinuousAmmo,
+               grenadeCount,
                maxGrenades,
                smokeBombCount,
                maxSmokeBombs;
