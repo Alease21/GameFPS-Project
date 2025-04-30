@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 [ExecuteAlways]
 public class GUIDController : MonoBehaviour
 {
+    /*
     public Dictionary<string, GameObject> tempRegistry = new Dictionary<string, GameObject>();
 
     private void OnEnable()
@@ -88,4 +89,5 @@ public class GUIDController : MonoBehaviour
         }
 
     }
+    */
 }

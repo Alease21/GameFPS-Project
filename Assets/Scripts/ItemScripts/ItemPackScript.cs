@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+[RequireComponent(typeof(MyGUID))]
 public class ItemPackScript : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        if (!GetComponent<MyGUID>())
+        {
+            gameObject.AddComponent<MyGUID>();
+        }
+    }
+
     public ItemPackSO itemPackSO;
     public GameObject itemPackPrefab;
 
@@ -12,6 +21,7 @@ public class ItemPackScript : MonoBehaviour
 
     public bool isConsumed;//bool for save/load
             //if ^this then set item obj bool to isRecharging as well
+                //^set this up on load
     public float rechargeTimeRemaining;
 
     //add stop coros method to listen for load event?

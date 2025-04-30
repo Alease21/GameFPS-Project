@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
+[RequireComponent(typeof(MyGUID))]
 public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, IDealDamageEnviron
 {
+    private void OnEnable()
+    {
+        if (!GetComponent<MyGUID>())
+        {
+            gameObject.AddComponent<MyGUID>();
+        }
+    }
+
     public EnvironmentalEnemySO environEnemySO;
     private BarrelInRangeScript inRangeScript;
     private SphereCollider explodeSphere;
@@ -14,9 +25,12 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
     [SerializeField] private float health;
     [SerializeField] private float damage;
+    public float Health { get { return health; } private set { health = value; } }
+    public float Damage { get { return damage; } private set { damage = value; } }
 
     public List<GameObject> inRangeColliders;
     private bool hasExploded = false;
+    public bool HasExploded { get { return hasExploded; } private set { hasExploded = value; } }
 
     public GameObject explodeSphereVisual;
     public float explodeDur = .2f; // constant value for explode duration
@@ -48,7 +62,6 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
             else if (health != 0 && health <= damage)
             {
                 health = 0;
-                hasExploded = true;
                 OnDestroyed();
             }
         }
@@ -73,10 +86,12 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
         StartCoroutine(DestroyCoro());
 
+        /*
         if (inRangeColliders.Count == 0)
         {
             hasExploded = false;
         }
+        */
     }
 
     // Coroutine expands sphere gameobject to visualize explosion. (probably change me)
@@ -96,6 +111,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
         //setactive to false instead of destroy for save/loading
         gameObject.SetActive(false);
+        hasExploded = false;
     }
     public void OnDealDamage()
     {

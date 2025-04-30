@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyWeaponController))]
+[RequireComponent(typeof(EnemyWeaponController), typeof(MyGUID))]
 public class EnemyScript : MonoBehaviour, ICanDie
 {
+    private void OnEnable()
+    {
+        if (!GetComponent<MyGUID>())
+        {
+            gameObject.AddComponent<MyGUID>();
+        }
+    }
+
     //Gizmo bools to flip in inspector
     [Header("Gizmo Bools:")]
     [Space(5)]
@@ -49,8 +57,10 @@ public class EnemyScript : MonoBehaviour, ICanDie
                 {
                     next = 0;
                 }
-                Gizmos.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(GetComponent<EnemyFSM>().patrolPoints[i].transform.position, .1f);
 
+                Gizmos.color = Color.red * new Color(1f, 1f, 1f, 0.3f);
                 Gizmos.DrawLine(GetComponent<EnemyFSM>().patrolPoints[i].transform.position, GetComponent<EnemyFSM>().patrolPoints[next].transform.position);
             }
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 879178418461203151, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_Name
       value: HealthPackPickup (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
+      propertyPath: _GUID
+      value: b4488167-c11f-4861-b74d-978071b7fd31
       objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,6 +401,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3179873793083093120, guid: 9bd656160b713f045a0f94b75c6516d7, type: 3}
+      propertyPath: _GUID
+      value: ada739cb-1b66-485d-ac65-8176631d23d0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -497,7 +505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 151220213035323356, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: showPatPath
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 817704488698833085, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: m_Name
@@ -505,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 817704488698833085, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4488363671011401900, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: playerTarget
@@ -538,6 +546,10 @@ PrefabInstance:
     - target: {fileID: 4488363671011401900, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: patrolPoints.Array.data[5]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5424773590351309319, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
+      propertyPath: _GUID
+      value: d3a57ee0-8556-4648-9147-06353083162e
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -996,6 +1008,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 4a5ec780-c616-42c8-8b96-7f7e15a128af
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1470,7 +1486,7 @@ GameObject:
   m_Layer: 8
   m_Name: PatPoint (4)
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2193,6 +2209,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: b8320e56-f068-4b24-834a-5dc2b0f3c503
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2832,6 +2852,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: fdf20f8e-9859-4f08-8034-336b3660615c
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3426,6 +3450,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: b496dd2d-6ca3-4467-bb80-3470af0bc7ae
+      objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
       value: SmokeGrenadePickup 1 (7)
@@ -3594,6 +3622,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 4429aad8-f15f-4d5f-8858-fd15dbefe997
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3610,6 +3642,10 @@ PrefabInstance:
     - target: {fileID: 879178418461203151, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_Name
       value: HOTPackPickup (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
+      propertyPath: _GUID
+      value: cbbd670e-a534-403e-87e8-1e391ac9246a
       objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3820,6 +3856,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: a3050ac7-6a9e-4b0c-aaf7-a9539551b16c
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp (3)
@@ -3949,6 +3989,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 0f0d9290-3138-48c2-9916-c4ab22007f9f
+      objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.023139
@@ -4006,6 +4050,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthPackPickup (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
+      propertyPath: _GUID
+      value: 9335ec30-cad2-47d7-b8fe-7a662ad07013
+      objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.332139
@@ -4062,6 +4110,10 @@ PrefabInstance:
     - target: {fileID: 3737602058443353202, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_Name
       value: ShieldPackPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: 3bf1d261-7516-437f-b331-c6229c184cde
       objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4695,6 +4747,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HOTPackPickup (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
+      propertyPath: _GUID
+      value: be4448b5-89fa-4bf5-b114-e39f70ce6e73
+      objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.7092323
@@ -5136,6 +5192,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 1abba50f-66c4-4853-af72-7a7d9fc81e9f
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5835,6 +5895,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 13.8
       objectReference: {fileID: 0}
+    - target: {fileID: 2351587326415214922, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6420367843507996102, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.391981
@@ -5878,6 +5942,18 @@ PrefabInstance:
     - target: {fileID: 6770439344067004585, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_Name
       value: PatPoints EnemyMelee
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632573306039653065, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297487885999929510, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189602916985089409, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6335,6 +6411,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: 398edeb1-827a-4704-8e99-a3f93ee49c4c
+      objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
       value: SmokeGrenadePickup 1 (1)
@@ -6476,6 +6556,10 @@ PrefabInstance:
     - target: {fileID: 879178418461203151, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_Name
       value: HealthPackPickup (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
+      propertyPath: _GUID
+      value: 5b27a1c3-5184-408c-85c5-bc7ff2c47389
       objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6791,6 +6875,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 130355772}
     m_Modifications:
+    - target: {fileID: 4690216134585136658, guid: 450d79db64f8f4d4793b04ca0ae9bc02, type: 3}
+      propertyPath: _GUID
+      value: c9981556-439a-4901-98aa-bb154bcd0916
+      objectReference: {fileID: 0}
     - target: {fileID: 5282326119965129494, guid: 450d79db64f8f4d4793b04ca0ae9bc02, type: 3}
       propertyPath: m_Name
       value: PickupContinuousWeapon1
@@ -6851,6 +6939,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 684c4d3c-f81a-4e39-8040-b3b924c3f533
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6948,6 +7040,10 @@ PrefabInstance:
     - target: {fileID: 6325018531375313985, guid: e07163a1303360942b3401c896bae514, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 7ab386ef-eb10-43c9-8a76-21276edbd1e9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7808,6 +7904,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: e505bb5a-8927-4635-9faf-581dd5ccae27
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp
@@ -8100,7 +8200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 817704488698833085, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4488363671011401900, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
       propertyPath: playerTarget
@@ -8170,6 +8270,10 @@ PrefabInstance:
       propertyPath: OnEnemyAttack.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5424773590351309319, guid: bb3a55c4490eb284f97fd23b837d6fb1, type: 3}
+      propertyPath: _GUID
+      value: 05b2112c-ea2f-4573-a2df-afa8659ffc8c
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8217,6 +8321,10 @@ PrefabInstance:
     - target: {fileID: 879178418461203151, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_Name
       value: HOTPackPickup (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
+      propertyPath: _GUID
+      value: 96364b52-a1d3-4cae-aa47-f80cd22922eb
       objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8397,6 +8505,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HOTPackPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
+      propertyPath: _GUID
+      value: 8872f7de-769d-485b-b66f-96ffcfbddf77
+      objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.8531386
@@ -8496,7 +8608,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 654065763291456644, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147471784091241551, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
+      propertyPath: _GUID
+      value: 14dfe351-97d8-4702-8043-06e4f9943a43
       objectReference: {fileID: 0}
     - target: {fileID: 6149007220552334363, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: showFOV
@@ -8854,7 +8970,7 @@ GameObject:
   m_Layer: 8
   m_Name: PatPoint (4)
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -10144,6 +10260,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickupProjectileWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2692726750143301071, guid: c690aaaee6d86274ea55e69ab8801b88, type: 3}
+      propertyPath: _GUID
+      value: 53fb290a-a129-4f5d-9de8-69e192c57025
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10192,6 +10312,10 @@ PrefabInstance:
     - target: {fileID: 3737602058443353202, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_Name
       value: ShieldPackPickup (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: e02aca70-c6ff-4b78-b357-e22d027210fa
       objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10595,6 +10719,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 5a6dd8a3-3913-4323-b73b-8e024cc6a8f6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10745,6 +10873,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: 2fcfec45-9b7d-4dce-b4d1-67d94362d1ae
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp (5)
@@ -10813,6 +10945,10 @@ PrefabInstance:
     - target: {fileID: 8346993515261622985, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: 2f2bff69-2bd7-4fa6-b11a-6245c10122b8
       objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
@@ -11164,6 +11300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 5955990b-0b25-4f61-8d89-3b506807eb87
+      objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.503139
@@ -11494,6 +11634,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPackPickup (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: ce3751b8-4ac5-4275-9324-b606d89d1464
+      objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.526861
@@ -11775,6 +11919,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 15.05
       objectReference: {fileID: 0}
+    - target: {fileID: 2351587326415214922, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6420367843507996102, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.537
@@ -11818,6 +11966,18 @@ PrefabInstance:
     - target: {fileID: 6770439344067004585, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_Name
       value: PatPoints EnemyRange
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632573306039653065, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297487885999929510, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189602916985089409, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12497,6 +12657,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 8f56bfce-541a-493b-8509-2af7374aa079
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12809,6 +12973,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: f505fea7-5188-447e-a4cb-a6126c7cf2d3
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp (4)
@@ -12980,6 +13148,10 @@ PrefabInstance:
     - target: {fileID: 8346993515261622985, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: b7619ab5-174f-4a9f-8f40-51c33c40fc46
       objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
@@ -13472,6 +13644,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: d1532d9e-51af-450a-b836-2d54d78d7d22
+      objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
       value: SmokeGrenadePickup 1 (8)
@@ -13813,6 +13989,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 130355772}
     m_Modifications:
+    - target: {fileID: 4690216134585136658, guid: 450d79db64f8f4d4793b04ca0ae9bc02, type: 3}
+      propertyPath: _GUID
+      value: 88182af3-58a1-453e-9a37-4d4d766ac4ce
+      objectReference: {fileID: 0}
     - target: {fileID: 5282326119965129494, guid: 450d79db64f8f4d4793b04ca0ae9bc02, type: 3}
       propertyPath: m_Name
       value: PickupContinuousWeapon1 (1)
@@ -13942,6 +14122,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPackPickup (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: bd7437c7-c815-497e-ad7e-635d7081b3b8
+      objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.58613867
@@ -13998,6 +14182,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: e0f8bf3e-9549-44cd-8c2a-c1d8e699da15
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14587,6 +14775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: c333ffaa-0814-402b-b356-c6825ec73c2b
+      objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.026861
@@ -14684,6 +14876,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: f254a711-c526-41ba-a959-5226eaaf6275
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp (8)
@@ -14745,55 +14941,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickupProjectileWeapon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2692726750143301071, guid: c690aaaee6d86274ea55e69ab8801b88, type: 3}
+      propertyPath: _GUID
+      value: 47f9f8e7-f7f6-4c4d-b695-8c8cae02ba58
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c690aaaee6d86274ea55e69ab8801b88, type: 3}
---- !u!1 &1270720991
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1270720992}
-  - component: {fileID: 1270720993}
-  m_Layer: 0
-  m_Name: GUIDController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1270720992
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270720991}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.645772, y: 3.1779175, z: -2.4386618}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1270720993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270720991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00fb69863fcbb3c4181e9474c3e1a92c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1273445753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4915206358095142538, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
@@ -14955,6 +15111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HOTPackPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
+      propertyPath: _GUID
+      value: 2d883f94-e826-4321-abe9-37522e1d137c
+      objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5138614
@@ -15057,6 +15217,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 28404710-e869-4933-b705-0d22dcdfb698
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15146,6 +15310,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 20f3a5ec-9eef-4bff-98f1-a81f15718158
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15353,6 +15521,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: 4851497c-8bdb-40dd-b9a7-63f03e6b20ed
+      objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
       value: SmokeGrenadePickup 1 (2)
@@ -15548,6 +15720,10 @@ PrefabInstance:
     - target: {fileID: 4915206358095142538, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: ea853bfe-dbb8-4e37-9287-9476127cd48a
       objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
@@ -15824,6 +16000,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthPackPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
+      propertyPath: _GUID
+      value: e5a1b0c8-0c0e-4d02-880e-26ae37a92ebf
+      objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.12
@@ -15916,6 +16096,10 @@ PrefabInstance:
     - target: {fileID: 4915206358095142538, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: 61a0212e-2a49-463d-8eb3-806281cc3384
       objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
@@ -16251,6 +16435,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 8f345dbc-7fdd-41f0-8e3f-c8925dc4f132
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16438,6 +16626,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: 39fdabd3-717f-4ff6-9a1c-8681e1e70135
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp (2)
@@ -16597,6 +16789,10 @@ PrefabInstance:
     - target: {fileID: 6325018531375313985, guid: e07163a1303360942b3401c896bae514, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: 8b5a04e4-f7ee-4c18-967f-ff02c2f3c284
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17318,6 +17514,10 @@ PrefabInstance:
       propertyPath: _camSensitivity
       value: 250
       objectReference: {fileID: 0}
+    - target: {fileID: 4377631567067726820, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: _GUID
+      value: 641539d6-7685-4afd-9be3-d9bde5685f93
+      objectReference: {fileID: 0}
     - target: {fileID: 4439690148121970240, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
       propertyPath: inventoryController
       value: 
@@ -17720,6 +17920,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: c7966c27-85c6-4a2f-b9f7-700b3294d707
+      objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.443139
@@ -17843,6 +18047,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: bc00317e-e6c2-4380-ac07-dab0c88a563e
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18084,6 +18292,10 @@ PrefabInstance:
     - target: {fileID: 8346993515261622985, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: 33d5c2c9-92fb-41b2-8ef9-df814e4ded71
       objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
@@ -18353,6 +18565,10 @@ PrefabInstance:
     - target: {fileID: 8346993515261622985, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: 2a043947-79bf-4cd4-bdf4-a40268e51d13
       objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
@@ -19096,6 +19312,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPackPickup (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: 40769d8a-e323-4c71-8b80-e5d941736cc0
+      objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.3768616
@@ -19185,6 +19405,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 14.27
       objectReference: {fileID: 0}
+    - target: {fileID: 2351587326415214922, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6420367843507996102, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.8173895
@@ -19228,6 +19452,18 @@ PrefabInstance:
     - target: {fileID: 6770439344067004585, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_Name
       value: PatPoints EnemyRange (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632573306039653065, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297487885999929510, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189602916985089409, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19651,6 +19887,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5185669078620497878, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
+      propertyPath: _GUID
+      value: dbe163b8-f475-4be6-b396-6d7d0f42cb57
+      objectReference: {fileID: 0}
     - target: {fileID: 8988147222266135391, guid: 6c4c5e52118f69442a803d598f4674b8, type: 3}
       propertyPath: m_Name
       value: GrenadePickUp (7)
@@ -20012,6 +20252,10 @@ PrefabInstance:
     - target: {fileID: 6325018531375313985, guid: e07163a1303360942b3401c896bae514, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9009616971729469827, guid: e07163a1303360942b3401c896bae514, type: 3}
+      propertyPath: _GUID
+      value: d68e2842-5755-489d-9e6e-90d17772c30a
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20968,6 +21212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldPackPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: 1ed459ca-41e6-43b2-b1a4-ccfc88285432
+      objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.268139
@@ -21024,6 +21272,10 @@ PrefabInstance:
     - target: {fileID: 1167533761418257462, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: fc1a30c1-be13-4d36-bd57-2f3a77805d71
       objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21215,6 +21467,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -20.09
       objectReference: {fileID: 0}
+    - target: {fileID: 2351587326415214922, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6420367843507996102, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.799758
@@ -21258,6 +21514,18 @@ PrefabInstance:
     - target: {fileID: 6770439344067004585, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
       propertyPath: m_Name
       value: PatPoints EnemyMelee (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632573306039653065, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297487885999929510, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189602916985089409, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
+      propertyPath: m_Icon
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21323,7 +21591,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 654065763291456644, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5147471784091241551, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
+      propertyPath: _GUID
+      value: f3efb588-68d8-4d25-9584-7f630919eeee
       objectReference: {fileID: 0}
     - target: {fileID: 6149007220552334363, guid: 4689d1abd8e70c244aa7a2b28eb8ffeb, type: 3}
       propertyPath: showFOV
@@ -21587,6 +21859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrel 1 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1719146629397308646, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: _GUID
+      value: 761b15bd-c7d8-40a2-952b-b354d7fa901c
+      objectReference: {fileID: 0}
     - target: {fileID: 5253476937764172634, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2231388
@@ -21765,6 +22041,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthPackPickup (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
+      propertyPath: _GUID
+      value: 7fb93c62-85ef-4bf6-a881-165658236dcb
+      objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.3478613
@@ -21821,6 +22101,10 @@ PrefabInstance:
     - target: {fileID: 879178418461203151, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_Name
       value: HOTPackPickup (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
+      propertyPath: _GUID
+      value: defd74bc-dbf2-4e21-9b8f-5da0ccca56f2
       objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: f60e4889c7369b14db3716c63cdbb85d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21973,6 +22257,50 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 0.10000001, z: 4.9999857}
   m_Center: {x: 2.5000002, y: -0.050000004, z: 2.4999928}
+--- !u!1 &2033928639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033928641}
+  - component: {fileID: 2033928640}
+  m_Layer: 0
+  m_Name: SaveLoadController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2033928640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033928639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d8e88719d35fd649bf8fe2503003bfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2033928641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033928639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5529348, y: -1.1849186, z: 9.150738}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2037209067 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9189602916985089409, guid: 51800c2a935390540beb2754fc689c4b, type: 3}
@@ -22071,6 +22399,10 @@ PrefabInstance:
     - target: {fileID: 3737602058443353202, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_Name
       value: ShieldPackPickup (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183284039969781229, guid: b75d511f14482d84a9bc56df92941438, type: 3}
+      propertyPath: _GUID
+      value: ce2a1311-ff2a-48ca-8f91-3d23f9b1c03b
       objectReference: {fileID: 0}
     - target: {fileID: 8490324271932201199, guid: b75d511f14482d84a9bc56df92941438, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22344,6 +22676,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8539748513790173855, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
+      propertyPath: _GUID
+      value: b3a4620d-6d5d-486b-9d2a-72320d7f99a9
+      objectReference: {fileID: 0}
     - target: {fileID: 8831862604257000543, guid: 0b824ff54eccf0b479433b515df8a694, type: 3}
       propertyPath: m_Name
       value: SmokeGrenadePickup 1 (4)
@@ -22361,6 +22697,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 130355772}
     m_Modifications:
+    - target: {fileID: 4690216134585136658, guid: 450d79db64f8f4d4793b04ca0ae9bc02, type: 3}
+      propertyPath: _GUID
+      value: 5d003d2e-573a-493e-811b-85dc2057c6b2
+      objectReference: {fileID: 0}
     - target: {fileID: 5282326119965129494, guid: 450d79db64f8f4d4793b04ca0ae9bc02, type: 3}
       propertyPath: m_Name
       value: PickupContinuousWeapon1 (2)
@@ -22483,6 +22823,10 @@ PrefabInstance:
     - target: {fileID: 879178418461203151, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_Name
       value: HealthPackPickup (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901507976081810203, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
+      propertyPath: _GUID
+      value: 12009a94-9153-4ba4-be97-f33bc4d8cb6c
       objectReference: {fileID: 0}
     - target: {fileID: 6986420728089839550, guid: 5c3eb7ffffdcd3d44a5dae36e8807af4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22998,8 +23342,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 833108207}
+  - {fileID: 2033928641}
   - {fileID: 1954551507}
-  - {fileID: 1270720992}
   - {fileID: 761869938}
   - {fileID: 3189676677262603872}
   - {fileID: 1401775434}

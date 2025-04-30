@@ -6,8 +6,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(MyGUID))]
 public class PlayerStatsScript : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        if (!GetComponent<MyGUID>())
+        {
+            gameObject.AddComponent<MyGUID>();
+        }
+    }
+
     //Singleton setup
     public static PlayerStatsScript instance;
     private void Awake()

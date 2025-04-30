@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,26 +6,22 @@ using UnityEngine;
 
 public static class GUIDRegistry
 {
-    private static Dictionary<string, GameObject> _registry = new Dictionary<string, GameObject>();
+    private static Dictionary<string, Tuple<MyGUID.GUIDObjectType, Transform>> _registry = new Dictionary<string, Tuple<MyGUID.GUIDObjectType, Transform>>();
+    public static Dictionary<string, Tuple<MyGUID.GUIDObjectType, Transform>> GetRegistry { get { return _registry; } }
 
-    public static Dictionary<string, GameObject> GetRegistry { get { return _registry; } }
-
-    public static void Register(Dictionary<string,GameObject> tempRegistry)
+    public static void Register(string key, Tuple<MyGUID.GUIDObjectType, Transform> valueTuple)
     {
-        for (int i = 0; i < tempRegistry.Count; i++)
+        if (_registry.ContainsKey(key))
         {
-            if (_registry.ContainsKey(tempRegistry.ElementAt(i).Key))
-            {
-                _registry[tempRegistry.ElementAt(i).Key] = tempRegistry.ElementAt(i).Value;
-            }
-            else
-            {
-                _registry.Add(tempRegistry.ElementAt(i).Key, tempRegistry.ElementAt(i).Value);
-            }
+            _registry[key] = valueTuple;
+        }
+        else
+        {
+            _registry.Add(key, valueTuple);
         }
     }
 
-    public static GameObject GetGameObjectFromKey(string key)
+    public static Tuple<MyGUID.GUIDObjectType, Transform> GetTransformFromKey(string key)
     {
         if (_registry.ContainsKey(key))
         {
