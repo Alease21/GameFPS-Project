@@ -24,4 +24,10 @@ public class WeaponScript : MonoBehaviour
         gameObject.SetActive(false);
         isPickedUp = true;
     }
+
+    public void OnLoadGameData(bool _isPickedUp)
+    {
+        gameObject.SetActive(_isPickedUp ? false : true);
+        isPickedUp = _isPickedUp;
+    }
 }

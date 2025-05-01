@@ -9,9 +9,12 @@ public class EnemyAnimationManager : MonoBehaviour
     private Animator animator;
     private NavMeshAgent navMeshAgent;
 
-    void Start()
+    private void OnEnable()
     {
         animator = GetComponent<Animator>();
+    }
+    void Start()
+    {
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyScript = GetComponent<EnemyScript>();
     }
@@ -46,6 +49,12 @@ public class EnemyAnimationManager : MonoBehaviour
     public IEnumerator AnimationCoro()
     {
         yield return new WaitForSecondsRealtime(enemyScript.weaponSO.attackAnimation.length);
+        animator.SetBool("IsAttacking", false);
+    }
+    public void OnLoadGameData()
+    {
+        StopAllCoroutines();
+        animator.Play("DefaultMove");//stop current animation instantly
         animator.SetBool("IsAttacking", false);
     }
 }

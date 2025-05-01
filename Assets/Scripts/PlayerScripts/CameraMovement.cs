@@ -23,6 +23,8 @@ public class CameraMovement : MonoBehaviour
 
     private float _xRotate;
     private float _yRotate;
+    public float XRotate { get { return _xRotate; } private set { _xRotate = value; } }
+    public float YRotate { get { return _yRotate; } private set { _yRotate = value; } }
     [SerializeField] private float _camPivotMax = 50f;
     [SerializeField] private float _camSensitivity;
 
@@ -86,5 +88,10 @@ public class CameraMovement : MonoBehaviour
                 break;
         }
         isRecoiling = false;
+    }
+    public void OnLoadGameData(float x, float y)
+    {
+        XRotate = x;
+        YRotate = y;
     }
 }

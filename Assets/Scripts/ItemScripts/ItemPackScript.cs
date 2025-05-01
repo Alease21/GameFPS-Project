@@ -66,4 +66,18 @@ public class ItemPackScript : MonoBehaviour
         isConsumed = false;
         StartCoroutine(ItemRechargeCoro());
     }
+    public void OnLoadGameData(bool _isConsumed, float remainingRechargeTime = 0f)
+    {
+        StopAllCoroutines();
+        isConsumed = _isConsumed;
+        if (isConsumed)
+        {
+            this.item.OnPackConsume(this.gameObject);//turn invis
+            StartCoroutine(ItemRechargeCoro(remainingRechargeTime));
+        }
+        else
+        {
+            this.item.RechargeLink(); //turn visible
+        }
+    }
 }

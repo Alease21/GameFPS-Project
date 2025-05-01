@@ -30,7 +30,7 @@ public class WeaponController : MonoBehaviour
     public GunBase Weapon2 { get { return _weapon2; } private set { _weapon2 = value; } }
     public GunBase Weapon3 { get { return _weapon3; } private set { _weapon3 = value; } }
 
-    private bool _isHitScan,
+    [SerializeField]private bool _isHitScan,
                  _isProjectile,
                  _isContinuous,
                  _hasHitScan = false,
@@ -65,10 +65,16 @@ public class WeaponController : MonoBehaviour
     public Action OnFireWeapon; //sfx
     public Action OnSwapWeapon; //sfx
 
+    //Bandaid fix please figure out weapon spawn on game load
+    public WeaponSO[] weaponSOArray;
+    //*****************************************************
+
     void Start()
     {
         _playerStatsScript = PlayerStatsScript.instance;//Does this make sense?
         gunEmptyObj = transform.Find("Main Camera").Find("GunEmpty");
+
+        //SaveLoadControl.instance.gameLoad += WeaponPrefabSwap;
     }
 
     void Update()
@@ -163,15 +169,8 @@ public class WeaponController : MonoBehaviour
 
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with params initialAmmoMax, initialAmmoCount and damage.
     //Immediately swap currWeapon/myWeapon to new instantiated gameobject/gun and update ammo.
-    public void WeaponPrefabSpawn(WeaponSO weaponSO) //int initialAmmoMax, int initialAmmoCount, int damage, float range)
+    public void WeaponPrefabSpawn(WeaponSO weaponSO)
     {
-        /*
-        if (currWeaponPrefab != null)
-        {
-            currWeaponPrefab.SetActive(false);
-        }
-        */
-
         //Based on weaponType, check if player has that weapon (bool), if false then instantiate gameobject and gun object and flip appropriate bool true
         switch (weaponSO.weaponType)
         {
@@ -181,7 +180,7 @@ public class WeaponController : MonoBehaviour
                     hitScanWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                     hitScanWeapon.transform.parent = gunSetPoint.transform;
                     _weapon1 = new HitScanGun(weaponSO) { shootPoint = shootPoint }; //give SO transform for specfic weapon shootpoint?
-                    
+
                     _hasHitScan = true;
                     Debug.Log("Hitscan weapon instantiated");
                 }
@@ -315,5 +314,107 @@ public class WeaponController : MonoBehaviour
             _playerStatsScript.continuousWeaponAmmo = _weapon3.ammoCount;
         }
         InventoryController.instance.UIUpdateEvent?.Invoke();
+    }
+
+    public void OnLoadGameData(bool[] bArray)
+    {
+        IsHitScan = bArray[0];
+        IsProjectile = bArray[1];
+        IsContinuous = bArray[2];
+        HasHitScan = bArray[3];
+        HasProjectile = bArray[4];
+        HasContinuous = bArray[5];
+        IsUnarmed = bArray[6];
+        
+        LoadGameWeaponSwap();
+    }
+
+    public void LoadGameWeaponSwap()
+    {
+        isHoldingFire = false; //maybe delete?
+
+        if (currWeaponPrefab != null)
+        {
+            currWeaponPrefab.SetActive(false);
+        }
+
+        //ammo adjust and weapon swap based on bools
+        if (HasHitScan)
+        {
+            //prefab spawning if weapons are null on load
+            if (hitScanWeapon == null)
+            {
+                //maybe find better way to do this
+                hitScanWeapon = GameObject.Instantiate(weaponSOArray[0].weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
+                hitScanWeapon.transform.parent = gunSetPoint.transform;
+                _weapon1 = new HitScanGun(weaponSOArray[0]) { shootPoint = shootPoint };
+                hitScanWeapon.SetActive(false);
+            }
+
+            if (IsHitScan)
+            {
+                currWeaponPrefab = hitScanWeapon;
+
+                gunEmptyObj.localPosition = hitScanWeapon.transform.Find("GunEmptySetPoint").localPosition;
+                gunEmptyObj.localRotation = hitScanWeapon.transform.Find("GunEmptySetPoint").localRotation;
+                _myGun = _weapon1;
+            }
+
+            _weapon1.ammoCount = PlayerStatsScript.instance.hitScanWeaponAmmo;
+        }
+        if (HasProjectile)
+        {
+            //prefab spawning if weapons are null on load
+            if (projectileWeapon == null)
+            {
+                //maybe find better way to do this
+                projectileWeapon = GameObject.Instantiate(weaponSOArray[1].weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
+                projectileWeapon.transform.parent = gunSetPoint.transform;
+                _weapon2 = new ProjectileGun(weaponSOArray[1]) { shootPoint = shootPoint };
+                projectileWeapon.SetActive(false);
+            }
+
+            if (IsProjectile)
+            {
+                currWeaponPrefab = projectileWeapon;
+
+                gunEmptyObj.localPosition = projectileWeapon.transform.Find("GunEmptySetPoint").localPosition;
+                gunEmptyObj.localRotation = projectileWeapon.transform.Find("GunEmptySetPoint").localRotation;
+                _myGun = _weapon2;
+            }
+            _weapon2.ammoCount = PlayerStatsScript.instance.projectileWeaponAmmo;
+        }
+        if (HasContinuous)
+        {
+            //prefab spawning if weapons are null on load
+            if (continuousWeapon == null)
+            {
+                //maybe find better way to do this
+                continuousWeapon = GameObject.Instantiate(weaponSOArray[2].weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
+                continuousWeapon.transform.parent = gunSetPoint.transform;
+                _weapon3 = new ContinuousGun(weaponSOArray[2]) { shootPoint = shootPoint };
+                continuousWeapon.SetActive(false);
+            }
+
+            if (IsContinuous)
+            {
+                currWeaponPrefab = continuousWeapon;
+
+                gunEmptyObj.localPosition = continuousWeapon.transform.Find("GunEmptySetPoint").localPosition;
+                gunEmptyObj.localRotation = continuousWeapon.transform.Find("GunEmptySetPoint").localRotation;
+                _myGun = _weapon3;
+                StartCoroutine(ContinuousWeaponFire());
+            }
+            _weapon3.ammoCount = PlayerStatsScript.instance.continuousWeaponAmmo;
+        }
+
+        InventoryController.instance.OnWeaponSwap();
+        InventoryController.instance.UIUpdateEvent?.Invoke();
+
+        if (currWeaponPrefab != null && !currWeaponPrefab.activeInHierarchy)
+        {
+            currWeaponPrefab.SetActive(true);
+        }
+        OnSwapWeapon?.Invoke();
     }
 }

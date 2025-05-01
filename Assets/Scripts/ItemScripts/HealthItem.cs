@@ -43,7 +43,6 @@ public class HealthItem : ItemBase, iRechargeableItem
             GameObject child = packPrefab.transform.GetChild(i).gameObject;
             child.layer = 0;
         }
-        //Debug.Log("health item recharged");
         isRecharging = false;
     }
 }

@@ -21,7 +21,7 @@ public static class GUIDRegistry
         }
     }
 
-    public static Tuple<MyGUID.GUIDObjectType, Transform> GetTransformFromKey(string key)
+    public static Tuple<MyGUID.GUIDObjectType, Transform> GetTupleFromKey(string key)
     {
         if (_registry.ContainsKey(key))
         {

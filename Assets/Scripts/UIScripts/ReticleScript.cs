@@ -34,7 +34,6 @@ public class ReticleScript : MonoBehaviour
 
     public void ReticleSwap()
     {
-        Debug.Log("test ret swap");
         if (WeaponController.instance.IsProjectile)
         {
             if (gunReticle.sprite != spriteArray[1])

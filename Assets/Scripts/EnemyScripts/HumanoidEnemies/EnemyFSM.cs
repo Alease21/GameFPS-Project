@@ -20,20 +20,28 @@ public class EnemyFSM : MonoBehaviour
         GotShot
     }
     private EnemyState enemyState;
+    public EnemyState _EnemyState { get { return enemyState; } private set { enemyState = value; } }
 
     public GameObject[] patrolPoints;
-    private bool isIdle;
-    private bool isPatroling;
-    private bool isAttacking;
-    private int patrolIndex = 0; //find better solution?
-
     public GameObject playerTarget;
-    private bool playerSeen = false;
+
+    [SerializeField ]private bool isIdle,
+                                  isPatroling,
+                                  isAttacking;
+    private int patrolIndex = 0; //find better solution?
+    [SerializeField]private bool playerSeen = false;
 
     private Vector3 playerTargetDir;
     private float playerTargetDist;
 
-    private Vector3 raycastOffset = new Vector3(0, 1, 0);
+    private Vector3 raycastOffset = new Vector3(0, 1, 0); // for to shoot the raycast from center of enemy
+
+
+    public bool IsIdle { get { return isIdle; } private set { isIdle = value; } }
+    public bool IsPatroling { get { return isPatroling; } private set { isPatroling = value; } }
+    public bool IsAttacking { get { return isAttacking; } private set { isAttacking = value; } }
+    public int PatrolIndex { get { return patrolIndex; } private set { patrolIndex = value; } }
+    public bool PlayerSeen { get { return playerSeen; } private set { playerSeen = value; } }
 
     public bool gotShot;
 
@@ -221,5 +229,32 @@ public class EnemyFSM : MonoBehaviour
     public void GotShotActions()
     {
 
+    }
+    public void OnLoadGameData(int[] iArray, bool[] bArray)
+    {
+        StopAllCoroutines();
+        navMeshAgent.ResetPath();//fix this so playersnapshot is properly set
+                                 //(rework enemy raycast?)
+
+        enemyState = (EnemyState)iArray[1];//casting to use int as index
+
+        //fix how these coros are calling in idle/attack actions so this isnt required?
+        if (enemyState == EnemyState.Idle)
+        {
+            StartCoroutine(IdleCoroutine());
+        }
+        else if (enemyState == EnemyState.Patrol)
+        {
+            navMeshAgent.SetDestination(patrolPoints[patrolIndex].transform.position);
+        }
+        else if (enemyState == EnemyState.Attack)
+        {
+            StartCoroutine(AttackCoro());
+        }
+        playerSeen = bArray[3];
+        patrolIndex = iArray[0];
+        IsIdle = bArray[0];
+        IsPatroling = bArray[1];
+        IsAttacking = bArray[2];
     }
 }

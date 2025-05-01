@@ -29,7 +29,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     public float Damage { get { return damage; } private set { damage = value; } }
 
     public List<GameObject> inRangeColliders;
-    private bool hasExploded = false;
+    [SerializeField]private bool hasExploded = false;
     public bool HasExploded { get { return hasExploded; } private set { hasExploded = value; } }
 
     public GameObject explodeSphereVisual;
@@ -85,19 +85,12 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         OnAffectSurrounding();
 
         StartCoroutine(DestroyCoro());
-
-        /*
-        if (inRangeColliders.Count == 0)
-        {
-            hasExploded = false;
-        }
-        */
     }
 
     // Coroutine expands sphere gameobject to visualize explosion. (probably change me)
     public IEnumerator DestroyCoro()
     {
-        yield return new WaitUntil(() => !hasExploded);
+        //yield return new WaitUntil(() => !hasExploded);
 
         Vector3 initSphereScale = explodeSphereVisual.transform.localScale;
 
@@ -111,7 +104,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
         //setactive to false instead of destroy for save/loading
         gameObject.SetActive(false);
-        hasExploded = false;
+        hasExploded = true;
     }
     public void OnDealDamage()
     {
@@ -139,6 +132,18 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         // maybe add fire on ground after explosion
 
         //Debug.Log("This is where I'd knock you back, if i had the code");
+    }
+    public void OnLoadGameData(float _health, bool _hasExploded)
+    {
+        StopAllCoroutines();
+
+        health = _health;
+        if (!_hasExploded)
+        {
+            explodeSphereVisual.transform.localScale = new Vector3(0.4706554f, 0.4706554f, 0.4706554f);//initial scale of sphere (grab it better?)
+        }
+        gameObject.SetActive(_hasExploded ? false : true);
+        hasExploded = _hasExploded;
     }
 
 #if UNITY_EDITOR

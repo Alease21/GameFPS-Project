@@ -133,4 +133,11 @@ public class EnemyScript : MonoBehaviour, ICanDie
         hasDied = true;
         gameObject.SetActive(false);
     }
+    public void OnLoadGameData(float _enemyHealth, float _enemyDamage, bool _hasdied)
+    {
+        enemyHealth = _enemyHealth;
+        enemyDamage = _enemyDamage;
+        hasDied = _hasdied;
+        gameObject.SetActive(hasDied ? false : true);
+    }
 }

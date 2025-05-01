@@ -142,4 +142,12 @@ public class ThrowableController : MonoBehaviour
         }
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
+
+    public void OnLoadGameData(bool[] bArray)
+    {
+        HasGrenade = bArray[0];
+        HasSmokeBomb = bArray[1];
+        IsGrenade = bArray[2];
+        IsSmokeBomb = bArray[3];
+    }
 }

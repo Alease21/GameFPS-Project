@@ -160,4 +160,25 @@ public class PlayerStatsScript : MonoBehaviour
             ticks--;
         }
     }
+
+    public void OnLoadGameData(float[] fArray, int[] iArray)
+    {
+        StopAllCoroutines();
+
+        Health = fArray[0];
+        MaxHealth = fArray[1];
+        Shield = fArray[2];
+        MaxShield = fArray[3];
+
+        hitScanWeaponAmmo = iArray[0];
+        projectileWeaponAmmo = iArray[1];
+        continuousWeaponAmmo = iArray[2];
+        maxHitscanAmmo = iArray[3];
+        maxProjectileAmmo = iArray[4];
+        maxContinuousAmmo = iArray[5];
+        grenadeCount = iArray[6];
+        maxGrenades = iArray[7];
+        smokeBombCount = iArray[8];
+        maxSmokeBombs = iArray[9];
+    }
 }

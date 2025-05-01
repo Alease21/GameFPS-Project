@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6864,8 +6864,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1300, y: -688}
+  m_AnchoredPosition: {x: -0.6563721, y: -0.25463867}
+  m_SizeDelta: {x: -954.3008, y: -536.6879}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &608546627
 PrefabInstance:
@@ -7751,8 +7751,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.316, y: 0.689}
   m_AnchorMax: {x: 0.68100005, y: 0.79951495}
-  m_AnchoredPosition: {x: -0.36791992, y: 114.05679}
-  m_SizeDelta: {x: 332.8478, y: 52.455704}
+  m_AnchoredPosition: {x: -1.8878174, y: 124.20001}
+  m_SizeDelta: {x: 526.5018, y: 52.4557}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &684168692
 MonoBehaviour:
@@ -9073,7 +9073,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.35
+  m_fontSize: 29.1
   m_fontSizeBase: 25.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13246,7 +13246,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.8
+  m_fontSize: 29.5
   m_fontSizeBase: 25.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16528,7 +16528,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.4
+  m_fontSize: 29.15
   m_fontSizeBase: 25.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17502,6 +17502,38 @@ PrefabInstance:
       propertyPath: projectilePreFab
       value: 
       objectReference: {fileID: 8963702116225746944, guid: 3aa3770e4ec81ef488c594d97160fc78, type: 3}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSOArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSoArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSOArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f9a2db4e2cc1e2b488507393cf13b875, type: 2}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSOArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fa9e6e662a717bf439d1c511a4871581, type: 2}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSOArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 611dd5480533aed4aaaf39127185e8ff, type: 2}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSoArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f9a2db4e2cc1e2b488507393cf13b875, type: 2}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSoArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fa9e6e662a717bf439d1c511a4871581, type: 2}
+    - target: {fileID: 1806653348800427763, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
+      propertyPath: weaponSoArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 611dd5480533aed4aaaf39127185e8ff, type: 2}
     - target: {fileID: 2596591017413337304, guid: 59b5b0d90928ad94f86fa8092b7c0298, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.85
@@ -19161,7 +19193,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.3
+  m_fontSize: 30.05
   m_fontSizeBase: 25.2
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -19982,7 +20014,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1768352465}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2033928640}
+        m_TargetAssemblyTypeName: SaveLoadControl, Assembly-CSharp
+        m_MethodName: OnSelectSave
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1768352465
 MonoBehaviour:
   m_ObjectHideFlags: 0
