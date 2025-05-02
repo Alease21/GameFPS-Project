@@ -15,11 +15,16 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         {
             gameObject.AddComponent<MyGUID>();
         }
+        if (!GetComponent<AudioSource>())
+        {
+            gameObject.AddComponent<AudioSource>();
+        }
     }
 
-    public EnvironmentalEnemySO environEnemySO;
+    [SerializeField] private EnvironmentalEnemySO environEnemySO;
     private BarrelInRangeScript inRangeScript;
     private SphereCollider explodeSphere;
+    private AudioSource audioSource;
 
     [Range(1,10)] public float explodeRange;
 
@@ -39,6 +44,8 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     {
         explodeSphere = GetComponentInChildren<SphereCollider>();
         inRangeScript = GetComponentInChildren<BarrelInRangeScript>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = SFX_Library.instance.explosion1;
 
         explodeSphere.radius = explodeRange / 2;
         health = environEnemySO.health;
@@ -90,7 +97,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     // Coroutine expands sphere gameobject to visualize explosion. (probably change me)
     public IEnumerator DestroyCoro()
     {
-        //yield return new WaitUntil(() => !hasExploded);
+        audioSource.Play();
 
         Vector3 initSphereScale = explodeSphereVisual.transform.localScale;
 
@@ -103,7 +110,8 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         }
 
         //setactive to false instead of destroy for save/loading
-        gameObject.SetActive(false);
+        StartCoroutine(PlayAudioAfterDestroy.SoundAfterDisable(gameObject, audioSource.clip.length));
+        //gameObject.SetActive(false);
         hasExploded = true;
     }
     public void OnDealDamage()

@@ -100,7 +100,10 @@ public class EnemyScript : MonoBehaviour, ICanDie
     {
         if (useDOTDamage)
         {
-            StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
+            }
         }
         if (enemyHealth > 0 && enemyHealth > damage)
         {
@@ -131,6 +134,7 @@ public class EnemyScript : MonoBehaviour, ICanDie
 
         //setactive to false instead of destroy for save/loading
         hasDied = true;
+        StopAllCoroutines();
         gameObject.SetActive(false);
     }
     public void OnLoadGameData(float _enemyHealth, float _enemyDamage, bool _hasdied)

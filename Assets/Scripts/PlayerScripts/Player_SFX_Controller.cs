@@ -19,26 +19,7 @@ public class Player_SFX_Controller : MonoBehaviour
         }
     }
 
-
     public AudioSource audioSource;
-
-    //make dict?
-    public AudioClip hitScanGunFire,
-        projectileGunFire,
-        continuousGunFire,//edit me, my clip is very long
-        noAmmoFire,
-        explosion,
-        //smokeBombAudio,
-        ammoPickUp,
-        healthPickUp,
-        shieldPickUp,
-        weaponPickUp,
-        confirmedHitAudio,
-        walkAudio;
-
-    public AudioClip[] playerHitSounds;
-        //enemySpottedSounds,
-        //gameMusic;
 
     private void Start()
     {
@@ -52,23 +33,19 @@ public class Player_SFX_Controller : MonoBehaviour
     {
         if (WeaponController.instance.MyGun.ammoCount == 0)
         {
-            audioSource.clip = noAmmoFire;
-            Debug.Log("no ammo in waepon");//swap to have diff sounds for each weapon?
+            audioSource.clip = SFX_Library.instance.outAmmo;//swap to have diff sounds for each weapon?
         }
         else if (WeaponController.instance.IsHitScan)
         {
-            audioSource.clip = hitScanGunFire;
-            Debug.Log("hitscan shot");
+            audioSource.clip = SFX_Library.instance.hitScanWepFire;
         }
         else if (WeaponController.instance.IsProjectile)
         {
-            audioSource.clip = projectileGunFire;
-            Debug.Log("proj shot");
+            audioSource.clip = SFX_Library.instance.projWepFire;
         }
         else if (WeaponController.instance.IsContinuous)
         {
-            //audioSource.clip = continuousGunFire;
-            Debug.Log("cont shot");
+            audioSource.clip = SFX_Library.instance.contWepFire;
         }
 
         audioSource.Play();
@@ -89,12 +66,12 @@ public class Player_SFX_Controller : MonoBehaviour
     //call from pickup script
     public void OnItemPickup(ItemPackSO itemPackSO)
     {
-        audioSource.clip = healthPickUp;
+        audioSource.clip = SFX_Library.instance.healPickUp;
         audioSource.Play();
     }
     public void OnWeaponPickup(WeaponSO weaponSO)
     {
-        audioSource.clip = ammoPickUp;
-        audioSource.Play();
+        //audioSource.clip = SFX_Library.instance;
+        //audioSource.Play();
     }
 }

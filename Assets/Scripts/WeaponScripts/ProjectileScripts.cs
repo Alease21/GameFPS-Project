@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -14,7 +15,14 @@ public class ProjectileScripts : MonoBehaviour
         Grenade,
         SmokeBomb
     }
-
+    private AudioSource audioSource;
+    private void OnEnable()
+    {
+        if (!GetComponent<AudioSource>())
+        {
+            transform.AddComponent<AudioSource>();
+        }
+    }
     //custom inspectorize me
     public ProjectileType projectileType;
     public float projectileDamage;
@@ -35,30 +43,38 @@ public class ProjectileScripts : MonoBehaviour
 
     private void Start()
     {
-        //does this make sense? will it still cause errors for projectiles without these comps?
         sphereCollider = GetComponent<SphereCollider>() ? GetComponent<SphereCollider>() : null;
+        audioSource = GetComponent<AudioSource>();
 
         EnemyDeathManager.instance.onEnemyDeath += InRangeCleanup;
 
         switch (projectileType)
         {
+            case ProjectileType.HitScan:
+                StartCoroutine(HitScanVisualDestroyer());//delete me?
+                break;
             case ProjectileType.GunProjectile:
+                audioSource.clip = SFX_Library.instance.explosion1;
+
                 sphereCollider.radius = explodeRange / 2;
                 break;
+            case ProjectileType.Fire:
+                //audioSource.clip = **add fire hit sound?**
+
+                initialPos = transform.position;
+                break;
             case ProjectileType.Grenade:
+                audioSource.clip = SFX_Library.instance.explosion1;
+
                 sphereCollider.enabled = true;
                 sphereCollider.radius = explodeRange / 2;
                 StartCoroutine(ExplodeTimer());
                 break;
             case ProjectileType.SmokeBomb:
+                //audioSource.clip = 
+
                 sphereCollider.enabled = true;
                 StartCoroutine(ExplodeTimer());
-                break;
-            case ProjectileType.Fire:
-                initialPos = transform.position;
-                break;
-            case ProjectileType.HitScan:
-                StartCoroutine(HitScanVisualDestroyer());
                 break;
         }
     }
@@ -90,7 +106,9 @@ public class ProjectileScripts : MonoBehaviour
         }
         else if (projectileType != ProjectileType.Grenade
             && projectileType != ProjectileType.SmokeBomb)
-        {
+        {  
+            //delete me? am i unused?
+
             //'Collision' with any collider destroys projectile
             OnDealDamage(collision.gameObject);
             Destroy(gameObject);
@@ -183,7 +201,7 @@ public class ProjectileScripts : MonoBehaviour
                     }
                 }
             }
-            Destroy(gameObject);
+            StartCoroutine(PlayAudioAfterDestroy.SoundAfterDestroy(this.gameObject, audioSource.clip.length));
         }
         else
         {
@@ -196,7 +214,10 @@ public class ProjectileScripts : MonoBehaviour
     public IEnumerator ExplodeTimer()
     {
         yield return new WaitForSecondsRealtime(explodeTime);
-
+        if (audioSource.clip)
+        {
+            audioSource.Play();
+        }
         Vector3 initSphereScale = explodeSphere.transform.localScale;
         float initColliderRadius = sphereCollider.radius;
         Color smokeSphereColor = explodeSphere.GetComponent<Renderer>().material.color;
@@ -250,7 +271,7 @@ public class ProjectileScripts : MonoBehaviour
             }
         }
     }
-#endregion
+    #endregion
 
     //HitScanWeaponMethod(s)
     #region HitScanVisualMethod

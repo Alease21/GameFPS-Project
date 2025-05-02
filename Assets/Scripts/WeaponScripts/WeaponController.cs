@@ -61,6 +61,7 @@ public class WeaponController : MonoBehaviour
     private bool isHoldingFire = false;
     public bool IsHoldingFire { get { return isHoldingFire; } private set { isHoldingFire = value; } }
 
+    private bool _isShot = false;
 
     public Action OnFireWeapon; //sfx
     public Action OnSwapWeapon; //sfx
@@ -111,12 +112,17 @@ public class WeaponController : MonoBehaviour
             //if equipped weapon is not continuous, use currently equipped weapon and update ammo
             if (Input.GetMouseButtonDown(0) && !_isContinuous)
             {
-                OnFireWeapon?.Invoke();
+                if (!_isShot)
+                {
+                    OnFireWeapon?.Invoke();
 
-                CameraMovement.instance.StartCoroutine(CameraMovement.instance.GunRecoilCoro(WeaponSO.WeaponType.HitScan));
+                    CameraMovement.instance.StartCoroutine(CameraMovement.instance.GunRecoilCoro(WeaponSO.WeaponType.HitScan));
 
-                _myGun.Use();
-                AmmoStatUpdater();
+                    _myGun.Use();
+                    AmmoStatUpdater();
+
+                    StartCoroutine(ShotCD(IsHitScan ? .3f : .7f)); //hard coded in shot cd timers, maybe attach to SO or to gun obj (mygun.shotCD)
+                }
             }
             //if equipped weapon is continuous, use weapon at continouousTickRate intervals
             if (Input.GetMouseButton(0) && _isContinuous)
@@ -151,6 +157,12 @@ public class WeaponController : MonoBehaviour
                 }
             }
         }
+    }
+    public IEnumerator ShotCD(float cd)
+    {
+        _isShot = true;
+        yield return new WaitForSecondsRealtime(cd);
+        _isShot = false;
     }
 
     //Coroutine to decrement ammoCount for continuous weapon every continuousTickRate seconds
@@ -316,6 +328,7 @@ public class WeaponController : MonoBehaviour
         InventoryController.instance.UIUpdateEvent?.Invoke();
     }
 
+    #region GAME SAVE/LOAD METHODS
     public void OnLoadGameData(bool[] bArray)
     {
         IsHitScan = bArray[0];
@@ -417,4 +430,5 @@ public class WeaponController : MonoBehaviour
         }
         OnSwapWeapon?.Invoke();
     }
+    #endregion
 }

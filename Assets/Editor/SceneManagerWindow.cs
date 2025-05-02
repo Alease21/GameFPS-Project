@@ -75,4 +75,13 @@ public class LevelEditorWindow : EditorWindow
             }
         }
     }
+
+    private void ShowListenerObjs()
+    {
+        AudioListener[] alArray = FindObjectsOfType<AudioListener>();
+        foreach (AudioListener al in alArray)
+        {
+            GUILayout.Label(al.name);
+        }
+    }
 }
