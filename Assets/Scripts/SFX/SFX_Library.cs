@@ -23,6 +23,8 @@ public class SFX_Library : MonoBehaviour
 
     public AudioClip footSteps1,
                      healPickUp,
+                     ammoPickup,
+                     wepPickup,
                      hitScanWepFire,
                      projWepFire,
                      contWepFire,

@@ -38,11 +38,17 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     public bool HasExploded { get { return hasExploded; } private set { hasExploded = value; } }
 
     public GameObject explodeSphereVisual;
+    public ParticleSystem explosionParticleSystem;
+
     public float explodeDur = .2f; // constant value for explode duration
 
     void Start()
     {
         explodeSphere = GetComponentInChildren<SphereCollider>();
+
+        explosionParticleSystem = GetComponentInChildren<ParticleSystem>();
+        explosionParticleSystem.gameObject.SetActive(false);
+        
         inRangeScript = GetComponentInChildren<BarrelInRangeScript>();
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = SFX_Library.instance.explosion1;
@@ -98,20 +104,12 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     public IEnumerator DestroyCoro()
     {
         audioSource.Play();
-
-        Vector3 initSphereScale = explodeSphereVisual.transform.localScale;
-
-        for (float timer = 0f; timer < explodeDur; timer += Time.deltaTime)
-        {
-            float explodeLerpRatio = timer / explodeDur;
-
-            explodeSphereVisual.transform.localScale = Vector3.Lerp(initSphereScale, new Vector3(explodeRange, explodeRange, explodeRange), explodeLerpRatio);
-            yield return null;
-        }
+        explosionParticleSystem.gameObject.SetActive(true);
+        explosionParticleSystem.Play();
+        yield return new WaitForSecondsRealtime(explosionParticleSystem.main.duration);
 
         //setactive to false instead of destroy for save/loading
         StartCoroutine(PlayAudioAfterDestroy.SoundAfterDisable(gameObject, audioSource.clip.length));
-        //gameObject.SetActive(false);
         hasExploded = true;
     }
     public void OnDealDamage()
@@ -146,11 +144,15 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         StopAllCoroutines();
 
         health = _health;
+        gameObject.SetActive(_hasExploded ? false : true);
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            gameObject.transform.GetChild(i).gameObject.SetActive(true);
+        }
         if (!_hasExploded)
         {
-            explodeSphereVisual.transform.localScale = new Vector3(0.4706554f, 0.4706554f, 0.4706554f);//initial scale of sphere (grab it better?)
+            explosionParticleSystem.Stop();//plays sound on load?
         }
-        gameObject.SetActive(_hasExploded ? false : true);
         hasExploded = _hasExploded;
     }
 

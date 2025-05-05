@@ -5040,6 +5040,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5526037149164256321, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8409
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526037149164256321, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8409
+      objectReference: {fileID: 0}
+    - target: {fileID: 5526037149164256321, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8409
+      objectReference: {fileID: 0}
+    - target: {fileID: 5529296147462956493, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399990805299672898, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: explodeRange
+      value: 7.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399990805299672898, guid: 6adc5ce15af02f34294c602c1d3f959e, type: 3}
+      propertyPath: explosionParticleSystem
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18512,14 +18536,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 52493de3bf22eec42b276a379edf13c8, type: 3}
   footSteps1: {fileID: 8300000, guid: 00a574f0c726539449d549c2bdcdeeee, type: 3}
   healPickUp: {fileID: 8300000, guid: 8d852c2a88f221b4698cd3f3c546799c, type: 3}
+  ammoPickup: {fileID: 8300000, guid: 3de4766accd3b2040adaeece5763fe33, type: 3}
+  wepPickup: {fileID: 8300000, guid: f73f64a4bc4ac204f89194f603060af1, type: 3}
   hitScanWepFire: {fileID: 8300000, guid: 1402d638c2261c6469eccc73d0e0c5e3, type: 3}
   projWepFire: {fileID: 8300000, guid: 919e26fcb60d1284895df769d337b9b1, type: 3}
   contWepFire: {fileID: 8300000, guid: e09a9c12f108e2946ba1fd4a5ec9ba91, type: 3}
   meleeBarHit: {fileID: 8300000, guid: f3c7ba14d1fd1234d94040d0d23b84fc, type: 3}
   explosion1: {fileID: 8300000, guid: 04698d146e6d58f40b2d15ac4ef6a13d, type: 3}
   throwableThrow: {fileID: 8300000, guid: 6f963b4553cdd7847b58b093da24fb9e, type: 3}
-  outAmmo: {fileID: 8300000, guid: 428ffe3e41f4dcc4bafc987c5a526169, type: 3}
-  wepSwap: {fileID: 8300000, guid: b5e3acd14cf52024db9b935741922b8a, type: 3}
+  outAmmo: {fileID: 8300000, guid: 121593923c17bb84a90aa9ef882cac05, type: 3}
+  wepSwap: {fileID: 8300000, guid: 90e42bf55846f6148b87c1c045e1aa54, type: 3}
 --- !u!4 &1646010551
 Transform:
   m_ObjectHideFlags: 0

@@ -23,4 +23,4 @@ MonoBehaviour:
   explodeTime: 0
   weaponPrefab: {fileID: 4539884031155441603, guid: ea84fa181ed37f74a8141e6c9f165eae, type: 3}
   projectilePrefab: {fileID: 8963702116225746944, guid: 3aa3770e4ec81ef488c594d97160fc78, type: 3}
-  projectileSpeed: 20
+  projectileSpeed: 35

@@ -63,8 +63,8 @@ public class WeaponController : MonoBehaviour
 
     private bool _isShot = false;
 
-    public Action OnFireWeapon; //sfx
-    public Action OnSwapWeapon; //sfx
+    public Action OnFireWeapon;
+    public Action OnSwapWeapon;
 
     //Bandaid fix please figure out weapon spawn on game load
     public WeaponSO[] weaponSOArray;
@@ -116,7 +116,11 @@ public class WeaponController : MonoBehaviour
                 {
                     OnFireWeapon?.Invoke();
 
-                    CameraMovement.instance.StartCoroutine(CameraMovement.instance.GunRecoilCoro(WeaponSO.WeaponType.HitScan));
+                    if(_myGun.ammoCount > 0)
+                    {
+                        CameraMovement.instance.StartCoroutine(CameraMovement.instance.GunRecoilCoro(WeaponSO.WeaponType.HitScan)); //no other recoil types coded yet
+                        currWeaponPrefab.GetComponentInChildren<ParticleSystem>()?.Play();//if has component, then play
+                    }
 
                     _myGun.Use();
                     AmmoStatUpdater();
@@ -127,10 +131,10 @@ public class WeaponController : MonoBehaviour
             //if equipped weapon is continuous, use weapon at continouousTickRate intervals
             if (Input.GetMouseButton(0) && _isContinuous)
             {
+                OnFireWeapon?.Invoke();
+
                 if (!isHoldingFire)
                 {
-                    OnFireWeapon?.Invoke();
-
                     isHoldingFire = true;
                     _myGun.Use();
                 }
@@ -139,8 +143,6 @@ public class WeaponController : MonoBehaviour
                     continuousTimer += Time.deltaTime;
                     if (continuousTimer >= continuousTickRate / 5)
                     {
-                        OnFireWeapon?.Invoke();
-
                         _myGun.Use();
                         continuousTimer = 0f;
                     }
@@ -153,6 +155,8 @@ public class WeaponController : MonoBehaviour
                 AmmoStatUpdater();
                 if (isHoldingFire)
                 {
+                    Player_SFX_Controller.instance.audioSource.Pause();
+
                     isHoldingFire = false;
                 }
             }
@@ -191,7 +195,7 @@ public class WeaponController : MonoBehaviour
                 {
                     hitScanWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                     hitScanWeapon.transform.parent = gunSetPoint.transform;
-                    _weapon1 = new HitScanGun(weaponSO) { shootPoint = shootPoint }; //give SO transform for specfic weapon shootpoint?
+                    _weapon1 = new HitScanGun(weaponSO) { shootPoint = GetComponentInChildren<Camera>().gameObject.transform }; //give SO transform for specfic weapon shootpoint?
 
                     _hasHitScan = true;
                     Debug.Log("Hitscan weapon instantiated");
@@ -234,8 +238,9 @@ public class WeaponController : MonoBehaviour
                 _playerStatsScript.maxContinuousAmmo = _myGun.ammoMax;
                 break;
         }
-        EquippedWeaponBool(weaponSO.weaponType);
 
+        Player_SFX_Controller.instance.OnWeaponPickup(weaponSO);
+        EquippedWeaponBool(weaponSO.weaponType);
         AmmoStatUpdater();
     }
 
@@ -326,6 +331,31 @@ public class WeaponController : MonoBehaviour
             _playerStatsScript.continuousWeaponAmmo = _weapon3.ammoCount;
         }
         InventoryController.instance.UIUpdateEvent?.Invoke();
+    }
+
+    public IEnumerator WeaponRecoilAnimation(float lerpTime)
+    {
+        Vector3 gunSetSnapShot = gunEmptyObj.transform.localEulerAngles;
+
+        for (float timer = 0f; timer < lerpTime; timer += Time.deltaTime)
+        {
+            float lerpRatio = timer / lerpTime;
+
+            gunEmptyObj.transform.localEulerAngles = Vector3.Lerp(gunSetSnapShot, gunSetSnapShot - new Vector3(10, 0, 0), lerpRatio);
+            yield return null;
+
+        }
+        Transform gunSetSnapShot2 = gunEmptyObj.transform;
+
+
+        for (float timer = 0f; timer < 0.2f; timer += Time.deltaTime)
+        {
+            float lerpRatio = timer / 0.2f;
+
+            gunEmptyObj.transform.localEulerAngles = Vector3.Lerp(gunSetSnapShot - new Vector3(10, 0, 0), gunSetSnapShot, lerpRatio);
+            yield return null;
+
+        }
     }
 
     #region GAME SAVE/LOAD METHODS

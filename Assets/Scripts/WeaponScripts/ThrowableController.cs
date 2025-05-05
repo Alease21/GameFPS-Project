@@ -37,7 +37,7 @@ public class ThrowableController : MonoBehaviour
                           _currThrowable;
 
 
-    public Action OnThrowableUse;
+    public Action OnThrowableThrow;
 
     void Start()
     {
@@ -67,6 +67,7 @@ public class ThrowableController : MonoBehaviour
             if ((_hasGrenade || _hasSmokeBomb) && _currThrowable.throwableCount > 0)
             {
                 _currThrowable?.Use(throwPoint.transform);
+                OnThrowableThrow?.Invoke();
                 ThrowableCountUpdater();
             }
             else

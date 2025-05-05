@@ -11,11 +11,12 @@ public class ProjectileScripts : MonoBehaviour
     {
         GunProjectile,
         Fire,
-        HitScan,
         Grenade,
         SmokeBomb
     }
     private AudioSource audioSource;
+    private ParticleSystem projParticleSystem,
+        projParticleSystem2;
     private void OnEnable()
     {
         if (!GetComponent<AudioSource>())
@@ -24,35 +25,34 @@ public class ProjectileScripts : MonoBehaviour
         }
     }
     //custom inspectorize me
-    public ProjectileType projectileType;
-    public float projectileDamage;
+    [SerializeField] private ProjectileType projectileType;
+    [HideInInspector] public float projectileDamage;
+
 
     private Vector3 initialPos;
     private float fireDistance = 2.255f;//make this adjustable in inspector?
 
     private List<GameObject> inRangeColliders = new List<GameObject>();
     private SphereCollider sphereCollider;
-    public float explodeRange;
-    public float explodeTime;
+    [HideInInspector] public float explodeRange;
+    [HideInInspector] public float explodeTime;
     
     [SerializeField] private GameObject explodeSphere;
-    private float explodeDur = 0.2f;
+    private float explodeDur = 1f;
 
     [SerializeField] private float smokeDur = 5f;
     [SerializeField] private bool isSmokin = false;
 
     private void Start()
     {
-        sphereCollider = GetComponent<SphereCollider>() ? GetComponent<SphereCollider>() : null;
+        sphereCollider = GetComponentInChildren<SphereCollider>() ? GetComponentInChildren<SphereCollider>() : null;
+        projParticleSystem = GetComponentInChildren<ParticleSystem>() ? GetComponentInChildren<ParticleSystem>() : null;
         audioSource = GetComponent<AudioSource>();
 
         EnemyDeathManager.instance.onEnemyDeath += InRangeCleanup;
 
         switch (projectileType)
         {
-            case ProjectileType.HitScan:
-                StartCoroutine(HitScanVisualDestroyer());//delete me?
-                break;
             case ProjectileType.GunProjectile:
                 audioSource.clip = SFX_Library.instance.explosion1;
 
@@ -60,6 +60,7 @@ public class ProjectileScripts : MonoBehaviour
                 break;
             case ProjectileType.Fire:
                 //audioSource.clip = **add fire hit sound?**
+                projParticleSystem?.Play();
 
                 initialPos = transform.position;
                 break;
@@ -72,6 +73,7 @@ public class ProjectileScripts : MonoBehaviour
                 break;
             case ProjectileType.SmokeBomb:
                 //audioSource.clip = 
+                projParticleSystem2 = transform.Find("GroundFog").GetComponent<ParticleSystem>();
 
                 sphereCollider.enabled = true;
                 StartCoroutine(ExplodeTimer());
@@ -118,7 +120,7 @@ public class ProjectileScripts : MonoBehaviour
     {
         if (other.GetComponent<PlayerStatsScript>())
         {
-            other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage);
+            other.GetComponent<PlayerStatsScript>().TakeDamage(projectileDamage, useDOTDamage);
         }
         else if (other.GetComponent<EnemyScript>())
         {
@@ -181,31 +183,24 @@ public class ProjectileScripts : MonoBehaviour
     //General explode, used for throwables and for projectile gun
     public void OnExplode()
     {
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
         if (projectileType != ProjectileType.SmokeBomb)
         {
+            projParticleSystem?.Play();
+
             for (int i = 0; i < inRangeColliders.Count; i++)
             {
                 if (inRangeColliders[i] != null)
                 {
-                    if (inRangeColliders[i]?.GetComponent<PlayerStatsScript>())
-                    {
-                        PlayerStatsScript.instance.TakeDamage(projectileDamage, true);
-                    }
-                    else if (inRangeColliders[i]?.GetComponent<EnemyScript>())
-                    {
-                        inRangeColliders[i]?.GetComponent<EnemyScript>().TakeDamage(projectileDamage, true);
-                    }
-                    else if (inRangeColliders[i]?.GetComponent<BarrelScript>())
-                    {
-                        inRangeColliders[i]?.GetComponent<BarrelScript>().OnTakeDamage(projectileDamage, true);
-                    }
+                    OnDealDamage(inRangeColliders[i].gameObject, true);
                 }
             }
+
             StartCoroutine(PlayAudioAfterDestroy.SoundAfterDestroy(this.gameObject, audioSource.clip.length));
         }
         else
         {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             StartCoroutine(SmokeCoro());
         }
     }
@@ -214,27 +209,32 @@ public class ProjectileScripts : MonoBehaviour
     public IEnumerator ExplodeTimer()
     {
         yield return new WaitForSecondsRealtime(explodeTime);
-        if (audioSource.clip)
+        if (audioSource.clip) //maybe delete me later
         {
             audioSource.Play();
         }
-        Vector3 initSphereScale = explodeSphere.transform.localScale;
-        float initColliderRadius = sphereCollider.radius;
-        Color smokeSphereColor = explodeSphere.GetComponent<Renderer>().material.color;
-
-        for (float timer = 0f; timer < explodeDur; timer += Time.deltaTime)
+        if (projectileType == ProjectileType.SmokeBomb)
         {
-            float explodeLerpRatio = timer / explodeDur;
+            projParticleSystem?.Play();//fix me to be better? or remove this extra thing
+            projParticleSystem2?.Play();
 
-            explodeSphere.transform.localScale = Vector3.Lerp(initSphereScale, new Vector3(explodeRange, explodeRange, explodeRange), explodeLerpRatio);
-            
-            //smoke bomb specific stuff: lerping collider radius to fix enter/exit issues & color fade in
-            if (projectileType == ProjectileType.SmokeBomb)
+            float initColliderRadius = sphereCollider.radius;
+            float alpha = 0f;
+
+            for (float timer = 0f; timer < explodeDur; timer += Time.deltaTime)
             {
-                explodeSphere.GetComponent<Renderer>().material.color = Color.Lerp(smokeSphereColor, smokeSphereColor + new Color(0f,0f,0f,0.7f), explodeLerpRatio);
+                float explodeLerpRatio = timer / explodeDur;
+
+                //smoke color lerp
+                alpha = Mathf.Lerp(0, 0.5f, explodeLerpRatio);//hard coded in alpha value for now
+                projParticleSystem2.transform.GetComponent<Renderer>().material.color = new Color(projParticleSystem2.transform.GetComponent<Renderer>().material.color.r,
+                    projParticleSystem2.transform.GetComponent<Renderer>().material.color.g,
+                    projParticleSystem2.transform.GetComponent<Renderer>().material.color.b, alpha);
+
+                //trigger sphere radius lerp
                 sphereCollider.radius = Mathf.Lerp(initColliderRadius, explodeRange / 2, explodeLerpRatio);
+                yield return null;
             }
-            yield return null;
         }
 
         InRangeCleanup();
@@ -243,8 +243,27 @@ public class ProjectileScripts : MonoBehaviour
     public IEnumerator SmokeCoro()
     {
         isSmokin = true;
-        yield return new WaitForSecondsRealtime(smokeDur);
+        yield return new WaitForSecondsRealtime(smokeDur - explodeDur);
 
+        float initColliderRadius = sphereCollider.radius;
+        float alpha = 0f;
+
+        for (float timer = 0f; timer < explodeDur; timer += Time.deltaTime)
+        {
+            float fadeLerpRatio = timer / explodeDur;
+
+            //smoke color fade
+            alpha = Mathf.Lerp(0.5f, 0, fadeLerpRatio);//hard coded in alpha value for now
+            projParticleSystem2.transform.GetComponent<Renderer>().material.color = new Color(projParticleSystem2.transform.GetComponent<Renderer>().material.color.r, 
+                projParticleSystem2.transform.GetComponent<Renderer>().material.color.g, 
+                projParticleSystem2.transform.GetComponent<Renderer>().material.color.b, alpha);
+
+            //trigger sphere radius lerp
+            sphereCollider.radius = Mathf.Lerp(initColliderRadius, 0f, fadeLerpRatio);
+            yield return null;
+        }
+
+        /*
         float initColliderRadius = sphereCollider.radius;
         Color smokeSphereColor = explodeSphere.GetComponent<Renderer>().material.color;
 
@@ -257,6 +276,7 @@ public class ProjectileScripts : MonoBehaviour
             sphereCollider.radius = Mathf.Lerp(initColliderRadius, 0f, smokeFadeRatio);
             yield return null;
         }
+        */
         Destroy(gameObject);
     }
 
@@ -270,24 +290,6 @@ public class ProjectileScripts : MonoBehaviour
                 inRangeColliders.Remove(inRangeColliders[i]);
             }
         }
-    }
-    #endregion
-
-    //HitScanWeaponMethod(s)
-    #region HitScanVisualMethod
-    // Coroutine fade, and then destroy spawned hitscan visual object
-    public IEnumerator HitScanVisualDestroyer()
-    {
-        float fadeDur = 0.5f;
-        Color mat = gameObject.GetComponent<Renderer>().material.color;
-
-        for (float timer = 0f; timer < fadeDur; timer += Time.deltaTime)
-        {
-            float lerpRatio = timer / fadeDur;
-            gameObject.GetComponent<Renderer>().material.color = Color.Lerp(mat,new Color(1f, 1f, 1f, 0f), lerpRatio);
-            yield return null;
-        }
-        Destroy(gameObject);
     }
     #endregion
 }

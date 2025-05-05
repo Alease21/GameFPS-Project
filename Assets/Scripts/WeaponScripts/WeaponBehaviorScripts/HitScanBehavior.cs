@@ -31,8 +31,5 @@ public class HitScanBehavior : IGunBehavior
             }
             //Debug.Log($"Shot {hit.transform.name}. (raycast)");
         }
-
-        // rough visual for the hitscan attack (fades away after short time)
-        GameObject hitScanShot = GameObject.Instantiate(hitScanShotPrefab, shootPoint);
     }
 }

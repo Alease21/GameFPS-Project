@@ -11,6 +11,8 @@ public class ItemPickupScript : MonoBehaviour
         var playerStatsScript = PlayerStatsScript.instance;
         var throwableController = ThrowableController.instance;
 
+        bool gotConsumed = false;
+
         if (other.GetComponent<ItemPackScript>())
         {
             ItemPackScript itemPackPickUp = other.transform.GetComponent<ItemPackScript>();
@@ -26,7 +28,8 @@ public class ItemPickupScript : MonoBehaviour
                         {
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
                             Debug.Log("Health Pack used");
-                            //Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.itemPackSO);
+
+                            gotConsumed = true;
                         }
                     }
                     break;
@@ -43,7 +46,8 @@ public class ItemPickupScript : MonoBehaviour
                                 itemPackPickUp.itemPackSO.packAmount));
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
                             Debug.Log("HOT Pack used");
-                            //Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.itemPackSO);
+
+                            gotConsumed = true;
                         }
                     }
                     break;
@@ -54,7 +58,8 @@ public class ItemPickupScript : MonoBehaviour
                         {
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
                             Debug.Log("Shield Pack used");
-                            //Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.itemPackSO);
+
+                            gotConsumed = true;
                         }
                     }
                     break;
@@ -75,17 +80,31 @@ public class ItemPickupScript : MonoBehaviour
                         itemPackPickUp.item.OnPackConsume(other.gameObject);
                         weaponController.AmmoStatUpdater();
                         Debug.Log("Ammo Pack used");
-                        //Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.itemPackSO);
+
+                        gotConsumed = true;
                     }
                     break;
             }
 
+            if (gotConsumed)
+            {
+                //Send itemSO to play specfic sound on pick up
+                Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.itemPackSO);
+
+                InventoryController.instance.UIUpdateEvent?.Invoke();
+
+                //gotConsumed = false; dont need me?
+            }
+            /* moved up there ^ delete me if thats fine
+             * 
             //update ui every item collision, whether item is consumed or not.
             InventoryController.instance.UIUpdateEvent?.Invoke();
+            */
         }
         if (other.GetComponent<WeaponScript>())
         {
             WeaponSO weaponPickUpSO = other.transform.GetComponent<WeaponScript>().weaponSO;
+
 
             //switch statement to assign hasWeapon properly based on collected weapons
             bool hasWeapon = false;
@@ -115,6 +134,8 @@ public class ItemPickupScript : MonoBehaviour
                         weaponController.WeaponPrefabSpawn(weaponPickUpSO);
                         //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
                         other.GetComponent<WeaponScript>().OnPickUp();
+
+                        gotConsumed = true;
                     }
                     break;
                 case WeaponSO.WeaponType.Grenade:
@@ -125,6 +146,8 @@ public class ItemPickupScript : MonoBehaviour
                         InventoryController.instance.OnWeaponSwap();
                         //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
                         other.GetComponent<WeaponScript>().OnPickUp();
+
+                        gotConsumed = true;
                     }
                     else
                     {
@@ -132,8 +155,17 @@ public class ItemPickupScript : MonoBehaviour
                     }
                     break;
             }
+
+            if (gotConsumed)
+            {
+                Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
+                InventoryController.instance.UIUpdateEvent?.Invoke();
+            }
+            /* moved up there ^ delete me if thats fine
+             * 
             //update ui every weapon collision, whether weapon is consumed or not.
             InventoryController.instance.UIUpdateEvent?.Invoke();
+            */
         }
     }
 }

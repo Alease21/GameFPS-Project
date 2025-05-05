@@ -13,6 +13,7 @@ public class GrenadeThrowable : ThrowableBase
         throwablePrefab = weaponSO.weaponPrefab;
         throwableCount = weaponSO.ammoCount;
         throwableMax = weaponSO.ammoMax;
+        damage = weaponSO.damage;
         range = weaponSO.range;
         timer = weaponSO.explodeTime;
         throwableSpeed = weaponSO.projectileSpeed;

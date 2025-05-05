@@ -25,15 +25,15 @@ public class CameraMovement : MonoBehaviour
     private float _yRotate;
     public float XRotate { get { return _xRotate; } private set { _xRotate = value; } }
     public float YRotate { get { return _yRotate; } private set { _yRotate = value; } }
+
     [SerializeField] private float _camPivotMax = 50f;
     [SerializeField] private float _camSensitivity;
 
     private float shotLerpTimer = .1f;
     bool isRecoiling = false;
-    float angleToLerp = 5f; //grab from weaponSO?
+    float angleToLerp = 10f; //grab from weaponSO?
 
-    // public get, protected set (ask about this?)
-    public float CamSensitivity { get { return _camSensitivity; } protected set { } }
+    public float CamSensitivity { get { return _camSensitivity; } private set { _camSensitivity = value; } }
 
     private void Start()
     {
@@ -64,27 +64,27 @@ public class CameraMovement : MonoBehaviour
     }
     public IEnumerator GunRecoilCoro(WeaponSO.WeaponType weaponType)
     {
-        isRecoiling = true;
         float ySnapSnot = _yRotate;
+
+        isRecoiling = true;
 
         switch (weaponType)
         {
             case WeaponSO.WeaponType.HitScan:
+            case WeaponSO.WeaponType.Projectile:
 
-                for(float timer = 0f; timer < shotLerpTimer; timer += Time.deltaTime)
+                WeaponController.instance.StartCoroutine(WeaponController.instance.WeaponRecoilAnimation(shotLerpTimer));
+
+                for (float timer = 0f; timer < shotLerpTimer; timer += Time.deltaTime)
                 {
                     float lerpRatio = timer / shotLerpTimer;
 
                     _yRotate = Mathf.Lerp(ySnapSnot, ySnapSnot - angleToLerp, lerpRatio);
                     yield return null;
                 }
-
-                //also lerp GunEmpty transform to something? set new empty for recoil target?
-                break;
-            case WeaponSO.WeaponType.Projectile:
                 break;
             case WeaponSO.WeaponType.Continuous:
-                // what do here???????
+                // figure out animation for this
                 break;
         }
         isRecoiling = false;
