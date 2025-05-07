@@ -17,7 +17,7 @@ MonoBehaviour:
   ammoMax: 50
   ammoCount: 50
   damage: 2
-  range: 0
+  range: 2.255
   attackAnimation: {fileID: 0}
   hitBoxPrefab: {fileID: 0}
   explodeTime: 0

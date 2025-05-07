@@ -268,6 +268,24 @@ public class GUIDWeaponToken : GUIDObjectToken
     }
 }
 
+public class GUIDThrowableToken : GUIDObjectToken
+{
+    //projectile script stuff
+
+    public GUIDThrowableToken(string guid, Transform t) : base(guid, t)
+    {
+        //set vars
+    }
+    public override void LoadGUID()
+    {
+        base.LoadGUID();
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+
+        //create method in proj script
+        //objTrans.GetComponent<ProjectileScript>().OnLoadGameData();
+    }
+}
+
 [System.Serializable]
 public class GUIDItemPackToken : GUIDObjectToken
 {

@@ -16,9 +16,15 @@ public class ProjectileScripts : MonoBehaviour
     }
     private AudioSource audioSource;
     private ParticleSystem projParticleSystem,
-        projParticleSystem2;
+                           projParticleSystem2;
+
     private void OnEnable()
     {
+        if (!GetComponent<MyGUID>())
+        {
+            gameObject.AddComponent<MyGUID>();
+        }
+
         if (!GetComponent<AudioSource>())
         {
             transform.AddComponent<AudioSource>();
@@ -30,18 +36,22 @@ public class ProjectileScripts : MonoBehaviour
 
 
     private Vector3 initialPos;
-    private float fireDistance = 2.255f;//make this adjustable in inspector?
+    [HideInInspector] public float fireDistance;
 
     private List<GameObject> inRangeColliders = new List<GameObject>();
     private SphereCollider sphereCollider;
     [HideInInspector] public float explodeRange;
     [HideInInspector] public float explodeTime;
     
-    [SerializeField] private GameObject explodeSphere;
     private float explodeDur = 1f;
 
     [SerializeField] private float smokeDur = 5f;
     [SerializeField] private bool isSmokin = false;
+
+    private float throwExplodeTimeRemaining;
+    private float smokeTimeRemaining;
+    public float ThrowExplodeTimeRemaining { get { return throwExplodeTimeRemaining; } private set { throwExplodeTimeRemaining = value; } }
+    public float SmokeTimeRemaining { get { return smokeTimeRemaining; } private set { smokeTimeRemaining = value; } }
 
     private void Start()
     {
@@ -60,7 +70,6 @@ public class ProjectileScripts : MonoBehaviour
                 break;
             case ProjectileType.Fire:
                 //audioSource.clip = **add fire hit sound?**
-                projParticleSystem?.Play();
 
                 initialPos = transform.position;
                 break;
@@ -183,8 +192,6 @@ public class ProjectileScripts : MonoBehaviour
     //General explode, used for throwables and for projectile gun
     public void OnExplode()
     {
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
         if (projectileType != ProjectileType.SmokeBomb)
         {
             projParticleSystem?.Play();
@@ -208,11 +215,21 @@ public class ProjectileScripts : MonoBehaviour
     //coroutine to track throwable explode timer and then trigger explode
     public IEnumerator ExplodeTimer()
     {
-        yield return new WaitForSecondsRealtime(explodeTime);
+        
+        //for loop to track timer for save/load
+        for (float timer = 0f; timer < explodeTime; timer += Time.deltaTime)
+        {
+            ThrowExplodeTimeRemaining = explodeTime - timer;
+            yield return null;
+        }
+        //yield return new WaitForSecondsRealtime(explodeTime);
+
         if (audioSource.clip) //maybe delete me later
         {
             audioSource.Play();
         }
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
         if (projectileType == ProjectileType.SmokeBomb)
         {
             projParticleSystem?.Play();//fix me to be better? or remove this extra thing
@@ -243,7 +260,16 @@ public class ProjectileScripts : MonoBehaviour
     public IEnumerator SmokeCoro()
     {
         isSmokin = true;
-        yield return new WaitForSecondsRealtime(smokeDur - explodeDur);
+
+        
+        //for loop to track timer for save/load
+        for (float timer = 0f; timer < (smokeDur - explodeDur); timer += Time.deltaTime)//initial smoke spawn done in OnExplode (above)
+                                                                                        //so wait time (smokeDur - explodeDur)
+        {
+            SmokeTimeRemaining = (smokeDur - explodeDur) - timer;
+            yield return null;
+        }
+        //yield return new WaitForSecondsRealtime(smokeDur - explodeDur);
 
         float initColliderRadius = sphereCollider.radius;
         float alpha = 0f;
@@ -262,21 +288,6 @@ public class ProjectileScripts : MonoBehaviour
             sphereCollider.radius = Mathf.Lerp(initColliderRadius, 0f, fadeLerpRatio);
             yield return null;
         }
-
-        /*
-        float initColliderRadius = sphereCollider.radius;
-        Color smokeSphereColor = explodeSphere.GetComponent<Renderer>().material.color;
-
-        //Collider radius lerp to fix enter/exit issues, color fade out
-        for (float timer = 0f; timer < 1f;  timer += Time.deltaTime)
-        {                           //hard coded in value for smoke fade duration
-            float smokeFadeRatio = timer / 1f;
-
-            explodeSphere.GetComponent<Renderer>().material.color = Color.Lerp(smokeSphereColor, smokeSphereColor * new Color(1f,1f,1f,0f), smokeFadeRatio);
-            sphereCollider.radius = Mathf.Lerp(initColliderRadius, 0f, smokeFadeRatio);
-            yield return null;
-        }
-        */
         Destroy(gameObject);
     }
 
@@ -291,5 +302,13 @@ public class ProjectileScripts : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region SaveLoadMethods
+    public void OnLoadGameData()
+    {
+        //create new prefab for token load?
+    }
+
     #endregion
 }

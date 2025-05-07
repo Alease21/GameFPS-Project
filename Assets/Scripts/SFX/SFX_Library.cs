@@ -19,6 +19,7 @@ public class SFX_Library : MonoBehaviour
         }
     }
 
+    [Header("Player Sounds")]
     public AudioClip[] playerDmgTakeClips;
 
     public AudioClip footSteps1,
@@ -33,4 +34,6 @@ public class SFX_Library : MonoBehaviour
                      throwableThrow,
                      outAmmo,
                      wepSwap;
+    [Header("EnemySounds")]
+    public AudioClip playerSpotted;
 }

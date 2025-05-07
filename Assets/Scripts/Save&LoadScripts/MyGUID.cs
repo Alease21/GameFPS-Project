@@ -12,10 +12,11 @@ public class MyGUID : MonoBehaviour
         Enemy,
         Weapon,
         ItemPack,
-        EnvironEnemy
+        EnvironEnemy,
+        Throwable
     }
     private GUIDObjectType objType;
-    [SerializeField] private string _GUID;
+    [SerializeField] private string _GUID = "";
     private Tuple<GUIDObjectType, Transform> _objTuple;
 
     private void OnEnable()
@@ -46,6 +47,10 @@ public class MyGUID : MonoBehaviour
         {
             objType = GUIDObjectType.EnvironEnemy;
         }
+        else if (GetComponent<ProjectileScripts>())
+        {
+            objType = GUIDObjectType.Throwable;
+        }
         else
         {
             Debug.Log("ObjType not set for " + this.gameObject.name);
@@ -63,7 +68,7 @@ public class MyGUID : MonoBehaviour
 
     private void Start()
     {
-        //EvaluateGUID();
+        EvaluateGUID();
 
         if (Application.isPlaying == false)
         {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ContinuousGun : GunBase
 {
+    float fireRange;
+
     //Constructor instantiates new ContinuousBehvaior then initializes ammoMax and ammoCount based on params
     public ContinuousGun(WeaponSO weaponSO)
     {
@@ -11,6 +13,7 @@ public class ContinuousGun : GunBase
         ammoMax = weaponSO.ammoMax;
         ammoCount = weaponSO.ammoCount;
         weaponDamage = weaponSO.damage;
+        fireRange = weaponSO.range;
     }
 
     //Checks ammo count against ammo max and decides if ammo should be added
@@ -41,7 +44,7 @@ public class ContinuousGun : GunBase
         {
             if (ammoCount > 0)
             {
-                weaponBehavior.FireGun(shootPoint, weaponDamage, 0f); //filler range for now (unused value)
+                weaponBehavior.FireGun(shootPoint, weaponDamage, fireRange);
             }
             else
             {

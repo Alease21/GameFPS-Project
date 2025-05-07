@@ -31,12 +31,12 @@ public class WeaponController : MonoBehaviour
     public GunBase Weapon3 { get { return _weapon3; } private set { _weapon3 = value; } }
 
     [SerializeField]private bool _isHitScan,
-                 _isProjectile,
-                 _isContinuous,
-                 _hasHitScan = false,
-                 _hasProjectile = false,
-                 _hasContinuous = false,
-                 _isUnarmed = true; //change this to start for if player should start w/ weapon
+                                 _isProjectile,
+                                 _isContinuous,
+                                 _hasHitScan = false,
+                                 _hasProjectile = false,
+                                 _hasContinuous = false,
+                                 _isUnarmed = true; //change this to start for if player should start w/ weapon
 
     //at some point make all calls through property (private stuff sets field atm)
     public bool IsHitScan { get { return _isHitScan; } private set { _isHitScan = value; } }
@@ -74,7 +74,6 @@ public class WeaponController : MonoBehaviour
     {
         _playerStatsScript = PlayerStatsScript.instance;//Does this make sense?
         gunEmptyObj = transform.Find("Main Camera").Find("GunEmpty");
-
         //SaveLoadControl.instance.gameLoad += WeaponPrefabSwap;
     }
 
@@ -119,7 +118,7 @@ public class WeaponController : MonoBehaviour
                     if(_myGun.ammoCount > 0)
                     {
                         CameraMovement.instance.StartCoroutine(CameraMovement.instance.GunRecoilCoro(WeaponSO.WeaponType.HitScan)); //no other recoil types coded yet
-                        currWeaponPrefab.GetComponentInChildren<ParticleSystem>()?.Play();//if has component, then play
+                        currWeaponPrefab.GetComponentInChildren<ParticleSystem>()?.Play();
                     }
 
                     _myGun.Use();
@@ -137,6 +136,10 @@ public class WeaponController : MonoBehaviour
                 {
                     isHoldingFire = true;
                     _myGun.Use();
+                    if (MyGun.ammoCount > 0)
+                    {
+                        currWeaponPrefab.GetComponentInChildren<ParticleSystem>()?.Play();
+                    }
                 }
                 else
                 {
@@ -145,6 +148,10 @@ public class WeaponController : MonoBehaviour
                     {
                         _myGun.Use();
                         continuousTimer = 0f;
+                    }
+                    if (MyGun.ammoCount == 0)
+                    {
+                        currWeaponPrefab.GetComponentInChildren<ParticleSystem>()?.Stop();
                     }
                 }
                 AmmoStatUpdater();
@@ -155,7 +162,8 @@ public class WeaponController : MonoBehaviour
                 AmmoStatUpdater();
                 if (isHoldingFire)
                 {
-                    Player_SFX_Controller.instance.audioSource.Pause();
+                    Player_SFX_Controller.instance.weaponAudio.Pause();
+                    currWeaponPrefab.GetComponentInChildren<ParticleSystem>()?.Stop();
 
                     isHoldingFire = false;
                 }
@@ -449,6 +457,15 @@ public class WeaponController : MonoBehaviour
                 StartCoroutine(ContinuousWeaponFire());
             }
             _weapon3.ammoCount = PlayerStatsScript.instance.continuousWeaponAmmo;
+        }
+
+        //maybe fine tune me? might cause problems if bools get messed up
+        if (IsUnarmed)
+        {
+            for (int i = 0; i < gunSetPoint.transform.childCount; i++)
+            {
+                Destroy(gunSetPoint.GetChild(i).gameObject);
+            }
         }
 
         InventoryController.instance.OnWeaponSwap();

@@ -15,8 +15,10 @@ public class EnemyAnimationManager : MonoBehaviour
     }
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
         enemyScript = GetComponent<EnemyScript>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        enemyScript.OnEnemyAttack += OnAttackAnimation;
     }
 
     void Update()
@@ -53,8 +55,11 @@ public class EnemyAnimationManager : MonoBehaviour
     }
     public void OnLoadGameData()
     {
-        StopAllCoroutines();
-        animator.Play("DefaultMove");//stop current animation instantly
-        animator.SetBool("IsAttacking", false);
+        if (gameObject.activeInHierarchy)
+        {
+            StopAllCoroutines();
+            animator.Play("DefaultMove");//stop current animation instantly
+            animator.SetBool("IsAttacking", false);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -22,11 +23,13 @@ public class EnemyScript : MonoBehaviour, ICanDie
     [Space(20)]
     //
 
+    private EnemyWeaponController e_WepControl;
+    private EnemyFSM enemyFSM;
+    private EnemySFXController e_SFXController;
+    private Animator animator;
+
     public EnemySO enemySO;
     public WeaponSO weaponSO;
-    private EnemyWeaponController e_WepControl;
-    private Animator animator;
-    private EnemyFSM enemyFSM;
     
     public string enemyName;
     public float enemyHealth;
@@ -37,6 +40,10 @@ public class EnemyScript : MonoBehaviour, ICanDie
     public float enemyViewDist;
 
     public bool hasDied = false;//bool for save/load
+
+    public Action OnPlayerSpotted;
+    public Action OnEnemyAttack;
+    public Action OnMeleeHit;
 
     //Gizmo to visualize enemy sight range(FOV) in scene editor
 #if UNITY_EDITOR
@@ -71,8 +78,9 @@ public class EnemyScript : MonoBehaviour, ICanDie
     private void Start()
     {
         e_WepControl = GetComponent<EnemyWeaponController>();
-        animator = GetComponent<Animator>();
         enemyFSM = GetComponent<EnemyFSM>();
+        e_SFXController = GetComponent<EnemySFXController>();
+        animator = GetComponent<Animator>();
 
         enemyName = enemySO.enemyName;
         enemyHealth = enemySO.enemyHealth;
@@ -82,17 +90,13 @@ public class EnemyScript : MonoBehaviour, ICanDie
         //enemySpeed = enemySO.enemySpeed; //adjust navmeshagent speed?
         enemyDamage = weaponSO.damage;
 
-        switch (enemySO.enemyType)
+        if (enemySO)
         {
-            case EnemySO.EnemyType.Range:
-                e_WepControl.WeaponPrefabSpawn(weaponSO);
-                break;
-            case EnemySO.EnemyType.Melee:
-                e_WepControl.WeaponPrefabSpawn(weaponSO);
-                break;
-            default:
-                Debug.Log("No enemy type on enemySO");
-                break;
+            e_WepControl.WeaponPrefabSpawn(weaponSO);
+        }
+        else
+        {
+            Debug.Log("No enemySO");
         }
     }
 

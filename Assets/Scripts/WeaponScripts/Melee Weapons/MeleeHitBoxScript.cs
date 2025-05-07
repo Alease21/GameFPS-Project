@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class MeleeHitBoxScript : MonoBehaviour
 {
-    public EnemyScript enemyScript;
-    public Animator animator;
+    private EnemyScript enemyScript;
+    private Animator animator;
+    //private EnemyFSM enemyFSM;
+
     float timer = 0f;
     private void Start()
     {
         enemyScript = GetComponentInParent<EnemyScript>();
         animator = GetComponentInParent<Animator>();
+        //enemyFSM = GetComponentInParent<EnemyFSM>();
     }
     private void Update()
     {
         timer += Time.deltaTime;
         // Auto destroy this object once attack is completed
-        if (timer > 1.14f)//hard coded time in, make more dynamic?
+        if (timer > 1.14f)//hard coded swing time in, make more dynamic?
         {
             Destroy(gameObject);
         }
@@ -27,9 +30,11 @@ public class MeleeHitBoxScript : MonoBehaviour
     {
         if (other.GetComponent<PlayerStatsScript>())
         {
-            Debug.Log("test dmg: " + enemyScript.weaponSO.damage);
             other.GetComponent<PlayerStatsScript>().TakeDamage(enemyScript.weaponSO.damage);
-            //other.GetComponent<PlayerStatsScript>().UiStatUpdate?.Invoke();
+            enemyScript.OnMeleeHit?.Invoke();
+
+            //destroy hitbox when it collides w/ player
+            Destroy(gameObject);
         }
     }
 }

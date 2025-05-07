@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2039987120292860624}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.29892156, y: 0.45102546, z: -0.45490754}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5710044, y: 0.5710044, z: 0.5710044}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: 2
   projectileDamage: 0
+  fireDistance: 0
   explodeRange: 0
   explodeTime: 0
   explodeSphere: {fileID: 7696525280033664818}

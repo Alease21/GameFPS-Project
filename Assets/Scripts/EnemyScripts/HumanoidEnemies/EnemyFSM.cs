@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,6 @@ public class EnemyFSM : MonoBehaviour
 {
     private EnemyScript enemyScript;
     private NavMeshAgent navMeshAgent;
-
-    public UnityEvent OnEnemyAttack;
 
     public enum EnemyState
     {
@@ -81,12 +80,14 @@ public class EnemyFSM : MonoBehaviour
                     Vector3.Angle(transform.forward, playerTargetDir.normalized) < enemyScript.enemyFOV / 2)
                 {
                     playerSeen = true;
+
                     var rotation = Quaternion.LookRotation(playerTargetDir);
                     transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
 
                     if (enemyState != EnemyState.Attack)
                     {
                         enemyState = EnemyState.Chase;
+                        enemyScript.OnPlayerSpotted?.Invoke();
                     }
                     if (isIdle)
                     {
@@ -217,7 +218,7 @@ public class EnemyFSM : MonoBehaviour
     // IsAttacking and playerSeen bools to false before swapping state to chase
     public IEnumerator AttackCoro()
     {
-        OnEnemyAttack?.Invoke();
+        enemyScript.OnEnemyAttack?.Invoke();
         navMeshAgent.ResetPath();
 
         yield return new WaitForSecondsRealtime(enemyScript.weaponSO.attackAnimation.length);
@@ -232,9 +233,14 @@ public class EnemyFSM : MonoBehaviour
     }
     public void OnLoadGameData(int[] iArray, bool[] bArray)
     {
-        StopAllCoroutines();
-        navMeshAgent.ResetPath();//fix this so playersnapshot is properly set
-                                 //(rework enemy raycast?)
+        if (gameObject.activeInHierarchy)
+        {
+            Debug.Log($"{gameObject.name} loaded test inside activehierarchy");
+            StopAllCoroutines();
+            navMeshAgent.ResetPath();//fix this so playersnapshot is properly set
+                                     //(rework enemy raycast?)
+            Debug.Log($"{gameObject.name} path? : {navMeshAgent.hasPath}.");
+        }
 
         enemyState = (EnemyState)iArray[1];//casting to use int as index
 

@@ -106,10 +106,14 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         audioSource.Play();
         explosionParticleSystem.gameObject.SetActive(true);
         explosionParticleSystem.Play();
-        yield return new WaitForSecondsRealtime(explosionParticleSystem.main.duration);
 
         //setactive to false instead of destroy for save/loading
         StartCoroutine(PlayAudioAfterDestroy.SoundAfterDisable(gameObject, audioSource.clip.length));
+
+        //wait for whichever duration is longer (no no animation or sound cutoff)
+        yield return new WaitForSecondsRealtime(explosionParticleSystem.main.duration > audioSource.clip.length ? 
+            explosionParticleSystem.main.duration : audioSource.clip.length);
+
         hasExploded = true;
     }
     public void OnDealDamage()
@@ -151,7 +155,7 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         }
         if (!_hasExploded)
         {
-            explosionParticleSystem.Stop();//plays sound on load?
+            explosionParticleSystem.Stop();
         }
         hasExploded = _hasExploded;
     }
