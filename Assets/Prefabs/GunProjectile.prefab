@@ -304,9 +304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: 0
   projectileDamage: 0
+  fireDistance: 0
   explodeRange: 0
   explodeTime: 0
-  explodeSphere: {fileID: 1413809020106270742}
   smokeDur: 5
   isSmokin: 0
 --- !u!135 &2503292229837506157
@@ -570,6 +570,10 @@ PrefabInstance:
     - target: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
       propertyPath: m_Name
       value: SmallExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4361801158873524, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
       propertyPath: m_LocalScale.x

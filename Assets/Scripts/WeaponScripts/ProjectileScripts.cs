@@ -17,6 +17,7 @@ public class ProjectileScripts : MonoBehaviour
     private AudioSource audioSource;
     private ParticleSystem projParticleSystem,
                            projParticleSystem2;
+    private Rigidbody rb;
 
     private void OnEnable()
     {
@@ -36,6 +37,8 @@ public class ProjectileScripts : MonoBehaviour
 
 
     private Vector3 initialPos;
+    public Vector3 InitialFirePos { get { return initialPos; } private set { initialPos = value; } }
+
     [HideInInspector] public float fireDistance;
 
     private List<GameObject> inRangeColliders = new List<GameObject>();
@@ -47,18 +50,25 @@ public class ProjectileScripts : MonoBehaviour
 
     [SerializeField] private float smokeDur = 5f;
     [SerializeField] private bool isSmokin = false;
+    public bool IsSmokin { get { return isSmokin; } private set { isSmokin = value; } }
 
-    private float throwExplodeTimeRemaining;
-    private float smokeTimeRemaining;
-    public float ThrowExplodeTimeRemaining { get { return throwExplodeTimeRemaining; } private set { throwExplodeTimeRemaining = value; } }
-    public float SmokeTimeRemaining { get { return smokeTimeRemaining; } private set { smokeTimeRemaining = value; } }
+    //SaveLoad variables
+    private float throwExplodeTime;
+    private float smokeTime;
+    private Vector3 velocity;
+    public float ThrowExplodeTime { get { return throwExplodeTime; } private set { throwExplodeTime = value; } }
+    public float SmokeTime { get { return smokeTime; } private set { smokeTime = value; } }
+    public Vector3 Velocity { get { return velocity; } private set { velocity = value; } }
+    public bool amSaved;
 
     private void Start()
     {
         sphereCollider = GetComponentInChildren<SphereCollider>() ? GetComponentInChildren<SphereCollider>() : null;
         projParticleSystem = GetComponentInChildren<ParticleSystem>() ? GetComponentInChildren<ParticleSystem>() : null;
         audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
 
+        SaveLoadControl.instance.saveGame += OnSaveGame;
         EnemyDeathManager.instance.onEnemyDeath += InRangeCleanup;
 
         switch (projectileType)
@@ -95,9 +105,7 @@ public class ProjectileScripts : MonoBehaviour
         // (relocate once projectile system is swapped to object pooling)
         if (projectileType == ProjectileType.Fire)
         {
-            Vector3 distanceTravelled = (initialPos - transform.position);
-
-            if (distanceTravelled.magnitude >= fireDistance)
+            if ((initialPos - transform.position).magnitude >= fireDistance)
             {
                 Destroy(gameObject);
             }
@@ -192,6 +200,9 @@ public class ProjectileScripts : MonoBehaviour
     //General explode, used for throwables and for projectile gun
     public void OnExplode()
     {
+        //projParticleSystem?.gameObject.SetActive(true);
+        //projParticleSystem2?.gameObject.SetActive(true);
+
         if (projectileType != ProjectileType.SmokeBomb)
         {
             projParticleSystem?.Play();
@@ -204,7 +215,14 @@ public class ProjectileScripts : MonoBehaviour
                 }
             }
 
-            StartCoroutine(PlayAudioAfterDestroy.SoundAfterDestroy(this.gameObject, audioSource.clip.length));
+            if (amSaved)
+            {
+                StartCoroutine(PlayAudioAfterDestroy.SoundAfterDisable(this.gameObject, audioSource.clip.length));
+            }
+            else
+            {
+                StartCoroutine(PlayAudioAfterDestroy.SoundAfterDestroy(this.gameObject, audioSource.clip.length));
+            }
         }
         else
         {
@@ -213,13 +231,13 @@ public class ProjectileScripts : MonoBehaviour
     }
 
     //coroutine to track throwable explode timer and then trigger explode
-    public IEnumerator ExplodeTimer()
+    public IEnumerator ExplodeTimer(float _timer = 0f)
     {
         
         //for loop to track timer for save/load
-        for (float timer = 0f; timer < explodeTime; timer += Time.deltaTime)
+        for (float timer = _timer; timer < explodeTime; timer += Time.deltaTime)
         {
-            ThrowExplodeTimeRemaining = explodeTime - timer;
+            ThrowExplodeTime = timer;
             yield return null;
         }
         //yield return new WaitForSecondsRealtime(explodeTime);
@@ -257,16 +275,16 @@ public class ProjectileScripts : MonoBehaviour
         InRangeCleanup();
         OnExplode();
     }
-    public IEnumerator SmokeCoro()
+    public IEnumerator SmokeCoro(float _timer = 0f)
     {
         isSmokin = true;
 
         
         //for loop to track timer for save/load
-        for (float timer = 0f; timer < (smokeDur - explodeDur); timer += Time.deltaTime)//initial smoke spawn done in OnExplode (above)
+        for (float timer = _timer; timer < (smokeDur - explodeDur); timer += Time.deltaTime)//initial smoke spawn done in OnExplode (above)
                                                                                         //so wait time (smokeDur - explodeDur)
         {
-            SmokeTimeRemaining = (smokeDur - explodeDur) - timer;
+            smokeTime = timer;
             yield return null;
         }
         //yield return new WaitForSecondsRealtime(smokeDur - explodeDur);
@@ -288,7 +306,14 @@ public class ProjectileScripts : MonoBehaviour
             sphereCollider.radius = Mathf.Lerp(initColliderRadius, 0f, fadeLerpRatio);
             yield return null;
         }
-        Destroy(gameObject);
+        if (amSaved)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Check for destroyed/null elements in list, then delete if any are found
@@ -304,10 +329,50 @@ public class ProjectileScripts : MonoBehaviour
     }
     #endregion
 
-    #region SaveLoadMethods
-    public void OnLoadGameData()
+    //run on save game instead of updating every frame?
+    public void OnSaveGame()
     {
-        //create new prefab for token load?
+        velocity = rb.velocity;
+        amSaved = true;
+    }
+
+    #region SaveLoadMethods
+    //create new prefab for token load?
+    public void OnLoadGameData(float[] fArray, Vector3[] vArray, bool _isSmokin)
+    {
+        StopAllCoroutines();
+        projParticleSystem?.Stop(true);
+        projParticleSystem2?.Stop(true);
+
+        isSmokin = _isSmokin;
+        rb.constraints = RigidbodyConstraints.None;
+        rb.velocity = vArray[0];
+
+        switch (projectileType)
+        {
+            case ProjectileType.GunProjectile:
+                break;
+            case ProjectileType.Fire:
+                InitialFirePos = vArray[1];
+                break;
+            case ProjectileType.Grenade:
+                StartCoroutine(ExplodeTimer(fArray[0]));
+                break;
+            case ProjectileType.SmokeBomb:
+                if (_isSmokin)
+                {
+                    StartCoroutine(SmokeCoro(fArray[1]));
+                }
+                else
+                {
+                    StartCoroutine(ExplodeTimer(fArray[0]));
+                }
+                break;
+        }
+        //set timers
+        //apply force in direction to rb
+        //
+        //run in range checker
     }
 
     #endregion

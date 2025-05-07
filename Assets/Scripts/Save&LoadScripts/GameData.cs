@@ -16,25 +16,27 @@ public class GameData
 
     public GameData()
     {
-        foreach (KeyValuePair<string, Tuple<MyGUID.GUIDObjectType, Transform>> token in GUIDRegistry.GetRegistry)
+        foreach (KeyValuePair<string, Tuple<MyGUID.GUIDObjectType, Transform>> keyVal in GUIDRegistry.GetRegistry)
         {
-            //add type sorting here
-            switch (token.Value.Item1)
+            switch (keyVal.Value.Item1)
             {
                 case MyGUID.GUIDObjectType.Player:
-                    _guidObjects.Add(new GUIDPlayerToken(token.Key, token.Value.Item2));
+                    _guidObjects.Add(new GUIDPlayerToken(keyVal.Key, keyVal.Value.Item2));
                     break;
                 case MyGUID.GUIDObjectType.Enemy:
-                    _guidObjects.Add(new GUIDEnemyToken(token.Key, token.Value.Item2));
+                    _guidObjects.Add(new GUIDEnemyToken(keyVal.Key, keyVal.Value.Item2));
                     break;
                 case MyGUID.GUIDObjectType.Weapon:
-                    _guidObjects.Add(new GUIDWeaponToken(token.Key, token.Value.Item2));
+                    _guidObjects.Add(new GUIDWeaponToken(keyVal.Key, keyVal.Value.Item2));
                     break;
                 case MyGUID.GUIDObjectType.ItemPack:
-                    _guidObjects.Add(new GUIDItemPackToken(token.Key, token.Value.Item2));
+                    _guidObjects.Add(new GUIDItemPackToken(keyVal.Key, keyVal.Value.Item2));
                     break;
                 case MyGUID.GUIDObjectType.EnvironEnemy:
-                    _guidObjects.Add(new GUIDEnvironEnemyToken(token.Key, token.Value.Item2));
+                    _guidObjects.Add(new GUIDEnvironEnemyToken(keyVal.Key, keyVal.Value.Item2));
+                    break;
+                case MyGUID.GUIDObjectType.Projectile:
+                    _guidObjects.Add(new GUIDProjectileToken(keyVal.Key, keyVal.Value.Item2));
                     break;
             }
         }
@@ -69,12 +71,13 @@ public class GUIDObjectToken
 
     public virtual void LoadGUID()
     {
-        Tuple<MyGUID.GUIDObjectType, Transform> obj = GUIDRegistry.GetTupleFromKey(_guid); //item 2 is the transform in tuple
+        Tuple<MyGUID.GUIDObjectType, Transform> obj = GUIDRegistry.GetTupleFromKey(_guid);
 
         obj.Item2.transform.position = _position.GetVector;
         obj.Item2.transform.rotation = Quaternion.Euler(_rotation.GetVector);
     }
 }
+
 
 [System.Serializable]
 public class GUIDPlayerToken : GUIDObjectToken
@@ -116,7 +119,6 @@ public class GUIDPlayerToken : GUIDObjectToken
     bool[] TCBoolArray;
 
     //cam data
-    private Vector3Token _camRotation;
     private float _camMouseX;
     private float _camMouseY;
 
@@ -173,7 +175,6 @@ public class GUIDPlayerToken : GUIDObjectToken
         TCBoolArray = new bool[] { _hasGrenade, _hasSmokeBomb,
                                    _isGrenade, _isSmokeBomb};
 
-        _camRotation = new Vector3Token(ct.rotation.eulerAngles.x, ct.rotation.eulerAngles.y, ct.rotation.eulerAngles.z);
         _camMouseX = cm.XRotate;
         _camMouseY = cm.YRotate;
     }
@@ -188,7 +189,6 @@ public class GUIDPlayerToken : GUIDObjectToken
         objTrans.GetComponent<ThrowableController>().OnLoadGameData(TCBoolArray);
         objTrans.GetComponentInChildren<CameraMovement>().OnLoadGameData(_camMouseX, _camMouseY);
     }
-
 }
 
 [System.Serializable]
@@ -268,21 +268,38 @@ public class GUIDWeaponToken : GUIDObjectToken
     }
 }
 
-public class GUIDThrowableToken : GUIDObjectToken
+[System.Serializable]
+public class GUIDProjectileToken : GUIDObjectToken
 {
     //projectile script stuff
+    private float _explodeTime;
+    private float _smokeTime;
+    private bool _isSmokin;
+    private Vector3Token _velocity;
+    private Vector3Token _initFirePos;
 
-    public GUIDThrowableToken(string guid, Transform t) : base(guid, t)
+    private float[] fArray;
+    private Vector3[] vArray;
+
+    public GUIDProjectileToken(string guid, Transform t) : base(guid, t)
     {
-        //set vars
+        ProjectileScripts ps = t.GetComponent<ProjectileScripts>();
+
+        _explodeTime = ps.ThrowExplodeTime;
+        _smokeTime = ps.SmokeTime;
+        _isSmokin = ps.IsSmokin;
+        _velocity = new Vector3Token(ps.Velocity);
+        _initFirePos = new Vector3Token(ps.InitialFirePos);
+
+        fArray = new float[] { _explodeTime, _explodeTime };
     }
     public override void LoadGUID()
     {
         base.LoadGUID();
         Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
 
-        //create method in proj script
-        //objTrans.GetComponent<ProjectileScript>().OnLoadGameData();
+        vArray = new Vector3[] { _velocity.GetVector, _initFirePos.GetVector };
+        objTrans.GetComponent<ProjectileScripts>().OnLoadGameData(fArray, vArray, _isSmokin);
     }
 }
 

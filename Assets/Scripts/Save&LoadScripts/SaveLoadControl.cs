@@ -29,12 +29,15 @@ public class SaveLoadControl : MonoBehaviour
         save2 = "GameSave2",
         save3 = "GameSave3";
 
+    public Action saveGame;
     public Action gameLoad;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F5))
         {
+            saveGame?.Invoke();//used for setting some vars instead of updating every frame
+            
             //eventually change for curSave variable?
             SaveLoadScript.Save("GameSave1", new GameData());
             Debug.Log("Game data saved");

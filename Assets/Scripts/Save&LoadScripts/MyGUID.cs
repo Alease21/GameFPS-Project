@@ -13,7 +13,7 @@ public class MyGUID : MonoBehaviour
         Weapon,
         ItemPack,
         EnvironEnemy,
-        Throwable
+        Projectile
     }
     private GUIDObjectType objType;
     [SerializeField] private string _GUID = "";
@@ -49,7 +49,7 @@ public class MyGUID : MonoBehaviour
         }
         else if (GetComponent<ProjectileScripts>())
         {
-            objType = GUIDObjectType.Throwable;
+            objType = GUIDObjectType.Projectile;
         }
         else
         {
