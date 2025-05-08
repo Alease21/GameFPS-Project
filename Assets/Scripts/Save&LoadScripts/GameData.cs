@@ -49,6 +49,14 @@ public class GameData
             token.LoadGUID();
         }
     }
+    public static void ObjActivator(Transform objTrans)
+    {
+        if (!objTrans.gameObject.activeInHierarchy)
+        {
+            objTrans.gameObject.SetActive(true);
+        }
+    }
+
 }
 
 [System.Serializable]
@@ -71,10 +79,16 @@ public class GUIDObjectToken
 
     public virtual void LoadGUID()
     {
-        Tuple<MyGUID.GUIDObjectType, Transform> obj = GUIDRegistry.GetTupleFromKey(_guid);
-
-        obj.Item2.transform.position = _position.GetVector;
-        obj.Item2.transform.rotation = Quaternion.Euler(_rotation.GetVector);
+        Tuple<MyGUID.GUIDObjectType, Transform> objTuple = GUIDRegistry.GetTupleFromKey(_guid);
+        if (objTuple.Item2 != null)
+        {
+            objTuple.Item2.transform.position = _position.GetVector;
+            objTuple.Item2.transform.rotation = Quaternion.Euler(_rotation.GetVector);
+        }
+        else
+        {
+            return;
+        }
     }
 }
 
@@ -181,7 +195,12 @@ public class GUIDPlayerToken : GUIDObjectToken
     public override void LoadGUID()
     {
         base.LoadGUID();
-        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2 ? GUIDRegistry.GetTupleFromKey(GetGUID).Item2 : null;
+        if (objTrans == null)
+        {
+            return;
+        }
+        GameData.ObjActivator(objTrans);
 
         //call variable assigning method in each script to avoid protection level issues
         objTrans.GetComponent<PlayerStatsScript>().OnLoadGameData(PSSFloatArray, PSSIntArray);
@@ -242,7 +261,13 @@ public class GUIDEnemyToken : GUIDObjectToken
     public override void LoadGUID()
     {
         base.LoadGUID();
-        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2 ? GUIDRegistry.GetTupleFromKey(GetGUID).Item2 : null;
+        if (objTrans == null)
+        {
+            return;
+        }
+
+        GameData.ObjActivator(objTrans);
 
         objTrans.GetComponent<EnemyScript>().OnLoadGameData(_enemyHealth, _enemyDamage, _hasDied);
         objTrans.GetComponent<EnemyFSM>().OnLoadGameData(FSMIntArray, FSMBoolArray);
@@ -262,7 +287,13 @@ public class GUIDWeaponToken : GUIDObjectToken
     public override void LoadGUID()
     {
         base.LoadGUID();
-        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2 ? GUIDRegistry.GetTupleFromKey(GetGUID).Item2 : null;
+        if (objTrans == null)
+        {
+            return;
+        }
+
+        GameData.ObjActivator(objTrans);
 
         objTrans.GetComponent<WeaponScript>().OnLoadGameData(_isPickedUp);
     }
@@ -296,9 +327,16 @@ public class GUIDProjectileToken : GUIDObjectToken
     public override void LoadGUID()
     {
         base.LoadGUID();
-        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2 ? GUIDRegistry.GetTupleFromKey(GetGUID).Item2 : null;
+        if (objTrans == null)
+        {
+            return;
+        }
 
         vArray = new Vector3[] { _velocity.GetVector, _initFirePos.GetVector };
+
+        GameData.ObjActivator(objTrans);
+
         objTrans.GetComponent<ProjectileScripts>().OnLoadGameData(fArray, vArray, _isSmokin);
     }
 }
@@ -321,7 +359,11 @@ public class GUIDItemPackToken : GUIDObjectToken
     public override void LoadGUID()
     {
         base.LoadGUID();
-        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2 ? GUIDRegistry.GetTupleFromKey(GetGUID).Item2 : null;
+        if (objTrans == null)
+        {
+            return;
+        }
 
         //better way to do this?
         if (_isConsumed)
@@ -349,7 +391,13 @@ public class GUIDEnvironEnemyToken : GUIDObjectToken
     public override void LoadGUID()
     {
         base.LoadGUID();
-        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2;
+        Transform objTrans = GUIDRegistry.GetTupleFromKey(GetGUID).Item2 ? GUIDRegistry.GetTupleFromKey(GetGUID).Item2 : null;
+        if (objTrans == null)
+        {
+            return;
+        }
+
+        GameData.ObjActivator(objTrans);
 
         objTrans.GetComponent<BarrelScript>().OnLoadGameData(_environhealth, _hasExploded);
     }

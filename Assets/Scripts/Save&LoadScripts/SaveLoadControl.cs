@@ -17,6 +17,7 @@ public class SaveLoadControl : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    /*
     public enum SaveNum
     {
         save1,
@@ -28,7 +29,7 @@ public class SaveLoadControl : MonoBehaviour
         save1 = "GameSave1",
         save2 = "GameSave2",
         save3 = "GameSave3";
-
+    */
     public Action saveGame;
     public Action gameLoad;
 
@@ -50,6 +51,7 @@ public class SaveLoadControl : MonoBehaviour
             Debug.Log("Game data loaded");
         }
     }
+    /*
     public void OnSelectSave(int saveNum)
     {
         switch (saveNum)
@@ -68,4 +70,5 @@ public class SaveLoadControl : MonoBehaviour
                 break;
         }
     }
+    */
 }

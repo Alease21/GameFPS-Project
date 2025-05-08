@@ -149,14 +149,10 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
 
         health = _health;
         gameObject.SetActive(_hasExploded ? false : true);
-        for (int i = 0; i < gameObject.transform.childCount; i++)
-        {
-            gameObject.transform.GetChild(i).gameObject.SetActive(true);
-        }
-        if (!_hasExploded)
-        {
-            explosionParticleSystem.Stop();
-        }
+        PlayAudioAfterDestroy.EnableVisualOnGameLoad(gameObject);
+
+        explosionParticleSystem?.gameObject.SetActive(false);
+
         hasExploded = _hasExploded;
     }
 

@@ -1,5 +1,39 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1136902236279198158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3656253943848171314}
+  m_Layer: 7
+  m_Name: GunProjVisual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3656253943848171314
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136902236279198158}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4596536400007571926}
+  - {fileID: 5076394401053237033}
+  - {fileID: 5112632221830782406}
+  m_Father: {fileID: 910106937733350135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1413809020106270742
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,12 +143,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750347440689115901}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.07455174, y: 0.056372296, z: 0.07455174}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 910106937733350135}
+  m_Father: {fileID: 3656253943848171314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6685205721776967760
 MeshFilter:
@@ -192,12 +226,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7846752371014463529}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.0344, z: -0.00000011921}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.034399986, z: 0}
   m_LocalScale: {x: 0.057538625, y: 0.052408442, z: 0.0072518024}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 910106937733350135}
+  m_Father: {fileID: 3656253943848171314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1166809052005284017
 MeshFilter:
@@ -283,9 +317,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4596536400007571926}
-  - {fileID: 5076394401053237033}
-  - {fileID: 5112632221830782406}
+  - {fileID: 3656253943848171314}
   - {fileID: 8484282344732346850}
   - {fileID: 2826252495692434847}
   m_Father: {fileID: 0}
@@ -302,6 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c79486fc2cead409a4bdc4fa43e2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projParticleSystem: {fileID: 0}
+  projParticleSystem2: {fileID: 0}
   projectileType: 0
   projectileDamage: 0
   fireDistance: 0
@@ -309,6 +343,7 @@ MonoBehaviour:
   explodeTime: 0
   smokeDur: 5
   isSmokin: 0
+  amSaved: 0
 --- !u!135 &2503292229837506157
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -503,11 +538,11 @@ Transform:
   m_GameObject: {fileID: 9103323738934646398}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.0344, z: -0.00000011920929}
+  m_LocalPosition: {x: 0, y: -0.034399986, z: 0}
   m_LocalScale: {x: 0.057538625, y: 0.052408442, z: 0.0072518024}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 910106937733350135}
+  m_Father: {fileID: 3656253943848171314}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &3130840073700355587
 MeshFilter:

@@ -32,4 +32,14 @@ public class PlayAudioAfterDestroy : MonoBehaviour
         yield return new WaitForSecondsRealtime(clipLength);
         thisObj.gameObject.SetActive(false);
     }
+    public static void EnableVisualOnGameLoad(GameObject thisObj)
+    {
+        for (int i = 0; i < thisObj.transform.childCount; i++)
+        {
+            if (thisObj.transform.GetChild(i).tag == "PrefabObjVisual")
+            {
+                thisObj.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+    }
 }

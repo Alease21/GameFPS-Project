@@ -17,6 +17,7 @@ public class MyGUID : MonoBehaviour
     }
     private GUIDObjectType objType;
     [SerializeField] private string _GUID = "";
+    public string GUID { get { return _GUID; } }
     private Tuple<GUIDObjectType, Transform> _objTuple;
 
     private void OnEnable()

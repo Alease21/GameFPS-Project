@@ -20,6 +20,14 @@ public static class GUIDRegistry
             _registry.Add(key, valueTuple);
         }
     }
+    public static void RemoveGUID(string guid)
+    {
+        if (_registry.ContainsKey(guid))
+        {
+            Debug.Log(_registry.Remove(guid) ? $"guid removed" : "guid not removed?");
+            _registry.Remove(guid);
+        }
+    }
 
     public static Tuple<MyGUID.GUIDObjectType, Transform> GetTupleFromKey(string key)
     {

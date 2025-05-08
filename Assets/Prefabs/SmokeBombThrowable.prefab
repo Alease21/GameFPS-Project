@@ -317,6 +317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c79486fc2cead409a4bdc4fa43e2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projParticleSystem: {fileID: 0}
+  projParticleSystem2: {fileID: 0}
   projectileType: 3
   projectileDamage: 0
   fireDistance: 0
@@ -324,6 +326,7 @@ MonoBehaviour:
   explodeTime: 0
   smokeDur: 5
   isSmokin: 0
+  amSaved: 0
 --- !u!136 &3386204368280157793
 CapsuleCollider:
   m_ObjectHideFlags: 0

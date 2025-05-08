@@ -15,8 +15,8 @@ public class ProjectileScripts : MonoBehaviour
         SmokeBomb
     }
     private AudioSource audioSource;
-    private ParticleSystem projParticleSystem,
-                           projParticleSystem2;
+    private ParticleSystem projParticleSystem = null,
+                           projParticleSystem2 = null;
     private Rigidbody rb;
 
     private void OnEnable()
@@ -63,8 +63,8 @@ public class ProjectileScripts : MonoBehaviour
 
     private void Start()
     {
-        sphereCollider = GetComponentInChildren<SphereCollider>() ? GetComponentInChildren<SphereCollider>() : null;
-        projParticleSystem = GetComponentInChildren<ParticleSystem>() ? GetComponentInChildren<ParticleSystem>() : null;
+        sphereCollider = GetComponentInChildren<SphereCollider>();
+        projParticleSystem = GetComponentInChildren<ParticleSystem>();
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
 
@@ -91,13 +91,14 @@ public class ProjectileScripts : MonoBehaviour
                 StartCoroutine(ExplodeTimer());
                 break;
             case ProjectileType.SmokeBomb:
-                //audioSource.clip = 
                 projParticleSystem2 = transform.Find("GroundFog").GetComponent<ParticleSystem>();
 
                 sphereCollider.enabled = true;
                 StartCoroutine(ExplodeTimer());
                 break;
+
         }
+        //Debug.Log($"partiSys1: {projParticleSystem.gameObject.name}\npartiSys2: {projParticleSystem2.gameObject.name}");
     }
     private void Update()
     {
@@ -107,7 +108,14 @@ public class ProjectileScripts : MonoBehaviour
         {
             if ((initialPos - transform.position).magnitude >= fireDistance)
             {
-                Destroy(gameObject);
+                if (amSaved)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
     }
@@ -123,6 +131,7 @@ public class ProjectileScripts : MonoBehaviour
             OnDealDamage(collision.gameObject, true);
             Destroy(gameObject);
         }
+        /*
         else if (projectileType != ProjectileType.Grenade
             && projectileType != ProjectileType.SmokeBomb)
         {  
@@ -132,6 +141,7 @@ public class ProjectileScripts : MonoBehaviour
             OnDealDamage(collision.gameObject);
             Destroy(gameObject);
         }
+        */
     }
     public void OnDealDamage(GameObject other, bool useDOTDamage = false)
     {
@@ -149,7 +159,7 @@ public class ProjectileScripts : MonoBehaviour
         }
     }
 
-    #region ExplodingSphereStuff
+    #region ExplodingStuff
     private void OnTriggerEnter(Collider other)
     {
         //adding enemyies/player to list if in range 
@@ -200,9 +210,6 @@ public class ProjectileScripts : MonoBehaviour
     //General explode, used for throwables and for projectile gun
     public void OnExplode()
     {
-        //projParticleSystem?.gameObject.SetActive(true);
-        //projParticleSystem2?.gameObject.SetActive(true);
-
         if (projectileType != ProjectileType.SmokeBomb)
         {
             projParticleSystem?.Play();
@@ -222,6 +229,8 @@ public class ProjectileScripts : MonoBehaviour
             else
             {
                 StartCoroutine(PlayAudioAfterDestroy.SoundAfterDestroy(this.gameObject, audioSource.clip.length));
+                GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);
+                SaveLoadControl.instance.saveGame -= OnSaveGame;
             }
         }
         else
@@ -240,13 +249,18 @@ public class ProjectileScripts : MonoBehaviour
             ThrowExplodeTime = timer;
             yield return null;
         }
-        //yield return new WaitForSecondsRealtime(explodeTime);
 
         if (audioSource.clip) //maybe delete me later
         {
             audioSource.Play();
         }
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+        projParticleSystem?.gameObject.SetActive(true);
+        if(projParticleSystem2 != null)
+        {
+            projParticleSystem2.gameObject.SetActive(true);
+        }
 
         if (projectileType == ProjectileType.SmokeBomb)
         {
@@ -279,15 +293,13 @@ public class ProjectileScripts : MonoBehaviour
     {
         isSmokin = true;
 
-        
         //for loop to track timer for save/load
-        for (float timer = _timer; timer < (smokeDur - explodeDur); timer += Time.deltaTime)//initial smoke spawn done in OnExplode (above)
-                                                                                        //so wait time (smokeDur - explodeDur)
+        for (float timer = _timer; timer < (smokeDur - explodeDur); timer += Time.deltaTime)//initial smoke spawn done in OnExplode (above) so
+                                                                                            // wait time is (smokeDur - explodeDur)
         {
             smokeTime = timer;
             yield return null;
         }
-        //yield return new WaitForSecondsRealtime(smokeDur - explodeDur);
 
         float initColliderRadius = sphereCollider.radius;
         float alpha = 0f;
@@ -312,6 +324,9 @@ public class ProjectileScripts : MonoBehaviour
         }
         else
         {
+            GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);//maybe make me better or move to guid scripts
+            SaveLoadControl.instance.saveGame -= OnSaveGame;
+
             Destroy(gameObject);
         }
     }
@@ -329,20 +344,32 @@ public class ProjectileScripts : MonoBehaviour
     }
     #endregion
 
-    //run on save game instead of updating every frame?
+    //run on save game instead, destroy disabled projectile obj if game saved 
     public void OnSaveGame()
     {
-        velocity = rb.velocity;
-        amSaved = true;
+        if (gameObject != null)
+        {
+            velocity = rb.velocity;
+            if (!gameObject.activeInHierarchy)
+            {
+                SaveLoadControl.instance.saveGame -= OnSaveGame;
+                GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);//maybe make me better or move to guid scripts
+                Destroy(gameObject);
+            }
+            amSaved = true;
+        }
     }
 
     #region SaveLoadMethods
-    //create new prefab for token load?
     public void OnLoadGameData(float[] fArray, Vector3[] vArray, bool _isSmokin)
     {
         StopAllCoroutines();
-        projParticleSystem?.Stop(true);
-        projParticleSystem2?.Stop(true);
+
+        projParticleSystem?.gameObject.SetActive(false);
+        if (projParticleSystem2 != null)
+        {
+            projParticleSystem2?.gameObject.SetActive(false);
+        }
 
         isSmokin = _isSmokin;
         rb.constraints = RigidbodyConstraints.None;
@@ -351,16 +378,24 @@ public class ProjectileScripts : MonoBehaviour
         switch (projectileType)
         {
             case ProjectileType.GunProjectile:
+                PlayAudioAfterDestroy.EnableVisualOnGameLoad(gameObject);
                 break;
             case ProjectileType.Fire:
                 InitialFirePos = vArray[1];
                 break;
             case ProjectileType.Grenade:
+                PlayAudioAfterDestroy.EnableVisualOnGameLoad(gameObject);
                 StartCoroutine(ExplodeTimer(fArray[0]));
                 break;
             case ProjectileType.SmokeBomb:
                 if (_isSmokin)
                 {
+                    projParticleSystem?.gameObject.SetActive(true);
+                    projParticleSystem2?.gameObject.SetActive(true);
+                    projParticleSystem?.Play();
+                    projParticleSystem2.transform.GetComponent<Renderer>().material.color += new Color(0f, 0f, 0f, 0.5f);//bandaid fix for smoke starting at 0 alpha when loaded,
+                                                                                                                         //maybe track alpha value on save
+                    projParticleSystem2?.Play();
                     StartCoroutine(SmokeCoro(fArray[1]));
                 }
                 else
@@ -369,10 +404,7 @@ public class ProjectileScripts : MonoBehaviour
                 }
                 break;
         }
-        //set timers
-        //apply force in direction to rb
-        //
-        //run in range checker
+        //run in range checker?
     }
 
     #endregion
