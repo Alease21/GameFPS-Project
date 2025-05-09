@@ -10,14 +10,33 @@ public class AmmoItem : ItemBase
 
     }
 
-    //Deactivates item once picked consumed. (Swap to true destroy somehow?)
+    //Deactivates item once picked consumed
     public override void OnPackConsume(GameObject itemGameobject)
     {
-        packPrefab.gameObject.SetActive(false);
+        isConsumed = true;
+
+        packPrefab = itemGameobject;
+        packPrefab.GetComponent<BoxCollider>().enabled = false;
+
+        for (int i = 0; i < packPrefab.transform.childCount; i++)
+        {
+            GameObject child = packPrefab.transform.GetChild(i).gameObject;
+            child.layer = 6;
+        }
+    }
+    public void OnEnablePack()
+    {
+        packPrefab.GetComponent<BoxCollider>().enabled = true;
+
+        for (int i = 0; i < packPrefab.transform.childCount; i++)
+        {
+            GameObject child = packPrefab.transform.GetChild(i).gameObject;
+            child.layer = 0;
+        }
     }
 
     public override void RechargeLink()
     {
-        //does not recharge
+        OnEnablePack();
     }
 }

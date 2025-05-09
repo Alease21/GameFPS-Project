@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3656253943848171314}
   m_Layer: 7
   m_Name: GunProjVisual
-  m_TagString: Untagged
+  m_TagString: PrefabObjVisual
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,8 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c79486fc2cead409a4bdc4fa43e2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projParticleSystem: {fileID: 0}
-  projParticleSystem2: {fileID: 0}
   projectileType: 0
   projectileDamage: 0
   fireDistance: 0

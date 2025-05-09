@@ -8,6 +8,7 @@ public abstract class ItemBase
     public int packAmount;
     public GameObject packPrefab;
     public bool isRecharging = false;
+    public bool isConsumed = false;
 
     public abstract void OnPackConsume(GameObject itemGameObject);
 

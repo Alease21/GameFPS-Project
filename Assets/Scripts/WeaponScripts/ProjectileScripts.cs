@@ -114,6 +114,8 @@ public class ProjectileScripts : MonoBehaviour
                 }
                 else
                 {
+                    GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);
+                    SaveLoadControl.instance.saveGame -= OnSaveGame;
                     Destroy(gameObject);
                 }
             }
@@ -129,7 +131,17 @@ public class ProjectileScripts : MonoBehaviour
         else if (projectileType == ProjectileType.Fire)
         {
             OnDealDamage(collision.gameObject, true);
-            Destroy(gameObject);
+
+            if (amSaved)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);
+                SaveLoadControl.instance.saveGame -= OnSaveGame;
+                Destroy(gameObject);
+            }
         }
         /*
         else if (projectileType != ProjectileType.Grenade

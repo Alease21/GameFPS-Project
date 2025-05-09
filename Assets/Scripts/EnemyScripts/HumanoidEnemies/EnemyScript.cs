@@ -20,9 +20,9 @@ public class EnemyScript : MonoBehaviour, ICanDie
     [Space(5)]
     [SerializeField] private bool showFOV;
     [SerializeField] private bool showPatPath;
-    [Space(20)]
     //
 
+    [Space(50)]
     private EnemyWeaponController e_WepControl;
     private EnemyFSM enemyFSM;
     private EnemySFXController e_SFXController;

@@ -19,7 +19,7 @@ public class ItemPackScript : MonoBehaviour
 
     public ItemBase item;
 
-    public bool isConsumed;//bool for save/load
+    public bool isConsumed = false;//bool for save/load
             //if ^this then set item obj bool to isRecharging as well
                 //^set this up on load
     public float rechargeTimeRemaining;
@@ -45,6 +45,8 @@ public class ItemPackScript : MonoBehaviour
                 break;
             case ItemPackSO.ItemPackType.AmmoPack:
                 item = new AmmoItem { packAmount = itemPackSO.packAmount, packPrefab = itemPackPrefab };
+
+                StartCoroutine(ItemDisableCoro());
                 break;
         }
     }
@@ -54,17 +56,31 @@ public class ItemPackScript : MonoBehaviour
     //from item and restarting the coroutine
     public IEnumerator ItemRechargeCoro(float timer = 0f)//optional param for loading based on rechargeTimeRemaining value, default to 0
     {
-        isConsumed = true;
-        yield return new WaitUntil(() => item.isRecharging);
+        rechargeTimeRemaining = 0f;
 
-        for (timer = 0f; timer < itemPackSO.rechargeTime; timer += Time.deltaTime)
+        yield return new WaitUntil(() => item.isRecharging);
+        isConsumed = true;
+
+        for ( ; timer < itemPackSO.rechargeTime; timer += Time.deltaTime)
         {
-            rechargeTimeRemaining = itemPackSO.rechargeTime - timer;// for save/load value grabbing
+            rechargeTimeRemaining = timer;// for save/load value grabbing
             yield return null;
         }
         item.RechargeLink();
         isConsumed = false;
         StartCoroutine(ItemRechargeCoro());
+    }
+    public IEnumerator ItemDisableCoro()
+    {
+        yield return new WaitUntil(() => item.isConsumed);
+        isConsumed = true;
+    }
+    public void ItemEnableOnLoad()
+    {
+        if (!isConsumed)
+        {
+            item.RechargeLink();
+        }
     }
     public void OnLoadGameData(bool _isConsumed, float remainingRechargeTime = 0f)
     {
@@ -72,12 +88,17 @@ public class ItemPackScript : MonoBehaviour
         isConsumed = _isConsumed;
         if (isConsumed)
         {
-            this.item.OnPackConsume(this.gameObject);//turn invis
-            StartCoroutine(ItemRechargeCoro(remainingRechargeTime));
+            if (item is iRechargeableItem)
+            {
+                this.item.OnPackConsume(this.gameObject);//turn invis
+                StartCoroutine(ItemRechargeCoro(remainingRechargeTime));
+            }
         }
         else
         {
             this.item.RechargeLink(); //turn visible
+            StartCoroutine((item is iRechargeableItem) ? ItemRechargeCoro() : ItemDisableCoro());
+            ItemEnableOnLoad();
         }
     }
 }

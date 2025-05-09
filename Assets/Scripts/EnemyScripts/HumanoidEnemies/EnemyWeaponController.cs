@@ -28,7 +28,7 @@ public class EnemyWeaponController : MonoBehaviour
     [SerializeField] private GameObject projectilePreFab;
     [SerializeField] private GameObject fireVisualPrefab;
     [SerializeField] private GameObject hitScanShotPrefab;
-    private ParticleSystem e_HitScanParticleSystem;
+    [SerializeField]private ParticleSystem e_HitScanParticleSystem;
 
     [SerializeField] private float continuousTickRate;
     //private bool isHoldingFire = false;
@@ -144,7 +144,7 @@ public class EnemyWeaponController : MonoBehaviour
                         //Debug.Log("Enemy continuous weapon instantiated");
                     }
                     break;
-                */
+                //*/
         }
     }
 }

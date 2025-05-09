@@ -103,6 +103,8 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     // Coroutine expands sphere gameobject to visualize explosion. (probably change me)
     public IEnumerator DestroyCoro()
     {
+        hasExploded = true;
+
         audioSource.Play();
         explosionParticleSystem.gameObject.SetActive(true);
         explosionParticleSystem.Play();
@@ -114,7 +116,6 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         yield return new WaitForSecondsRealtime(explosionParticleSystem.main.duration > audioSource.clip.length ? 
             explosionParticleSystem.main.duration : audioSource.clip.length);
 
-        hasExploded = true;
     }
     public void OnDealDamage()
     {
@@ -133,8 +134,6 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
             }
         }
         hasExploded = false;
-
-        Debug.Log($"Barrel exploded!");
     }
     public void OnAffectSurrounding()
     {
