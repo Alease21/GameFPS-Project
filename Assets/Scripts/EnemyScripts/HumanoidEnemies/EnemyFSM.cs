@@ -28,7 +28,7 @@ public class EnemyFSM : MonoBehaviour
                                   isPatroling,
                                   isAttacking;
     private int patrolIndex = 0; //find better solution?
-    [SerializeField]private bool playerSeen = false;
+    [SerializeField] private bool playerSeen = false;
 
     private Vector3 playerTargetDir;
     private float playerTargetDist;
@@ -42,7 +42,7 @@ public class EnemyFSM : MonoBehaviour
     public int PatrolIndex { get { return patrolIndex; } private set { patrolIndex = value; } }
     public bool PlayerSeen { get { return playerSeen; } private set { playerSeen = value; } }
 
-    public bool gotShot;
+    [HideInInspector] public bool gotShot;
 
     private void Start()
     {

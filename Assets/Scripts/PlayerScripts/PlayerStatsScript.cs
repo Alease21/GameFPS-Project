@@ -52,7 +52,7 @@ public class PlayerStatsScript : MonoBehaviour
                smokeBombCount,
                maxSmokeBombs;
 
-    public bool isHidden;
+    [HideInInspector] public bool isHidden;
 
     public Action OnTakeDamage;
     public Action OnPlayerDeath;
@@ -127,7 +127,7 @@ public class PlayerStatsScript : MonoBehaviour
         if (useDOTDamage)
         {
             StopCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));
-            StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
+            StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in values for ticks & tick time
         }
         if (_shield > 0 && damage < _shield)
         {
@@ -145,7 +145,7 @@ public class PlayerStatsScript : MonoBehaviour
         else
         {
             _health = 0;
-            Debug.Log("health is 0 now :(");
+            //Debug.Log("health is 0 now :(");
         }
         OnTakeDamage?.Invoke();
         InventoryController.instance.UIUpdateEvent?.Invoke();
@@ -165,6 +165,8 @@ public class PlayerStatsScript : MonoBehaviour
     {
         StopAllCoroutines();
 
+        //setting values here instead of in gameData b/c of var protection levels,
+        //maybe find better way around this
         Health = fArray[0];
         MaxHealth = fArray[1];
         Shield = fArray[2];

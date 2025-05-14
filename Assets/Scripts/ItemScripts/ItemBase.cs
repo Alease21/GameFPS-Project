@@ -12,7 +12,7 @@ public abstract class ItemBase
 
     public abstract void OnPackConsume(GameObject itemGameObject);
 
-    //using this to trigger the rechargeitem method from iRechargableItem interface.
+    //using this method to trigger the rechargeitem method from iRechargableItem interface.
     //(probably change/fix this?)
     public abstract void RechargeLink();
 }

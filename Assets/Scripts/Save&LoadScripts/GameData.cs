@@ -56,7 +56,6 @@ public class GameData
             objTrans.gameObject.SetActive(true);
         }
     }
-
 }
 
 [System.Serializable]
@@ -227,7 +226,6 @@ public class GUIDEnemyToken : GUIDObjectToken
                  _isPatroling,
                  _isAttacking,
                  _playerSeen;
-    //add gotshot? revamp that system?
     private bool[] FSMBoolArray;
 
     //animation control data
@@ -349,11 +347,11 @@ public class GUIDItemPackToken : GUIDObjectToken
 
     public GUIDItemPackToken(string guid, Transform t) : base(guid, t)
     {
-        _isConsumed = t.GetComponent<ItemPackScript>().isConsumed;
+        _isConsumed = t.GetComponent<ItemPackScript>().IsConsumed;
 
         if (_isConsumed)
         {
-            _rechargeTimeRemaining = t.GetComponent<ItemPackScript>().rechargeTimeRemaining;
+            _rechargeTimeRemaining = t.GetComponent<ItemPackScript>().RechargeTimeRemaining;
         }
     }
     public override void LoadGUID()

@@ -8,9 +8,9 @@ public class EnvironmentalEnemySO : ScriptableObject
 {
     public enum EnvironEnemyType
     {
-        Explosive,
-        Lava,
-        BreakableWall
+        Explosive
+        //Lava,
+        //BreakableWall
     }
     public EnvironEnemyType environEnemyType;
     public string environEnemyName;

@@ -69,6 +69,7 @@ public class ProjectileScripts : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         SaveLoadControl.instance.saveGame += OnSaveGame;
+        SaveLoadControl.instance.gameLoad += OnLoadGame; //Destroy obj if not saved 
         EnemyDeathManager.instance.onEnemyDeath += InRangeCleanup;
 
         switch (projectileType)
@@ -338,6 +339,7 @@ public class ProjectileScripts : MonoBehaviour
         {
             GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);//maybe make me better or move to guid scripts
             SaveLoadControl.instance.saveGame -= OnSaveGame;
+            SaveLoadControl.instance.gameLoad -= OnLoadGame;
 
             Destroy(gameObject);
         }
@@ -365,6 +367,8 @@ public class ProjectileScripts : MonoBehaviour
             if (!gameObject.activeInHierarchy)
             {
                 SaveLoadControl.instance.saveGame -= OnSaveGame;
+                SaveLoadControl.instance.gameLoad -= OnLoadGame;
+
                 GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);//maybe make me better or move to guid scripts
                 Destroy(gameObject);
             }
@@ -372,7 +376,21 @@ public class ProjectileScripts : MonoBehaviour
         }
     }
 
+    //rename me?
+    public void OnLoadGame()
+    {
+        if (!amSaved && this != null)
+        {
+            SaveLoadControl.instance.saveGame -= OnSaveGame;
+            SaveLoadControl.instance.gameLoad -= OnLoadGame;
+
+            GUIDRegistry.RemoveGUID(GetComponent<MyGUID>().GUID);//maybe make me better or move to guid scripts
+            Destroy(gameObject);
+        }
+    }
+
     #region SaveLoadMethods
+    //rename me?
     public void OnLoadGameData(float[] fArray, Vector3[] vArray, bool _isSmokin)
     {
         StopAllCoroutines();
@@ -416,8 +434,7 @@ public class ProjectileScripts : MonoBehaviour
                 }
                 break;
         }
-        //run in range checker?
+        //call in range checker?
     }
-
     #endregion
 }

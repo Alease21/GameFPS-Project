@@ -37,17 +37,17 @@ public class SaveLoadControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            saveGame?.Invoke();//used for setting some vars instead of updating every frame
+            saveGame?.Invoke();//used for setting some vars before save instead of updating every frame
             
-            //eventually change for curSave variable?
             SaveLoadScript.Save("GameSave1", new GameData());
             Debug.Log("Game data saved");
         }
         if (Input.GetKeyDown(KeyCode.F8))
         {
+            gameLoad?.Invoke();
+
             GameData gameData = SaveLoadScript.Load("GameSave1");
             gameData?.LoadData();
-            gameLoad?.Invoke();
             Debug.Log("Game data loaded");
         }
     }

@@ -33,7 +33,7 @@ public class ContinuousGun : GunBase
         }
         else
         {
-            Debug.Log("Full on ammo for continuous gun");
+            //Debug.Log("Full on ammo for continuous gun");
         }
     }
 
@@ -48,12 +48,12 @@ public class ContinuousGun : GunBase
             }
             else
             {
-                Debug.Log("Out of ammo in continuous gun");
+                //Debug.Log("Out of ammo in continuous gun");
             }
         }
         else
         {
-            Debug.Log("No weapon behavior set");
+            //Debug.Log("No weapon behavior set");
         }
     }
 

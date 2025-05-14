@@ -7,14 +7,14 @@ public class HitScanGun : GunBase
     //Constructor instantiates new HitScanBehavior then initializes ammoMax and ammoCount based on params
     public HitScanGun(WeaponSO weaponSO)
     {
-        weaponBehavior = new HitScanBehavior(weaponSO.projectilePrefab);
+        weaponBehavior = new HitScanBehavior();
         ammoMax = weaponSO.ammoMax;
         ammoCount = weaponSO.ammoCount;
         weaponDamage = weaponSO.damage;
     }
     public HitScanGun(WeaponSO weaponSO, int cheatAmmo)
     {
-        weaponBehavior = new HitScanBehavior(weaponSO.projectilePrefab);
+        weaponBehavior = new HitScanBehavior();
         ammoMax = cheatAmmo;
         ammoCount = cheatAmmo;
         weaponDamage = weaponSO.damage;
@@ -37,7 +37,7 @@ public class HitScanGun : GunBase
         }
         else
         {
-            Debug.Log("Full on ammo for hitscan gun");
+            //Debug.Log("Full on ammo for hitscan gun");
         }
     }
 
@@ -53,12 +53,12 @@ public class HitScanGun : GunBase
             }
             else
             {
-                Debug.Log("Out of ammo in hitscan gun");
+                //Debug.Log("Out of ammo in hitscan gun");
             }
         }
         else
         {
-            Debug.Log("No weapon behavior set");
+            //Debug.Log("No weapon behavior set");
         }
     }
 

@@ -25,22 +25,19 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
     private BarrelInRangeScript inRangeScript;
     private SphereCollider explodeSphere;
     private AudioSource audioSource;
+    private ParticleSystem explosionParticleSystem;
+
+    [HideInInspector] public List<GameObject> inRangeColliders;
 
     [Range(1,10)] public float explodeRange;
 
     [SerializeField] private float health;
     [SerializeField] private float damage;
+    [SerializeField] private bool hasExploded = false;
+
     public float Health { get { return health; } private set { health = value; } }
     public float Damage { get { return damage; } private set { damage = value; } }
-
-    public List<GameObject> inRangeColliders;
-    [SerializeField]private bool hasExploded = false;
     public bool HasExploded { get { return hasExploded; } private set { hasExploded = value; } }
-
-    public GameObject explodeSphereVisual;
-    public ParticleSystem explosionParticleSystem;
-
-    public float explodeDur = .2f; // constant value for explode duration
 
     void Start()
     {
@@ -112,10 +109,9 @@ public class BarrelScript : MonoBehaviour, IDestructable, IAffectSurroundings, I
         //setactive to false instead of destroy for save/loading
         StartCoroutine(PlayAudioAfterDestroy.SoundAfterDisable(gameObject, audioSource.clip.length));
 
-        //wait for whichever duration is longer (no no animation or sound cutoff)
+        //wait for whichever duration is longer (animation or sound cutoff)
         yield return new WaitForSecondsRealtime(explosionParticleSystem.main.duration > audioSource.clip.length ? 
             explosionParticleSystem.main.duration : audioSource.clip.length);
-
     }
     public void OnDealDamage()
     {

@@ -6,9 +6,9 @@ using UnityEngine;
 public class HitScanBehavior : IGunBehavior
 {
     public GameObject hitScanShotPrefab;
-    public HitScanBehavior(GameObject hitScanShot)
+    public HitScanBehavior()
     {
-        hitScanShotPrefab = hitScanShot;
+
     }
     // raycast forward from shootpoint position and deal damage to hit target
     public void FireGun(Transform shootPoint, float damage, float range)

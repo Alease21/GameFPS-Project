@@ -10,7 +10,7 @@ public class AmmoItem : ItemBase
 
     }
 
-    //Deactivates item once picked consumed
+    //Sets gameobject & children to invis layer (so player cannot interact/see)
     public override void OnPackConsume(GameObject itemGameobject)
     {
         isConsumed = true;
@@ -21,9 +21,10 @@ public class AmmoItem : ItemBase
         for (int i = 0; i < packPrefab.transform.childCount; i++)
         {
             GameObject child = packPrefab.transform.GetChild(i).gameObject;
-            child.layer = 6;
+            child.layer = 6;//invis layer
         }
     }
+    //Sets gameobject & children to default layer (so player can interact/see)
     public void OnEnablePack()
     {
         packPrefab.GetComponent<BoxCollider>().enabled = true;

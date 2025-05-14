@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class PlayAudioAfterDestroy : MonoBehaviour
 {
-    //coroutine to remove visible aspects of object am keep audio and/or effects
+    //coroutines to remove visible aspects of object and keep audio and/or effects
+    //**
+    //-(combine to one method with optional param bool for if to destroy or deactivate)-
+    //**
     public static IEnumerator SoundAfterDestroy(GameObject thisObj, float clipLength)
     {
         for (int i = 0; i < thisObj.transform.childCount; i++)
@@ -32,6 +35,8 @@ public class PlayAudioAfterDestroy : MonoBehaviour
         yield return new WaitForSecondsRealtime(clipLength);
         thisObj.gameObject.SetActive(false);
     }
+
+    //method to reactivate objects on game load
     public static void EnableVisualOnGameLoad(GameObject thisObj)
     {
         for (int i = 0; i < thisObj.transform.childCount; i++)

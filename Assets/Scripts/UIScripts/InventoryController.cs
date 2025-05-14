@@ -241,26 +241,6 @@ public class InventoryController : MonoBehaviour
         shieldBar.value = (float)playerStatsScript.Shield / (float)playerStatsScript.MaxShield;
         healthTextInv.text = $"{playerStatsScript.Health} / {playerStatsScript.MaxHealth}";
         shieldTextInv.text = $"{playerStatsScript.Shield} / {playerStatsScript.MaxShield}";
-
-        /* Old color change on health value
-        if (healthBar.value == 0)
-        {
-            healthBar.GetComponentInChildren<UnityEngine.UI.Image>().color *= new Color(1f,1f,1f,0f);
-        }
-        else
-        {
-            healthBar.GetComponentInChildren<UnityEngine.UI.Image>().color += new Color(0f, 0f, 0f, 1f);
-        }
-        
-        if (shieldBar.value == 0)
-        {
-            shieldBar.GetComponentInChildren<UnityEngine.UI.Image>().color *= new Color(1f,1f,1f,0f);
-        }
-        else
-        {
-            shieldBar.GetComponentInChildren<UnityEngine.UI.Image>().color += new Color(0f, 0f, 0f, 1f);
-        }
-        */
     }
 
     //UI update of ammo counts

@@ -66,9 +66,7 @@ public class WeaponController : MonoBehaviour
     public Action OnFireWeapon;
     public Action OnSwapWeapon;
 
-    //Bandaid fix please figure out weapon spawn on game load
-    public WeaponSO[] weaponSOArray;
-    //*****************************************************
+    public WeaponSO[] weaponSOArray; //find better way to spawn weapons on load?
 
     void Start()
     {
@@ -203,13 +201,13 @@ public class WeaponController : MonoBehaviour
                 {
                     hitScanWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                     hitScanWeapon.transform.parent = gunSetPoint.transform;
-                    _weapon1 = new HitScanGun(weaponSO) { shootPoint = GetComponentInChildren<Camera>().gameObject.transform }; //give SO transform for specfic weapon shootpoint?
+                    _weapon1 = new HitScanGun(weaponSO) { shootPoint = GetComponentInChildren<Camera>().gameObject.transform };
 
+                    weaponSOArray[0] = weaponSO;
                     _hasHitScan = true;
-                    Debug.Log("Hitscan weapon instantiated");
+                    //Debug.Log("Hitscan weapon instantiated");
                 }
                 break;
-
             case WeaponSO.WeaponType.Projectile:
                 if (!_hasProjectile)
                 {
@@ -217,8 +215,9 @@ public class WeaponController : MonoBehaviour
                     projectileWeapon.transform.parent = gunSetPoint.transform;
                     _weapon2 = new ProjectileGun(weaponSO) { shootPoint = shootPoint };//give SO transform for specfic weapon shootpoint?
 
+                    weaponSOArray[1] = weaponSO;
                     _hasProjectile = true;
-                    Debug.Log("Projectile weapon instantiated");
+                    //Debug.Log("Projectile weapon instantiated");
                 }
                 break;
             case WeaponSO.WeaponType.Continuous:
@@ -228,11 +227,13 @@ public class WeaponController : MonoBehaviour
                     continuousWeapon.transform.parent = gunSetPoint.transform;
                     _weapon3 = new ContinuousGun(weaponSO) { shootPoint = shootPoint };//give SO transform for specfic weapon shootpoint?
 
+                    weaponSOArray[2] = weaponSO;
                     _hasContinuous = true;
-                    Debug.Log("Continuous weapon instantiated");
+                    //Debug.Log("Continuous weapon instantiated");
                 }
                 break;
         }
+
         WeaponPrefabSwap(weaponSO.weaponType, IsUnarmed);
         switch (weaponSO.weaponType)
         {
@@ -272,6 +273,7 @@ public class WeaponController : MonoBehaviour
         switch (newWeaponType)
         {
             case WeaponSO.WeaponType.HitScan:
+
                 currWeaponPrefab = hitScanWeapon;
                 gunEmptyObj.localPosition = hitScanWeapon.transform.Find("GunEmptySetPoint").localPosition;
                 gunEmptyObj.localRotation = hitScanWeapon.transform.Find("GunEmptySetPoint").localRotation;
@@ -298,7 +300,7 @@ public class WeaponController : MonoBehaviour
         OnSwapWeapon?.Invoke();
     }
 
-    //Controls bools for what weapon is currently equipped
+    //Controls bools for which weapon is currently equipped
     public void EquippedWeaponBool(WeaponSO.WeaponType weaponType)
     {
         switch (weaponType)
@@ -355,7 +357,6 @@ public class WeaponController : MonoBehaviour
         }
         Transform gunSetSnapShot2 = gunEmptyObj.transform;
 
-
         for (float timer = 0f; timer < 0.2f; timer += Time.deltaTime)
         {
             float lerpRatio = timer / 0.2f;
@@ -369,6 +370,8 @@ public class WeaponController : MonoBehaviour
     #region GAME SAVE/LOAD METHODS
     public void OnLoadGameData(bool[] bArray)
     {
+        //setting values here instead of in gameData b/c of var protection levels,
+        //maybe find better way around this
         IsHitScan = bArray[0];
         IsProjectile = bArray[1];
         IsContinuous = bArray[2];
@@ -376,13 +379,14 @@ public class WeaponController : MonoBehaviour
         HasProjectile = bArray[4];
         HasContinuous = bArray[5];
         IsUnarmed = bArray[6];
-        
+        _myGun = null; //reset myGun to avoid avoid errors with being unarmed on load
+        Debug.Log($"element1 SOarray: {weaponSOArray[0]}\nelement2 SOarray: {weaponSOArray[1]}\nelement3 SOarray: {weaponSOArray[2]}");
         LoadGameWeaponSwap();
     }
 
     public void LoadGameWeaponSwap()
     {
-        isHoldingFire = false; //maybe delete?
+        isHoldingFire = false; //is this needed?
 
         if (currWeaponPrefab != null)
         {
@@ -395,7 +399,7 @@ public class WeaponController : MonoBehaviour
             //prefab spawning if weapons are null on load
             if (hitScanWeapon == null)
             {
-                //maybe find better way to do this
+                //WeaponPrefabSpawn(weaponSOArray[0], true); // call to spawn weapon, with optional param to skip uneeded portion of method
                 hitScanWeapon = GameObject.Instantiate(weaponSOArray[0].weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                 hitScanWeapon.transform.parent = gunSetPoint.transform;
                 _weapon1 = new HitScanGun(weaponSOArray[0]) { shootPoint = shootPoint };
@@ -418,7 +422,7 @@ public class WeaponController : MonoBehaviour
             //prefab spawning if weapons are null on load
             if (projectileWeapon == null)
             {
-                //maybe find better way to do this
+                //WeaponPrefabSpawn(weaponSOArray[1], true); // call to spawn weapon, with optional param to skip uneeded portion of method
                 projectileWeapon = GameObject.Instantiate(weaponSOArray[1].weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                 projectileWeapon.transform.parent = gunSetPoint.transform;
                 _weapon2 = new ProjectileGun(weaponSOArray[1]) { shootPoint = shootPoint };
@@ -440,7 +444,7 @@ public class WeaponController : MonoBehaviour
             //prefab spawning if weapons are null on load
             if (continuousWeapon == null)
             {
-                //maybe find better way to do this
+                //WeaponPrefabSpawn(weaponSOArray[2], true); // call to spawn weapon, with optional param to skip uneeded portion of method
                 continuousWeapon = GameObject.Instantiate(weaponSOArray[2].weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                 continuousWeapon.transform.parent = gunSetPoint.transform;
                 _weapon3 = new ContinuousGun(weaponSOArray[2]) { shootPoint = shootPoint };
@@ -459,7 +463,7 @@ public class WeaponController : MonoBehaviour
             _weapon3.ammoCount = PlayerStatsScript.instance.continuousWeaponAmmo;
         }
 
-        //maybe fine tune me? might cause problems if bools get messed up
+        //If player was unarmed on save, delete all current gun prefabs
         if (IsUnarmed)
         {
             for (int i = 0; i < gunSetPoint.transform.childCount; i++)

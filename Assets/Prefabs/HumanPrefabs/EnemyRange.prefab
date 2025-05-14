@@ -269,6 +269,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &2379445029272602124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1036354613021387417}
+  m_Layer: 8
+  m_Name: NewShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1036354613021387417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2379445029272602124}
+  serializedVersion: 2
+  m_LocalRotation: {x: -2.4868992e-14, y: 0.000000005587935, z: -0.0000010535385, w: 1}
+  m_LocalPosition: {x: -0, y: 1.4499984, z: 0.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438657836904017931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2595825679548738818
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +451,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17b03b7412e75c14991ac481f75efb93, type: 3}
       insertIndex: 0
       addedObject: {fileID: 7433406073933153543}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17b03b7412e75c14991ac481f75efb93, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1036354613021387417}
     - targetCorrespondingSourceObject: {fileID: 5465940246521907071, guid: 17b03b7412e75c14991ac481f75efb93, type: 3}
       insertIndex: -1
       addedObject: {fileID: 502020869313305505}
@@ -527,12 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093a235ec8162f9439899faa83ce68fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   playerTarget: {fileID: 0}
   isIdle: 0
   isPatroling: 0
@@ -556,9 +585,7 @@ MonoBehaviour:
   meleeSetPoint: {fileID: 8401013934564656387}
   meleeSwingPoint: {fileID: 502020869313305505}
   currWeapon: {fileID: 0}
-  projectilePreFab: {fileID: 874818377779681695, guid: 65c35d292794788408b77ce9137f0cc9, type: 3}
-  fireVisualPrefab: {fileID: 2545932288709607859, guid: 72306873477a01c43a59af42e1b58f0a, type: 3}
-  hitScanShotPrefab: {fileID: 1995857472206946201, guid: 8c86bc295d8fea34989af1729eff596c, type: 3}
+  e_HitScanParticleSystem: {fileID: 0}
   continuousTickRate: 0
 --- !u!114 &6710658982974335031
 MonoBehaviour:
@@ -656,7 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72eb8f590e6cf14c9f66f0d02652c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _GUID: 
+  _GUID: 2106d0e3-94ec-4723-b206-f4c00405838a
 --- !u!4 &2454333628868977224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2563496969622287784, guid: 17b03b7412e75c14991ac481f75efb93, type: 3}

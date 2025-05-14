@@ -20,9 +20,9 @@ public class EnemyScript : MonoBehaviour, ICanDie
     [Space(5)]
     [SerializeField] private bool showFOV;
     [SerializeField] private bool showPatPath;
+    [Space(10)]//not sure why this space stopped working
     //
 
-    [Space(50)]
     private EnemyWeaponController e_WepControl;
     private EnemyFSM enemyFSM;
     private EnemySFXController e_SFXController;
@@ -35,7 +35,7 @@ public class EnemyScript : MonoBehaviour, ICanDie
     public float enemyHealth;
     public float enemyDamage;
     public float enemyRotateSpeed;
-    //public float enemySpeed;
+    //public float enemySpeed; //adjust navmeshagent speed?
     public float enemyFOV;
     public float enemyViewDist;
 
@@ -87,7 +87,6 @@ public class EnemyScript : MonoBehaviour, ICanDie
         enemyFOV = enemySO.enemyFOV;
         enemyViewDist = enemySO.enemyViewDistance;
         enemyRotateSpeed = enemySO.enemyRotateSpeed;
-        //enemySpeed = enemySO.enemySpeed; //adjust navmeshagent speed?
         enemyDamage = weaponSO.damage;
 
         if (enemySO)
@@ -96,7 +95,7 @@ public class EnemyScript : MonoBehaviour, ICanDie
         }
         else
         {
-            Debug.Log("No enemySO");
+            Debug.Log($"No enemySO attached to {gameObject.name}'s enemyScript");
         }
     }
 
@@ -106,7 +105,7 @@ public class EnemyScript : MonoBehaviour, ICanDie
         {
             if (gameObject.activeInHierarchy)
             {
-                StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in ticks & tick time
+                StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in values for ticks & tick time
             }
         }
         if (enemyHealth > 0 && enemyHealth > damage)
@@ -121,7 +120,6 @@ public class EnemyScript : MonoBehaviour, ICanDie
         enemyFSM.gotShot = true;
     }
 
-    //Fix me, i don't continue running for some reason after triggers
     public IEnumerator TakeDOTDamage(float damage, int ticks, float tickTime)
     {
         while (ticks > 0)
@@ -134,9 +132,8 @@ public class EnemyScript : MonoBehaviour, ICanDie
 
     public void OnDeath()
     {
-        //add ondeath animation? setactive false after animation play
+        //add ondeath animation? (setactive false after animation play)
 
-        //setactive to false instead of destroy for save/loading
         hasDied = true;
         StopAllCoroutines();
         gameObject.SetActive(false);

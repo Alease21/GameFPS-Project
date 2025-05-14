@@ -33,7 +33,7 @@ public class ProjectileGun : GunBase
         }
         else
         {
-            Debug.Log("Full on ammo for projectile gun");
+            //Debug.Log("Full on ammo for projectile gun");
         }
     }
 
@@ -49,12 +49,12 @@ public class ProjectileGun : GunBase
             }
             else
             {
-                Debug.Log("Out of ammo in projectile gun");
+                //Debug.Log("Out of ammo in projectile gun");
             }
         }
         else
         {
-            Debug.Log("No weapon behavior set");
+            //Debug.Log("No weapon behavior set");
         }
     }
 

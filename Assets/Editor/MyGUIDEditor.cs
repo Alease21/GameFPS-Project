@@ -14,11 +14,28 @@ public class MyGUIDEditor : Editor
         _GUID = serializedObject.FindProperty("_GUID");
     }
 
+    private bool editGUID = false;
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField($"GUID:", EditorStyles.boldLabel);
-        EditorGUILayout.LabelField($"( {_GUID.stringValue} )");
-        EditorGUILayout.EndHorizontal();
+        using (new EditorGUILayout.HorizontalScope())
+        {
+            if (editGUID)
+            {
+                EditorGUILayout.PropertyField(_GUID);
+                //GUILayout.FlexibleSpace();
+            }
+            else
+            {
+                GUILayout.Label($"GUID:", EditorStyles.boldLabel);
+                GUILayout.FlexibleSpace();
+                GUILayout.Label($"( {_GUID.stringValue} )");
+            }
+        }
+        /*
+        if (GUILayout.Button("Edit GUID"))
+        {
+            editGUID = (editGUID == true ? false : true);
+        }
+        */
     }
 }

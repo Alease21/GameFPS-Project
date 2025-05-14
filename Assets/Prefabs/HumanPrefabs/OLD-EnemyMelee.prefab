@@ -821,7 +821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aa2bd3460a3ecf246a51964bd7115480, type: 3}
       propertyPath: m_Name
-      value: EnemyMelee
+      value: OLD-EnemyMelee
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aa2bd3460a3ecf246a51964bd7115480, type: 3}
       propertyPath: m_Layer
@@ -1061,11 +1061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093a235ec8162f9439899faa83ce68fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   playerTarget: {fileID: 0}
   isIdle: 0
   isPatroling: 0
@@ -1089,9 +1085,7 @@ MonoBehaviour:
   meleeSetPoint: {fileID: 5987543178915784276}
   meleeSwingPoint: {fileID: 2237394441739948657}
   currWeapon: {fileID: 0}
-  projectilePreFab: {fileID: 874818377779681695, guid: 65c35d292794788408b77ce9137f0cc9, type: 3}
-  fireVisualPrefab: {fileID: 2545932288709607859, guid: 72306873477a01c43a59af42e1b58f0a, type: 3}
-  hitScanShotPrefab: {fileID: 1995857472206946201, guid: 8c86bc295d8fea34989af1729eff596c, type: 3}
+  e_HitScanParticleSystem: {fileID: 0}
   continuousTickRate: 0
 --- !u!114 &5662360700856633249
 MonoBehaviour:

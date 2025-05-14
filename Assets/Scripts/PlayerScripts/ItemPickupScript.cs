@@ -17,17 +17,17 @@ public class ItemPickupScript : MonoBehaviour
         {
             ItemPackScript itemPackPickUp = other.transform.GetComponent<ItemPackScript>();
             
-            switch (itemPackPickUp.itemPackSO.itemPackType)
+            switch (itemPackPickUp.ItemPackSO.itemPackType)
             {
                 //If item is of ItemPackType HealthPack or ShieldPack: check if item is currently recharging, check if player can be healed/shielded.
                 //if true then consume item and call OnPackConsume().
                 case ItemPackSO.ItemPackType.HealthPack:
                     if (!itemPackPickUp.item.isRecharging)
                     {
-                        if (playerStatsScript.GetHealed(itemPackPickUp.itemPackSO.packAmount))
+                        if (playerStatsScript.GetHealed(itemPackPickUp.ItemPackSO.packAmount))
                         {
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
-                            Debug.Log("Health Pack used");
+                            //Debug.Log("Health Pack used");
 
                             gotConsumed = true;
                         }
@@ -38,15 +38,14 @@ public class ItemPickupScript : MonoBehaviour
                     {
                         //send initial heal ticks, if player can be healed then start coro heal the remainder of HOT amount over numTicks intervals
                         //int initHeal = itemPackPickUp.itemPackSO.packAmount / itemPackPickUp.itemPackSO.numTicks;
-                        if (playerStatsScript.GetHealed(itemPackPickUp.itemPackSO.packAmount))
+                        if (playerStatsScript.GetHealed(itemPackPickUp.ItemPackSO.packAmount))
                         {
-                            StartCoroutine(playerStatsScript.HOTHealCoro(itemPackPickUp.itemPackSO.tickTime, 
-                                itemPackPickUp.itemPackSO.numTicks - 1, // -1 to numTicks b/c of initial heal done in header
+                            StartCoroutine(playerStatsScript.HOTHealCoro(itemPackPickUp.ItemPackSO.tickTime, 
+                                itemPackPickUp.ItemPackSO.numTicks - 1, // -1 to numTicks b/c of initial heal done in header
+                                itemPackPickUp.ItemPackSO.packAmount));
 
-                                itemPackPickUp.itemPackSO.packAmount));
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
-                            Debug.Log("HOT Pack used");
-
+                            //Debug.Log("HOT Pack used");
                             gotConsumed = true;
                         }
                     }
@@ -54,11 +53,10 @@ public class ItemPickupScript : MonoBehaviour
                 case ItemPackSO.ItemPackType.ShieldPack:
                     if (!itemPackPickUp.item.isRecharging)
                     {
-                        if (playerStatsScript.GetShielded(itemPackPickUp.itemPackSO.packAmount))
+                        if (playerStatsScript.GetShielded(itemPackPickUp.ItemPackSO.packAmount))
                         {
                             itemPackPickUp.item.OnPackConsume(other.gameObject);
-                            Debug.Log("Shield Pack used");
-
+                            //Debug.Log("Shield Pack used");
                             gotConsumed = true;
                         }
                     }
@@ -72,14 +70,14 @@ public class ItemPickupScript : MonoBehaviour
                         weaponController.Weapon3?.ammoCount < weaponController.Weapon3?.ammoMax)
                     {
                         //ammo pack affects all guns player currently has
-                        weaponController.Weapon1?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                        weaponController.Weapon2?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
-                        weaponController.Weapon3?.AmmoGet(itemPackPickUp.itemPackSO.packAmount);
+                        weaponController.Weapon1?.AmmoGet(itemPackPickUp.ItemPackSO.packAmount);
+                        weaponController.Weapon2?.AmmoGet(itemPackPickUp.ItemPackSO.packAmount);
+                        weaponController.Weapon3?.AmmoGet(itemPackPickUp.ItemPackSO.packAmount);
                         //
 
                         itemPackPickUp.item.OnPackConsume(other.gameObject);
                         weaponController.AmmoStatUpdater();
-                        Debug.Log("Ammo Pack used");
+                        //Debug.Log("Ammo Pack used");
 
                         gotConsumed = true;
                     }
@@ -89,22 +87,14 @@ public class ItemPickupScript : MonoBehaviour
             if (gotConsumed)
             {
                 //Send itemSO to play specfic sound on pick up
-                Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.itemPackSO);
+                Player_SFX_Controller.instance.OnItemPickup(itemPackPickUp.ItemPackSO);
 
-                InventoryController.instance.UIUpdateEvent?.Invoke();
-
-                //gotConsumed = false; dont need me?
+                InventoryController.instance.UIUpdateEvent?.Invoke();            
             }
-            /* moved up there ^ delete me if thats fine
-             * 
-            //update ui every item collision, whether item is consumed or not.
-            InventoryController.instance.UIUpdateEvent?.Invoke();
-            */
         }
         if (other.GetComponent<WeaponScript>())
         {
             WeaponSO weaponPickUpSO = other.transform.GetComponent<WeaponScript>().weaponSO;
-
 
             //switch statement to assign hasWeapon properly based on collected weapons
             bool hasWeapon = false;
@@ -128,11 +118,9 @@ public class ItemPickupScript : MonoBehaviour
                 case WeaponSO.WeaponType.HitScan:
                 case WeaponSO.WeaponType.Projectile:
                 case WeaponSO.WeaponType.Continuous:
-                    Debug.Log(hasWeapon ? "I already have this weapon." : $"{weaponPickUpSO.weaponType} weapon picked up");
                     if (!hasWeapon)
                     {
                         weaponController.WeaponPrefabSpawn(weaponPickUpSO);
-                        //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
                         other.GetComponent<WeaponScript>().OnPickUp();
 
                         gotConsumed = true;
@@ -144,14 +132,9 @@ public class ItemPickupScript : MonoBehaviour
                     {
                         throwableController.ThrowableCountUpdater();
                         InventoryController.instance.OnWeaponSwap();
-                        //Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
                         other.GetComponent<WeaponScript>().OnPickUp();
 
                         gotConsumed = true;
-                    }
-                    else
-                    {
-                        Debug.Log("I don't need any of those throwables");
                     }
                     break;
             }
@@ -161,11 +144,6 @@ public class ItemPickupScript : MonoBehaviour
                 Player_SFX_Controller.instance.OnWeaponPickup(weaponPickUpSO);
                 InventoryController.instance.UIUpdateEvent?.Invoke();
             }
-            /* moved up there ^ delete me if thats fine
-             * 
-            //update ui every weapon collision, whether weapon is consumed or not.
-            InventoryController.instance.UIUpdateEvent?.Invoke();
-            */
         }
     }
 }

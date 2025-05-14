@@ -28,12 +28,12 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private float _camPivotMax = 50f;
     [SerializeField] private float _camSensitivity;
-
-    private float shotLerpTimer = .1f;
-    bool isRecoiling = false;
-    float angleToLerp = 10f; //grab from weaponSO?
-
     public float CamSensitivity { get { return _camSensitivity; } private set { _camSensitivity = value; } }
+
+    private float angleToLerp = 10f; //grab from weaponSO?
+    private float shotLerpTimer = .1f;
+    private bool isRecoiling = false;
+
 
     private void Start()
     {
@@ -70,6 +70,7 @@ public class CameraMovement : MonoBehaviour
 
         switch (weaponType)
         {
+            //same recoil for hitscan & projectile for now
             case WeaponSO.WeaponType.HitScan:
             case WeaponSO.WeaponType.Projectile:
 

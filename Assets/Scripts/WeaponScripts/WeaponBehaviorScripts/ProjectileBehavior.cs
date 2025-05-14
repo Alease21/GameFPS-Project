@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileBehavior : IGunBehavior
 {
     public GameObject projectilePrefab;
-    public float projectileSpeed; //= 20f;
+    public float projectileSpeed;
 
     public ProjectileBehavior(GameObject projectilePrefab, float projectileSpeed)
     {

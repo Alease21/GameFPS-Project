@@ -18,7 +18,6 @@ public class ReticleScript : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    //
 
     public Image gunReticle;
     public Vector2 firingRecticleSize = new Vector2(17.6287f, 17.6287f);
@@ -58,8 +57,7 @@ public class ReticleScript : MonoBehaviour
             }
         }
     }
-
-    //Change me to unity event on waepon swap please
+    //Change me to unity event on weapon swap please
     void Update()
     {
         gunReticle.rectTransform.sizeDelta = (WeaponController.instance.IsHoldingFire && WeaponController.instance.IsContinuous) ? 

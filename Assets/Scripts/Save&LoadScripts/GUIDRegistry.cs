@@ -24,7 +24,7 @@ public static class GUIDRegistry
     {
         if (_registry.ContainsKey(guid))
         {
-            Debug.Log(_registry.Remove(guid) ? $"guid removed" : "guid not removed?");
+            //Debug.Log(_registry.Remove(guid) ? $"guid removed" : "guid not removed?");
             _registry.Remove(guid);
         }
     }

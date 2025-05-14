@@ -13,11 +13,11 @@ public class MeleeHitBoxScript : MonoBehaviour
     {
         enemyScript = GetComponentInParent<EnemyScript>();
         animator = GetComponentInParent<Animator>();
-        //enemyFSM = GetComponentInParent<EnemyFSM>();
     }
     private void Update()
     {
         timer += Time.deltaTime;
+
         // Auto destroy this object once attack is completed
         if (timer > 1.14f)//hard coded swing time in, make more dynamic?
         {

@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 6325018531375313985}
   - component: {fileID: 2161441897225994209}
   - component: {fileID: 4385854804488818407}
+  - component: {fileID: 9009616971729469827}
   m_Layer: 9
   m_Name: AmmoPackPickup
   m_TagString: ItemPickup
@@ -410,8 +411,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5260f9064e360e84c9f6924dc6c62307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPackSO: {fileID: 11400000, guid: 42ccd502af0911b429d5c1bd50442ba2, type: 2}
-  itemPackPrefab: {fileID: 3855028834970890194}
+  _itemPackSO: {fileID: 11400000, guid: 42ccd502af0911b429d5c1bd50442ba2, type: 2}
+  _itemPackPrefab: {fileID: 3855028834970890194}
+--- !u!114 &9009616971729469827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3855028834970890194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72eb8f590e6cf14c9f66f0d02652c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GUID: 95387b52-3b29-4ab1-8145-ec1c30896225
 --- !u!1 &4830574177720262266
 GameObject:
   m_ObjectHideFlags: 0

@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 8490324271932201199}
   - component: {fileID: 7008298549394260176}
   - component: {fileID: 1757280292368658295}
+  - component: {fileID: 5183284039969781229}
   m_Layer: 9
   m_Name: ShieldPackPickup
   m_TagString: ItemPickup
@@ -488,8 +489,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5260f9064e360e84c9f6924dc6c62307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPackSO: {fileID: 11400000, guid: a6b329efa72166d489ab9348b16b3cbd, type: 2}
-  itemPackPrefab: {fileID: 3737602058443353202}
+  _itemPackSO: {fileID: 11400000, guid: a6b329efa72166d489ab9348b16b3cbd, type: 2}
+  _itemPackPrefab: {fileID: 3737602058443353202}
+--- !u!114 &5183284039969781229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3737602058443353202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72eb8f590e6cf14c9f66f0d02652c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GUID: 880a8c51-f262-4bed-be34-d452e5154516
 --- !u!1 &6266494066358637302
 GameObject:
   m_ObjectHideFlags: 0

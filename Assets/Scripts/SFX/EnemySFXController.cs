@@ -33,9 +33,6 @@ public class EnemySFXController : MonoBehaviour
             case WeaponSO.WeaponType.Melee:
                 weaponAudioSource.clip = SFX_Library.instance.meleeBarHit;
                 break;
-            default:
-                Debug.Log("enemy sfx controller: no weapon type on weapon SO");
-                break;
         }
     }
     public void OnUseWeapon()

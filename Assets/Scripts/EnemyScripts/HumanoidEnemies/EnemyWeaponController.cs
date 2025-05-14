@@ -8,11 +8,11 @@ public class EnemyWeaponController : MonoBehaviour
     private EnemyScript enemyScript;
 
     [SerializeField] private GunBase myGun;
-    public GunBase weapon1,
-                   weapon2,
-                   weapon3;
+    //private GunBase weapon1;
+                   //weapon2,
+                   //weapon3;
     [SerializeField] private MeleeBase myMelee;
-    public MeleeBase weapon4;
+    //private MeleeBase weapon4;
 
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Transform gunSetPoint;
@@ -23,11 +23,8 @@ public class EnemyWeaponController : MonoBehaviour
                        //projectileWeapon,
                        //continuousWeapon,
                        meleeWeapon;
-    //[SerializeField] private GameObject[] weaponPrefabs;
+
     [SerializeField] private GameObject currWeapon;
-    [SerializeField] private GameObject projectilePreFab;
-    [SerializeField] private GameObject fireVisualPrefab;
-    [SerializeField] private GameObject hitScanShotPrefab;
     [SerializeField]private ParticleSystem e_HitScanParticleSystem;
 
     [SerializeField] private float continuousTickRate;
@@ -40,14 +37,21 @@ public class EnemyWeaponController : MonoBehaviour
     private void Start()
     {
         enemyScript = GetComponent<EnemyScript>();
-        e_HitScanParticleSystem = gunSetPoint.GetComponentInChildren<ParticleSystem>();
+        
         enemyScript.OnEnemyAttack += EnemyAttack;
     }
     public void EnemyAttack()
     {
-        myGun?.Use();
-        e_HitScanParticleSystem?.Play();
-        myMelee?.Use();
+        switch (enemyScript.enemySO.enemyType)
+        {
+            case EnemySO.EnemyType.Range:
+                myGun?.Use();
+                e_HitScanParticleSystem?.Play();
+                break;
+            case EnemySO.EnemyType.Melee:
+                myMelee?.Use();
+                break;
+        }
     }
 
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with weaponSO stats (in constructor)
@@ -66,24 +70,19 @@ public class EnemyWeaponController : MonoBehaviour
                 {
                     hitScanWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, gunSetPoint.position, gunSetPoint.transform.rotation);
                     hitScanWeapon.transform.parent = gunSetPoint.transform;
-                    hitScanWeapon.layer = 8; //Enemy layer to avoid seeing object through walls due to prefab being on FPS_Elements layer
-                    for (int i = 0; i < hitScanWeapon.transform.childCount; i++)
-                    {
-                        Transform child1 = hitScanWeapon.transform.GetChild(i);
-                        child1.gameObject.layer = 8;
+                    e_HitScanParticleSystem = hitScanWeapon.GetComponentInChildren<ParticleSystem>();
 
-                        if (hitScanWeapon.transform.GetChild(i).childCount >= 1)
-                        {
-                            for (int j = 0; j < child1.childCount; j++)
-                            {
-                                child1.GetChild(j).gameObject.layer = 8;
-                            }
-                        }
+                    Transform wepChild = hitScanWeapon.transform.GetChild(0);
+
+                    wepChild.gameObject.layer = 8;
+                    for (int i = 0; i < wepChild.childCount; i++)
+                    {
+                        wepChild.GetChild(i).gameObject.layer = 8;
                     }
+                    
                     currWeapon = hitScanWeapon;
 
-                    weapon1 = new HitScanGun(weaponSO, 9999) { shootPoint = shootPoint }; //float is "cheatAmmo" maybe find better solution?
-                    myGun = weapon1;
+                    myGun = new HitScanGun(weaponSO, 9999) { shootPoint = shootPoint }; //float is "cheatAmmo" maybe find better solution?
 
                     hasHitScan = true;
                 }
@@ -91,15 +90,14 @@ public class EnemyWeaponController : MonoBehaviour
             case WeaponSO.WeaponType.Melee:
                 meleeWeapon = GameObject.Instantiate(weaponSO.weaponPrefab, meleeSetPoint.position, meleeSetPoint.transform.rotation);
                 meleeWeapon.transform.parent = meleeSetPoint.transform;
-                meleeWeapon.layer = 8; //Enemy layer to avoid seeing object through walls due to prefab being on FPS_Elements layer
+                
                 for (int i = 0; i < meleeWeapon.transform.childCount; i++)
                 {
                     meleeWeapon.transform.GetChild(i).gameObject.layer = 8;
                 }
-                currWeapon = meleeWeapon;
 
-                weapon4 = new MeleeWeapon(meleeSetPoint, weaponSO.hitBoxPrefab);
-                myMelee = weapon4;
+                currWeapon = meleeWeapon;
+                myMelee = new MeleeWeapon(meleeSetPoint, weaponSO.hitBoxPrefab);
                 break;
 
                 /* Commented out other enemy weapons as just hitscan is implemented fully

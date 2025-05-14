@@ -11,15 +11,14 @@ public class PlayerMovement : MonoBehaviour
     private Animator _animator;
     private CapsuleCollider _capsuleCollider;
 
-    public float playerSpeed;
-    public float playerJumpFactor;
-    public float playerDashFactor;
+    [SerializeField] private float playerSpeed;
+    [SerializeField] private float playerJumpFactor;
+    [SerializeField] private float playerDashFactor;
     [SerializeField] private float _dashCoolDown = 2f;
     [SerializeField] private float _dashVerticalHold = .25f;
 
-    // public gets, protected sets (ask about this?)
-    public float DashCoolDown { get { return _dashCoolDown; } protected set { } }
-    public float DashVerticalHold { get { return _dashVerticalHold; } protected set { } }
+    public float DashCoolDown { get { return _dashCoolDown; } private set { _dashCoolDown = value; } }
+    public float DashVerticalHold { get { return _dashVerticalHold; } private set { _dashVerticalHold = value; } }
 
     private bool isJumping = false;
     private bool hasDashed = false;
@@ -114,6 +113,6 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(_dashCoolDown - _dashVerticalHold);
         hasDashed = false;
-        Debug.Log("dash can be used again");
+        //Debug.Log("dash can be used again");
     }
 }

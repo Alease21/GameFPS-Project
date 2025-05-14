@@ -60,8 +60,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8711191327355521730}
   - {fileID: 1227700553770507532}
+  - {fileID: 8711191327355521730}
   - {fileID: 797977388046417148}
   - {fileID: 2548488665235578291}
   m_Father: {fileID: 0}
@@ -148,6 +148,10 @@ PrefabInstance:
     - target: {fileID: 882355674061049394, guid: 9910dff50e97d224bb619f3b6a862302, type: 3}
       propertyPath: m_Name
       value: ProjectileWeap1
+      objectReference: {fileID: 0}
+    - target: {fileID: 882355674061049394, guid: 9910dff50e97d224bb619f3b6a862302, type: 3}
+      propertyPath: m_TagString
+      value: PrefabObjVisual
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

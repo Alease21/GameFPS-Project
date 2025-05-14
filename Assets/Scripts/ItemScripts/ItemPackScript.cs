@@ -14,37 +14,37 @@ public class ItemPackScript : MonoBehaviour
         }
     }
 
-    public ItemPackSO itemPackSO;
-    public GameObject itemPackPrefab;
+    [HideInInspector] public ItemBase item;
 
-    public ItemBase item;
+    [SerializeField] private ItemPackSO _itemPackSO;
+    [SerializeField] private GameObject _itemPackPrefab;
+    private bool isConsumed = false;//maybe just use item.isrecharging?
+    private float rechargeTimeRemaining;
 
-    public bool isConsumed = false;//bool for save/load
-            //if ^this then set item obj bool to isRecharging as well
-                //^set this up on load
-    public float rechargeTimeRemaining;
-
-    //add stop coros method to listen for load event?
+    public ItemPackSO ItemPackSO { get { return _itemPackSO; } private set { _itemPackSO = value; } }
+    public GameObject ItemPackPrefab { get { return _itemPackPrefab; } private set { _itemPackPrefab = value; } }
+    public bool IsConsumed { get { return isConsumed; } private set { isConsumed = value; } }
+    public float RechargeTimeRemaining { get { return rechargeTimeRemaining; } private set { rechargeTimeRemaining = value; } }
 
     private void Start()
     {
         //Instantiate new itemBase based of the itempacktype of the attached itemPackSO.
         //In case of HealhPack or ShieldPack ItemPackTypes, start ItemRechargeCoro().
-        switch (itemPackSO.itemPackType)
+        switch (_itemPackSO.itemPackType)
         {
             case ItemPackSO.ItemPackType.HOTPack:
             case ItemPackSO.ItemPackType.HealthPack:
-                item = new HealthItem { packAmount = itemPackSO.packAmount, packPrefab = itemPackPrefab };
+                item = new HealthItem { packAmount = _itemPackSO.packAmount, packPrefab = _itemPackPrefab };
 
                 StartCoroutine(ItemRechargeCoro());
                 break;
             case ItemPackSO.ItemPackType.ShieldPack:
-                item = new ShieldItem { packAmount = itemPackSO.packAmount, packPrefab = itemPackPrefab };
+                item = new ShieldItem { packAmount = _itemPackSO.packAmount, packPrefab = _itemPackPrefab };
 
                 StartCoroutine(ItemRechargeCoro());
                 break;
             case ItemPackSO.ItemPackType.AmmoPack:
-                item = new AmmoItem { packAmount = itemPackSO.packAmount, packPrefab = itemPackPrefab };
+                item = new AmmoItem { packAmount = _itemPackSO.packAmount, packPrefab = _itemPackPrefab };
 
                 StartCoroutine(ItemDisableCoro());
                 break;
@@ -61,7 +61,7 @@ public class ItemPackScript : MonoBehaviour
         yield return new WaitUntil(() => item.isRecharging);
         isConsumed = true;
 
-        for ( ; timer < itemPackSO.rechargeTime; timer += Time.deltaTime)
+        for ( ; timer < _itemPackSO.rechargeTime; timer += Time.deltaTime)
         {
             rechargeTimeRemaining = timer;// for save/load value grabbing
             yield return null;

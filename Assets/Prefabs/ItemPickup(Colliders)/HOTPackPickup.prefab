@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6986420728089839550}
   - component: {fileID: 7026625240817079077}
   - component: {fileID: 7438284817150600300}
+  - component: {fileID: 5901507976081810203}
   m_Layer: 9
   m_Name: HOTPackPickup
   m_TagString: ItemPickup
@@ -71,8 +72,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5260f9064e360e84c9f6924dc6c62307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPackSO: {fileID: 11400000, guid: bc7596523795f714ab6fb7117c577cfb, type: 2}
-  itemPackPrefab: {fileID: 879178418461203151}
+  _itemPackSO: {fileID: 11400000, guid: bc7596523795f714ab6fb7117c577cfb, type: 2}
+  _itemPackPrefab: {fileID: 879178418461203151}
+--- !u!114 &5901507976081810203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879178418461203151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a72eb8f590e6cf14c9f66f0d02652c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GUID: c8c9a876-f2de-4a58-a5bf-bb975617c380
 --- !u!1 &2075757084827850436
 GameObject:
   m_ObjectHideFlags: 0
