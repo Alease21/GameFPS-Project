@@ -380,7 +380,6 @@ public class WeaponController : MonoBehaviour
         HasContinuous = bArray[5];
         IsUnarmed = bArray[6];
         _myGun = null; //reset myGun to avoid avoid errors with being unarmed on load
-        Debug.Log($"element1 SOarray: {weaponSOArray[0]}\nelement2 SOarray: {weaponSOArray[1]}\nelement3 SOarray: {weaponSOArray[2]}");
         LoadGameWeaponSwap();
     }
 

@@ -241,24 +241,26 @@ public class EnemyFSM : MonoBehaviour
         }
 
         enemyState = (EnemyState)iArray[1];//casting to use int as index
-
-        //fix how these coros are calling in idle/attack actions so this isnt required?
-        if (enemyState == EnemyState.Idle)
+        if (gameObject.activeInHierarchy)
         {
-            StartCoroutine(IdleCoroutine());
+            //fix how these coros are calling in idle/attack actions so this isnt required?
+            if (enemyState == EnemyState.Idle)
+            {
+                StartCoroutine(IdleCoroutine());
+            }
+            else if (enemyState == EnemyState.Patrol)
+            {
+                navMeshAgent.SetDestination(patrolPoints[patrolIndex].transform.position);
+            }
+            else if (enemyState == EnemyState.Attack)
+            {
+                StartCoroutine(AttackCoro());
+            }
+            playerSeen = bArray[3];
+            patrolIndex = iArray[0];
+            IsIdle = bArray[0];
+            IsPatroling = bArray[1];
+            IsAttacking = bArray[2];
         }
-        else if (enemyState == EnemyState.Patrol)
-        {
-            navMeshAgent.SetDestination(patrolPoints[patrolIndex].transform.position);
-        }
-        else if (enemyState == EnemyState.Attack)
-        {
-            StartCoroutine(AttackCoro());
-        }
-        playerSeen = bArray[3];
-        patrolIndex = iArray[0];
-        IsIdle = bArray[0];
-        IsPatroling = bArray[1];
-        IsAttacking = bArray[2];
     }
 }

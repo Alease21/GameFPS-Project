@@ -33,8 +33,8 @@ public class PlayerStatsScript : MonoBehaviour
 
     [SerializeField] private float _health,
                                    _shield,
-                                   _maxHealth = 100,
-                                   _maxShield = 50;
+                                   _maxHealth = 200,
+                                   _maxShield = 100;
     
     public float Health { get { return _health; } private set { _health = value; } }
     public float MaxHealth { get { return _maxHealth; } private set { _maxHealth = value; } }
