@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce912048a57c934285f17a51e9143f5, type: 3}
+  m_Name: ContinuousWeapon
+  m_EditorClassIdentifier: 
+  weaponName: ContinuousWeapon1
+  weaponType: 2
+  ammoMax: 50
+  ammoCount: 50
+  damage: 2
+  range: 2.255
+  attackAnimation: {fileID: 0}
+  hitBoxPrefab: {fileID: 0}
+  explodeTime: 0
+  weaponPrefab: {fileID: 2304947903537036665, guid: 81aafeaae65f16b41b4c6980c9faf257, type: 3}
+  projectilePrefab: {fileID: 2545932288709607859, guid: 72306873477a01c43a59af42e1b58f0a, type: 3}
+  projectileSpeed: 10
