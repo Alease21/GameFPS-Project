@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -89,14 +86,11 @@ public class EnemyFSM : MonoBehaviour
                         enemyState = EnemyState.Chase;
                         enemyScript.OnPlayerSpotted?.Invoke();
                     }
+
                     if (isIdle)
-                    {
                         isIdle = false;
-                    }
                     if (isPatroling)
-                    {
                         isPatroling = false;
-                    }
                 }
             }
         }
@@ -161,9 +155,7 @@ public class EnemyFSM : MonoBehaviour
                 isPatroling = false;
                 patrolIndex++;
                 if (patrolIndex >= patrolPoints.Length)
-                {
                     patrolIndex = 0;
-                }
             }
         }
         else
@@ -189,9 +181,7 @@ public class EnemyFSM : MonoBehaviour
             Vector3 playerSnapShot = playerTarget.transform.position;
 
             if ((playerSnapShot - transform.position).magnitude < enemyScript.weaponSO.range)
-            {
                 enemyState = EnemyState.Attack;
-            }
             else
             {
                 navMeshAgent.SetDestination(playerSnapShot);
@@ -199,9 +189,7 @@ public class EnemyFSM : MonoBehaviour
             }
         }
         else if (!playerSeen && !navMeshAgent.hasPath)
-        {
             enemyState = EnemyState.Idle;
-        }
     }
 
     //Start AttackCoro
@@ -245,17 +233,12 @@ public class EnemyFSM : MonoBehaviour
         {
             //fix how these coros are calling in idle/attack actions so this isnt required?
             if (enemyState == EnemyState.Idle)
-            {
                 StartCoroutine(IdleCoroutine());
-            }
             else if (enemyState == EnemyState.Patrol)
-            {
                 navMeshAgent.SetDestination(patrolPoints[patrolIndex].transform.position);
-            }
             else if (enemyState == EnemyState.Attack)
-            {
                 StartCoroutine(AttackCoro());
-            }
+
             playerSeen = bArray[3];
             patrolIndex = iArray[0];
             IsIdle = bArray[0];

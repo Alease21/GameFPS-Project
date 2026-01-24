@@ -57,10 +57,7 @@ public class EnemyWeaponController : MonoBehaviour
     //Initial gun object and gameobject instantiation based on weaponType param. New gun instantiated with weaponSO stats (in constructor)
     public void WeaponPrefabSpawn(WeaponSO weaponSO)
     {
-        if (currWeapon != null)
-        {
-            currWeapon.SetActive(false);
-        }
+        currWeapon?.SetActive(false);
 
         //Based on weaponType, check if player has that weapon (bool), if false then instantiate gameobject and gun object and flip appropriate bool true
         switch (weaponSO.weaponType)
@@ -76,9 +73,7 @@ public class EnemyWeaponController : MonoBehaviour
 
                     wepChild.gameObject.layer = 8;
                     for (int i = 0; i < wepChild.childCount; i++)
-                    {
                         wepChild.GetChild(i).gameObject.layer = 8;
-                    }
                     
                     currWeapon = hitScanWeapon;
 
@@ -92,9 +87,7 @@ public class EnemyWeaponController : MonoBehaviour
                 meleeWeapon.transform.parent = meleeSetPoint.transform;
                 
                 for (int i = 0; i < meleeWeapon.transform.childCount; i++)
-                {
                     meleeWeapon.transform.GetChild(i).gameObject.layer = 8;
-                }
 
                 currWeapon = meleeWeapon;
                 myMelee = new MeleeWeapon(meleeSetPoint, weaponSO.hitBoxPrefab);

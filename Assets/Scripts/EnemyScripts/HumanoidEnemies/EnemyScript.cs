@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyWeaponController), typeof(MyGUID))]
@@ -90,33 +88,25 @@ public class EnemyScript : MonoBehaviour, ICanDie
         enemyDamage = weaponSO.damage;
 
         if (enemySO)
-        {
             e_WepControl.WeaponPrefabSpawn(weaponSO);
-        }
         else
-        {
             Debug.Log($"No enemySO attached to {gameObject.name}'s enemyScript");
-        }
     }
 
     public void TakeDamage(float damage, bool useDOTDamage = false)
     {
         if (useDOTDamage)
-        {
             if (gameObject.activeInHierarchy)
-            {
                 StartCoroutine(TakeDOTDamage(damage / 5, 5, 1.5f));//hard coded in values for ticks & tick time
-            }
-        }
+
         if (enemyHealth > 0 && enemyHealth > damage)
-        {
             enemyHealth -= damage;
-        }
         else
         {
             enemyHealth = 0;
             OnDeath();
         }
+
         enemyFSM.gotShot = true;
     }
 
