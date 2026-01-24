@@ -362,7 +362,7 @@ public class ProjectileScripts : MonoBehaviour
     {
         if (gameObject != null)
         {
-            velocity = rb.velocity;
+            velocity = rb.linearVelocity;
             if (!gameObject.activeInHierarchy)
             {
                 SaveLoadControl.instance.saveGame -= OnSaveGame;
@@ -402,7 +402,7 @@ public class ProjectileScripts : MonoBehaviour
 
         isSmokin = _isSmokin;
         rb.constraints = RigidbodyConstraints.None;
-        rb.velocity = vArray[0];
+        rb.linearVelocity = vArray[0];
 
         switch (projectileType)
         {
