@@ -61,7 +61,6 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.15f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ScriptableOjects\EnemySOs\EnemySO.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\HumanoidEnemies\EnemyScript.cs" />
     <Compile Include="Assets\Scripts\Save&amp;LoadScripts\SaveLoadControl.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponBehaviorScripts\MeleeBasicBehavior.cs" />
@@ -78,9 +77,9 @@
     <Compile Include="Assets\Scripts\WeaponScripts\Range Weapons\ProjectileGun.cs" />
     <Compile Include="Assets\Scripts\SFX\Player_SFX_Controller.cs" />
     <Compile Include="Assets\~Old&amp;Unused\UnusedInterfaces\ICollectable.cs" />
+    <Compile Include="Assets\Scripts\SO Bases\WeaponSO.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponBehaviorScripts\HitScanBehavior.cs" />
     <Compile Include="Assets\Scripts\Interfaces\EnemyInterfaces\IDestructable.cs" />
-    <Compile Include="Assets\ScriptableOjects\EnvironEnemiySOs\EnvironmentalEnemySO.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD EnemyObjectScripts\BaseEnemy.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD_HealthSystemPrefabs\PlayerHealth.cs" />
@@ -95,14 +94,13 @@
     <Compile Include="Assets\Scripts\SFX\EnemySFXController.cs" />
     <Compile Include="Assets\Scripts\Save&amp;LoadScripts\SaveLoadScript.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Melee Weapons\MeleeHitBoxScript.cs" />
-    <Compile Include="Assets\ScriptableOjects\WeaponSOs\WeaponSO.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\ProximityActivate.cs" />
     <Compile Include="Assets\Scripts\ItemScripts\HealthItem.cs" />
+    <Compile Include="Assets\Scripts\SO Bases\ItemPackSO.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD environ objects\LavaObject.cs" />
     <Compile Include="Assets\Scripts\ItemScripts\ShieldItem.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD environ objects\BreakableWallBehavior.cs" />
     <Compile Include="Assets\Scripts\Interfaces\Item&amp;Weapons\iRechargeableItem.cs" />
-    <Compile Include="Assets\ScriptableOjects\ItemPackSOs\ItemPackSO.cs" />
     <Compile Include="Assets\Scripts\Interfaces\EnemyInterfaces\IDealDamageEnviron.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\ThrowableController.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\EnvironEnemies\BarrelScript.cs" />
@@ -112,6 +110,7 @@
     <Compile Include="Assets\Scripts\EnemyScripts\HumanoidEnemies\EnemyDeathManager.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD SaveLoadScripts\OLD - GUIDController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStatsScript.cs" />
+    <Compile Include="Assets\Scripts\SO Bases\EnemySO.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Ramps\Runtime\RampAsset.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\AdjustTimeScale.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\SimpleCameraController.cs" />
@@ -135,6 +134,7 @@
     <Compile Include="Assets\Scripts\WeaponScripts\Throwables\SmokeBombThrowable.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD environ objects\ExplosiveBehavior.cs" />
     <Compile Include="Assets\Scripts\Interfaces\Item&amp;Weapons\IGunBehavior.cs" />
+    <Compile Include="Assets\Scripts\SO Bases\EnvironmentalEnemySO.cs" />
     <Compile Include="Assets\Scripts\Interfaces\EnemyInterfaces\ICanDie.cs" />
     <Compile Include="Assets\~Old&amp;Unused\OLD EnemyObjectScripts\RangeEnemy.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovement.cs" />
